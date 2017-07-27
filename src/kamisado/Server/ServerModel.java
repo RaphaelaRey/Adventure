@@ -5,7 +5,7 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.logging.Logger;
 
-import kamisado.commonClasses.ClientModel;
+import kamisado.client.ClientModel;
 
 
 public class ServerModel {

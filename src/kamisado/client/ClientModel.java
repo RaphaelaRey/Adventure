@@ -1,4 +1,4 @@
-package kamisado.commonClasses;
+package kamisado.client;
 
 import java.io.IOException;
 import java.net.Socket;

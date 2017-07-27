@@ -14,7 +14,7 @@ public class Turm extends Circle {
 	}
 
 	// Farbe des Turms herausfinden
-	public Color getFarbe()	{
+	public Color getTurmFarbe()	{
 		return (Color) super.getFill();
 	}
 	
