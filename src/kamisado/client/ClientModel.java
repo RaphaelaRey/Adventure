@@ -1,29 +1,43 @@
 package kamisado.client;
 
 import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.net.Socket;
 
-import kamisado.Server.ServerModel;
-
 public class ClientModel {
-	private Socket socket;
-	private String name;
-	private ServerModel model;
-
-	public ClientModel(ServerModel model, Socket socket) {
-		this.model = model;
-		this.socket = socket;
-
-		//Thread erstellen um mehrere Clients zu starten
-		Runnable r = new Runnable() {
-			@Override
-			public void run() {
-				//while Schleife mit Object in- und out-putstream
-
-			}
-		};
-		Thread t = new Thread(r);
-		t.start();
-	}
+	
+		private int port = 444;
+		private String spielerName;
+		private boolean amLaufen = true;
+		
+		private int[] neueKoordinaten; //= kamisado.commonClasses.Spielbrett.getAktiverTurmKoordinaten() --- nicht static
+		
+		ObjectOutputStream anServer;
+		ObjectInputStream vonServer;
+		
+			
+		public void mitServerVerbinden() {
+			
+			
+			
+			try{
+				//Verbindung mit ServerClient herstellen
+				Socket clientSocket = new Socket(spielerName, port);
+				
+				//Streams erstellen
+				anServer = new ObjectOutputStream(clientSocket.getOutputStream());
+				vonServer = new ObjectInputStream(clientSocket.getInputStream());
+				
+				while(amLaufen == true){
+					
+					anServer.writeObject(neueKoordinaten);
+				
+					clientSocket.close();	
+				}
+			} 	catch (IOException e){
+					System.out.println(e);
+				}
+		}
 
 }
