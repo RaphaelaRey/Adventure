@@ -123,6 +123,7 @@ public class Spielbrett extends GridPane {
  		return aktiverTurmKoordinaten;
  	}
  	public void setAktiverTurmKoordinaten(int[] aktiverTurmKoordinaten) {
+ 		kamisado.client.ClientModel.setNeueKoordinaten(aktiverTurmKoordinaten);
  		this.aktiverTurmKoordinaten = aktiverTurmKoordinaten;
  	}
  	

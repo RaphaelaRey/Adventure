@@ -4,40 +4,61 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
+import java.util.List;
+import java.util.logging.Logger;
 
-public class ClientModel {
+import kamisado.Server.Client;
+
+public class ClientModel extends Thread{
 	
-		private int port = 444;
-		private String spielerName;
+		protected Socket client;
 		private boolean amLaufen = true;
+		private static int[] neueKoordinaten;
+		protected ObjectInputStream vonServer;
+		protected ObjectOutputStream anServer;
+		private final Logger logger = Logger.getLogger("");
 		
-		private int[] neueKoordinaten; //= kamisado.commonClasses.Spielbrett.getAktiverTurmKoordinaten() --- nicht static
-		
-		ObjectOutputStream anServer;
-		ObjectInputStream vonServer;
-		
+		public static void setNeueKoordinaten(int[] aktiverTurmKoordinaten) {
+	 		neueKoordinaten = aktiverTurmKoordinaten;
+	 	}
 			
-		public void mitServerVerbinden() {
-			
-			
+		public ClientModel(String hostName, int ip){
 			
 			try{
-				//Verbindung mit ServerClient herstellen
-				Socket clientSocket = new Socket(spielerName, port);
-				
-				//Streams erstellen
-				anServer = new ObjectOutputStream(clientSocket.getOutputStream());
-				vonServer = new ObjectInputStream(clientSocket.getInputStream());
+				//Verbindung mit Server herstellen
+				this.client = new Socket(hostName, ip);
 				
 				while(amLaufen == true){
-					
-					anServer.writeObject(neueKoordinaten);
 				
-					clientSocket.close();	
-				}
-			} 	catch (IOException e){
-					System.out.println(e);
-				}
+					//Streams erstellen
+					this.vonServer = new ObjectInputStream(client.getInputStream());
+					this.anServer = new ObjectOutputStream(client.getOutputStream());
+	
+					//neueKoordinaten an Server senden
+					anServer.writeObject(neueKoordinaten);
+					anServer.flush();
+					
+					//neueKoordinaten von Client empfangen
+					int[] in = (int[]) vonServer.readObject();
+					
+					if(neueKoordinaten != in){
+						setNeueKoordinaten(in);
+					}
+					//else do nothing
+										
+				} 
+			} catch (Exception e){
+				logger.info(e.toString());
+			}
+			
 		}
+		
+		public void clientAnhalten(){
+			this.amLaufen = false;
+			
+			
+		}
+		
+		
 
 }
