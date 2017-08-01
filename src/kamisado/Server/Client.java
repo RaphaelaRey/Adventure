@@ -13,10 +13,8 @@ public class Client {
 
     public Client(Socket client) {
         this.client = client;
-        try {
-            this.out = new PrintWriter(client.getOutputStream());
-        } catch (IOException e) {
-            logger.info(e.toString());
-        }
+        
+        
+        
     }
 }

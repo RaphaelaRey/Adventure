@@ -1,9 +1,11 @@
 package kamisado.commonClasses;
 
+import java.io.Serializable;
+
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 
-public class Turm extends Circle {
+public class Turm extends Circle implements Serializable{
 	
 	private int[] koordinaten = new int[2];
 

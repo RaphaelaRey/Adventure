@@ -1,11 +1,15 @@
 package kamisado.client;
 
+import java.net.InetAddress;
+import java.net.Socket;
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.logging.Logger;
 
 import javafx.scene.paint.Color;
 import javafx.scene.shape.StrokeType;
 import kamisado.commonClasses.Feld;
+import kamisado.commonClasses.SendenEmpfangen;
 import kamisado.commonClasses.Turm;
 
 public class Model {
@@ -13,6 +17,67 @@ public class Model {
 	// TODO Gewinner/Verlierer definieren
 	// TODO mögliche felder nur anzeigen wenn nicht besetzt
 	
+	protected Socket client;
+	private boolean amLaufen = true;
+	private String hostName;
+	private int port = 444;
+	
+	//protected ObjectInputStream vonServer;
+	//protected ObjectOutputStream anServer;
+	private final Logger logger = Logger.getLogger("");
+	
+	public Model() {
+		try{
+			this.hostName= InetAddress.getLocalHost().getHostName();
+			Verbinden(hostName, port);
+		} catch (Exception e){
+			logger.info(e.toString());
+		}
+	}
+	
+	public void Verbinden(String hostName, int port) {
+		
+		try{
+			this.hostName= InetAddress.getLocalHost().getHostName();
+			
+			//Verbindung mit Server herstellen
+			this.client = new Socket(hostName, port);
+			logger.info(hostName + " über Port" + port + " verbunden");
+			
+			//Thread erstellen
+			Runnable a = new Runnable() {
+				@Override
+				public void run() {
+					try{
+						while(amLaufen == true){
+							SendenEmpfangen.Empfangen(client);
+						}
+					}catch (Exception e){
+						logger.info(e.toString());
+					}
+				}
+			}; 
+			Thread b = new Thread(a);
+			b.start();
+			logger.info("thread gestartet");
+		 
+		}catch (Exception e){
+			logger.info(e.toString());
+		}
+	}
+	
+	public void clientAnhalten(){
+		if(client != null){
+			try{
+				client.close();
+				logger.info("client Thread beendet");
+			} catch (Exception e){
+				logger.info(e.toString());
+			}
+		}
+		
+		
+	}
 	
 	// Farbe (schwarz/weiss) eines Turms (basierend auf Koordinaten) herausfinden
 	public Color getTurmFarbe(int[]turmKoordinaten, Turm[]türme){

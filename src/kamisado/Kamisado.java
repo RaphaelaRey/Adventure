@@ -1,17 +1,20 @@
 package kamisado;
 
 
+import java.io.IOException;
+
 import javafx.application.Application;
 import javafx.stage.Stage;
 import kamisado.client.ClientController;
-import kamisado.client.ClientModel;
 import kamisado.client.ClientView;
+import kamisado.client.Model;
 
 public class Kamisado extends Application {
 	
 	private ClientView view;
 	private ClientController controller;
-	private ClientModel clientModel;
+	private Model clientModel;
+	
 	
 
 	public static void main(String[] args) {
@@ -19,8 +22,8 @@ public class Kamisado extends Application {
 	}
 
 	@Override
-	public void start(Stage primaryStage) {
-		clientModel = new ClientModel();
+	public void start(Stage primaryStage) throws IOException{
+		clientModel = new Model();
 		view = new ClientView(primaryStage, clientModel);
 		controller = new ClientController(clientModel, view);	
 		view.start();

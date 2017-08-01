@@ -16,7 +16,7 @@ public class ClientController {
 	
 	Spielbrett spielbrett;		
 		
-	protected ClientController(Model model, ClientView view) {
+	public ClientController(Model model, ClientView view) {
 		this.model = model;
 		this.view = view;
 		spielbrett = view.spielbrett;

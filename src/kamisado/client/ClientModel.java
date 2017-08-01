@@ -1,13 +1,10 @@
 package kamisado.client;
 
-import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.net.InetAddress;
 import java.net.Socket;
-import java.util.List;
 import java.util.logging.Logger;
-
-import kamisado.Server.Client;
 
 public class ClientModel extends Thread{
 	
@@ -17,16 +14,20 @@ public class ClientModel extends Thread{
 		protected ObjectInputStream vonServer;
 		protected ObjectOutputStream anServer;
 		private final Logger logger = Logger.getLogger("");
+		String hostName;
+		int port = 444;
 		
 		public static void setNeueKoordinaten(int[] aktiverTurmKoordinaten) {
 	 		neueKoordinaten = aktiverTurmKoordinaten;
 	 	}
 			
-		public ClientModel(String hostName, int ip){
+		public ClientModel(){
 			
 			try{
+				this.hostName= InetAddress.getLocalHost().getHostName();
+				
 				//Verbindung mit Server herstellen
-				this.client = new Socket(hostName, ip);
+				this.client = new Socket(hostName, port);
 				
 				while(amLaufen == true){
 				

@@ -32,7 +32,7 @@ public class Spielbrett extends GridPane {
     // Je ein Array für die beiden Turmfarben und alle Türme erstellen 
     protected Turm [] schwarzeTürme = new Turm [8];					
     protected Turm [] weisseTürme = new Turm [8];						
-    private Turm [] türme = new Turm [16];
+    private static Turm [] türme = new Turm [16];
     
     // Array für die Koordinaten der möglichen Felder erstellen
 	private ArrayList<int[]> möglicheFelder = new ArrayList<int[]>();
@@ -122,9 +122,8 @@ public class Spielbrett extends GridPane {
  	public int[] getAktiverTurmKoordinaten() {
  		return aktiverTurmKoordinaten;
  	}
- 	public void setAktiverTurmKoordinaten(int[] aktiverTurmKoordinaten) {
- 		kamisado.client.ClientModel.setNeueKoordinaten(aktiverTurmKoordinaten);
- 		this.aktiverTurmKoordinaten = aktiverTurmKoordinaten;
+ 	public void setAktiverTurmKoordinaten(int[] neueTurmKoordinaten) {
+ 		aktiverTurmKoordinaten = neueTurmKoordinaten;
  	}
  	
  	// Getter und setter für Koordinaten des ausgewählten Felds
@@ -157,11 +156,11 @@ public class Spielbrett extends GridPane {
 	}
 
 	// Getter und setter für das Turm-Array
-	public Turm [] getTürme() {
+	public static Turm [] getTürme() {
 		return türme;
 	}
-	public void setTürme(Turm [] türme) {
-		this.türme = türme;
+	public static void setTürme(Turm [] neutürme) {
+		türme = neutürme;
 	}
 
 	// Getter und setter für die Arrayliste mögliche Felder
