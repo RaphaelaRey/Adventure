@@ -24,7 +24,7 @@ public class SendenEmpfangen {
 			logger.info("OutputStream erstellt");
 
 			//neueKoordinaten an Client senden
-//			türme = kamisado.commonClasses.Spielbrett.getTürme();
+			türme = kamisado.commonClasses.Spielbrett.getTürme();
 			senden.writeObject(türme);
 			senden.flush();
 			logger.info("Neue Koordinaten gesendet");
@@ -45,7 +45,7 @@ public class SendenEmpfangen {
 			logger.info("Neue Koordinaten erhalten");
 			
 			if(türme != in){
-//				kamisado.commonClasses.Spielbrett.setTürme(türme);
+				kamisado.commonClasses.Spielbrett.setTürme(türme);
 				logger.info("Koordinaten ersetzt");
 				}
 				//else do nothing

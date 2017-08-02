@@ -49,7 +49,7 @@ public class Spielbrett {
     // Je ein Array für die beiden Turmfarben und alle Türme erstellen 
     private Turm [] schwarzeTürme = new Turm [8];					
     private Turm [] weisseTürme = new Turm [8];						
-    private Turm [] türme = new Turm [16];
+    private static Turm [] türme = new Turm [16];
     
     // Array für die Koordinaten der möglichen Felder erstellen
 	protected ArrayList<int[]> möglicheFelder = new ArrayList<int[]>();
@@ -144,11 +144,11 @@ public class Spielbrett {
 		this.turmBewegt = turmBewegt;
 	}
 
-	public Turm [] getTürme() {
+	public static Turm [] getTürme() {
 		return türme;
 	}
-	public void setTürme(Turm [] türme) {
-		this.türme = türme;
+	public static void setTürme(Turm [] neuTürme) {
+		türme = neuTürme;
 	}
 
 	public Turm[] getSchwarzeTürme() {
