@@ -8,7 +8,7 @@ import javafx.scene.shape.Circle;
  * @author Raphaela Rey
  */
 
-public class Turm extends Circle {
+public class Turm extends Circle implements Serializable {
 		
 	private int[] koordinaten = new int[2];
 
