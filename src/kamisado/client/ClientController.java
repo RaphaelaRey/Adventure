@@ -1,9 +1,5 @@
 package kamisado.client;
 
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
-import java.beans.PropertyChangeSupport;
-
 import javafx.event.EventHandler; 
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
@@ -26,6 +22,7 @@ public class ClientController {
 		this.clientModel = clientModel;
 		this.view = view;
 		spielbrett = view.spielbrett;
+		
 		// Turm bewegen					
 		for(int i = 0; i < spielbrett.getFelder().length; i++){
 			for (int j = 0; j < spielbrett.getFelder().length; j++){
@@ -52,12 +49,12 @@ public class ClientController {
 									
 									spielbrett.setTurmBewegt(true);											
 									
-									// Gewinner? // TODO Gewinnermeldung inkl. Frage ob nochmals gespielt werden will
-																		//von Carmen einbauen, im Moment wird nur ein Feld eingefärbt
+									// Gewinner? 
 									for(int l = 0; l < spielbrett.getGewinnerFelderSchwarz().length; l++){
 										int [] koordGewinnerFeld = {spielbrett.getGewinnerFelderSchwarz()[l][0], spielbrett.getGewinnerFelderSchwarz()[l][1]};
 										if(clientModel.koordVergleich(ausgewähltesFeld.getKoordinaten(), koordGewinnerFeld)){
-											ausgewähltesFeld.setFill(Color.ALICEBLUE); 			
+											ausgewähltesFeld.setFill(Color.ALICEBLUE); 	
+											// schwarz gewinnt -> TODO Carmen Gewinnermeldung inkl. Frage ob nochmals gespielt werden will (im Moment wird nur ein Feld eingefärbt)
 											spielbrett.setSpielBeendet(true);		
 										}
 									}	
@@ -65,6 +62,7 @@ public class ClientController {
 										int [] koordGewinnerFeld = {spielbrett.getGewinnerFelderWeiss()[m][0], spielbrett.getGewinnerFelderWeiss()[m][1]};
 										if(clientModel.koordVergleich(ausgewähltesFeld.getKoordinaten(), koordGewinnerFeld)){
 											ausgewähltesFeld.setFill(Color.ALICEBLUE);
+											// weiss gewinnt -> TODO Carmen Gewinnermeldung inkl. Frage ob nochmals gespielt werden will (im Moment wird nur ein Feld eingefärbt)
 											spielbrett.setSpielBeendet(true);		
 										}
 									}	
@@ -98,7 +96,7 @@ public class ClientController {
 					for (int i = 0; i < spielbrett.getTürme().length; i++){
 						spielbrett.getTürme()[i].setStrokeWidth(spielbrett.STROKEWIDTHTÜRMESTANDARD);
 					}
-					if(spielbrett.istTurmBewegt()==false){		// TODO kommentare weg 
+					if(spielbrett.istTurmBewegt()==false){		
 						t.setStrokeWidth(spielbrett.STROKEWIDTHAUSGEWÄHLTERTURM);
 						spielbrett.setAktiverTurmKoordinaten(t.getKoordinaten());
 						clientModel.möglicheFelderAnzeigen(spielbrett.getAktiverTurmKoordinaten());
@@ -107,20 +105,9 @@ public class ClientController {
 			});
 		}
 		
-		// TODO  Totaler Stillstand, Gewinner definieren (+ Carmen Gewinnermeldung)
-		
-		
+		// TODO Totaler Stillstand, Gewinner definieren (+ Carmen Gewinnermeldung)	
 		if(spielbrett.getMöglicheFelder().size()==0 && spielbrett.istTurmBewegt()==true){
 		
-		}
-	}
-	
-	
-	
-	public void propertyChange(PropertyChangeEvent event){
-		String property = event.getPropertyName();
-		if(spielbrett.istSpielBeendet()==true){
-			System.out.println("spielbeendet");
 		}
 	}
 }
