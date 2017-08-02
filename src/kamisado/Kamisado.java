@@ -7,13 +7,13 @@ import javafx.application.Application;
 import javafx.stage.Stage;
 import kamisado.client.ClientController;
 import kamisado.client.ClientView;
-import kamisado.client.Model;
+import kamisado.client.ClientModel;
 
 public class Kamisado extends Application {
 	
 	private ClientView view;
 	private ClientController controller;
-	private Model clientModel;
+	private ClientModel clientModel;
 	
 	
 
@@ -23,7 +23,7 @@ public class Kamisado extends Application {
 
 	@Override
 	public void start(Stage primaryStage) throws IOException{
-		clientModel = new Model();
+		clientModel = new ClientModel();
 		view = new ClientView(primaryStage, clientModel);
 		controller = new ClientController(clientModel, view);	
 		view.start();

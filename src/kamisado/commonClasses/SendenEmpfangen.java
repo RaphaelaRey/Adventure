@@ -10,8 +10,11 @@ public class SendenEmpfangen {
 	private static Turm[] türme;
 	private static final Logger logger = Logger.getLogger("");
 	
+	
 	static ObjectOutputStream senden;
 	static ObjectInputStream empfangen;
+	
+	
 	
 	public static void Senden(Socket clientSocket){
 		
@@ -21,7 +24,7 @@ public class SendenEmpfangen {
 			logger.info("OutputStream erstellt");
 
 			//neueKoordinaten an Client senden
-			türme = kamisado.commonClasses.Spielbrett.getTürme();
+//			türme = kamisado.commonClasses.Spielbrett.getTürme();
 			senden.writeObject(türme);
 			senden.flush();
 			logger.info("Neue Koordinaten gesendet");
@@ -42,7 +45,7 @@ public class SendenEmpfangen {
 			logger.info("Neue Koordinaten erhalten");
 			
 			if(türme != in){
-				kamisado.commonClasses.Spielbrett.setTürme(türme);
+//				kamisado.commonClasses.Spielbrett.setTürme(türme);
 				logger.info("Koordinaten ersetzt");
 				}
 				//else do nothing
