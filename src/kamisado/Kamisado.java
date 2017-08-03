@@ -15,8 +15,6 @@ public class Kamisado extends Application {
 	private ClientController controller;
 	private ClientModel clientModel;
 	
-	
-
 	public static void main(String[] args) {
 		launch(args);	
 	}

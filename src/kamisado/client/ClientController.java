@@ -7,17 +7,14 @@ import kamisado.commonClasses.Feld;
 import kamisado.commonClasses.Spielbrett;
 import kamisado.commonClasses.Turm;
 
-/**
- * @author Raphaela Rey
- */
 
 public class ClientController {
 	 	
 	final private ClientModel clientModel;
 	final private ClientView view;
+	final private Spielbrett spielbrett;	
 	
-	Spielbrett spielbrett;	
-	
+	// Konstruktor
 	public ClientController(ClientModel clientModel, ClientView view) {
 		this.clientModel = clientModel;
 		this.view = view;
@@ -50,16 +47,16 @@ public class ClientController {
 									spielbrett.setTurmBewegt(true);											
 									
 									// Gewinner? 
-									for(int l = 0; l < spielbrett.getGewinnerFelderSchwarz().length; l++){
-										int [] koordGewinnerFeld = {spielbrett.getGewinnerFelderSchwarz()[l][0], spielbrett.getGewinnerFelderSchwarz()[l][1]};
+									for(int l = 0; l < spielbrett.GEWINNERFELDERSCHWARZ.length; l++){
+										int [] koordGewinnerFeld = {spielbrett.GEWINNERFELDERSCHWARZ[l][0], spielbrett.GEWINNERFELDERSCHWARZ[l][1]};
 										if(clientModel.koordVergleich(ausgewähltesFeld.getKoordinaten(), koordGewinnerFeld)){
 											ausgewähltesFeld.setFill(Color.ALICEBLUE); 	
 											// schwarz gewinnt -> TODO Carmen Gewinnermeldung inkl. Frage ob nochmals gespielt werden will (im Moment wird nur ein Feld eingefärbt)
 											spielbrett.setSpielBeendet(true);		
 										}
 									}	
-									for(int m = 0; m < spielbrett.getGewinnerFelderWeiss().length; m++){
-										int [] koordGewinnerFeld = {spielbrett.getGewinnerFelderWeiss()[m][0], spielbrett.getGewinnerFelderWeiss()[m][1]};
+									for(int m = 0; m < spielbrett.GEWINNERFELDERWEISS.length; m++){
+										int [] koordGewinnerFeld = {spielbrett.GEWINNERFELDERWEISS[m][0], spielbrett.GEWINNERFELDERWEISS[m][1]};
 										if(clientModel.koordVergleich(ausgewähltesFeld.getKoordinaten(), koordGewinnerFeld)){
 											ausgewähltesFeld.setFill(Color.ALICEBLUE);
 											// weiss gewinnt -> TODO Carmen Gewinnermeldung inkl. Frage ob nochmals gespielt werden will (im Moment wird nur ein Feld eingefärbt)
@@ -67,13 +64,13 @@ public class ClientController {
 										}
 									}	
 									
-									// Spiel zurücksetzen nach Gewinn
+									// Spiel zurücksetzen nach Gewinn TODO Überprüfen
 									if(spielbrett.istSpielBeendet()==true){
 										clientModel.spielZurücksetzen(spielbrett.getMöglicheFelder(), spielbrett.getFelder(), spielbrett.getTürme());
 										
 									}
 									
-									// zukünftiger gegnerischer Turm definieren und mögliche Felder anzeigen (sofern das Spiel nicht schon beendet ist)
+									// Zukünftiger gegnerischer Turm definieren und mögliche Felder anzeigen (sofern das Spiel nicht schon beendet ist)
 									if(spielbrett.istTurmBewegt()==true){
 										nächsterAktiverTurm=clientModel.setNächsterGegnerischerTurm(k, ausgewähltesFeld, nächsterAktiverTurm);							
 
@@ -93,10 +90,10 @@ public class ClientController {
 			t.setOnMouseClicked(new EventHandler<MouseEvent>(){
 				@Override
 				public void handle(MouseEvent event){
-					for (int i = 0; i < spielbrett.getTürme().length; i++){
-						spielbrett.getTürme()[i].setStrokeWidth(spielbrett.STROKEWIDTHTÜRMESTANDARD);
-					}
-					if(spielbrett.istTurmBewegt()==false){		
+					if(spielbrett.istTurmBewegt()==false){	
+						for (int i = 0; i < spielbrett.getTürme().length; i++){
+							spielbrett.getTürme()[i].setStrokeWidth(spielbrett.STROKEWIDTHTÜRMESTANDARD);
+						}	
 						t.setStrokeWidth(spielbrett.STROKEWIDTHAUSGEWÄHLTERTURM);
 						spielbrett.setAktiverTurmKoordinaten(t.getKoordinaten());
 						clientModel.möglicheFelderAnzeigen(spielbrett.getAktiverTurmKoordinaten());

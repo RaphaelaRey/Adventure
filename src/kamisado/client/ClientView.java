@@ -1,12 +1,11 @@
 package kamisado.client;
 
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 import kamisado.commonClasses.Spielbrett;
 
-/**
- * @author Raphaela Rey
- */
 
 public class ClientView {
 	
@@ -19,15 +18,20 @@ public class ClientView {
 		this.stage = stage; 
 		this.clientModel = clientModel;
 		stage.setMinWidth(826);
-		stage.setMinHeight(855);
+		stage.setMinHeight(886);
 		stage.setMaxWidth(826);
-		stage.setMaxHeight(855);
+		stage.setMaxHeight(886);
 		stage.setTitle("Kamisado");
 		
 		spielbrett = new Spielbrett(clientModel);
 		clientModel.setSpielbrett(spielbrett);
 		
-		Scene scene = new Scene(spielbrett.getPane());
+		BorderPane borderPane = new BorderPane();
+		Button button = new Button("Menuleiste"); // TODO Carmen durch Menuleiste ersetzen (habe Gridpane bereits in Borderpane hinzugefügt)
+		borderPane.setTop(button); // durch Menuleiste ersetzen
+		borderPane.setCenter(spielbrett.getPane());
+		
+		Scene scene = new Scene(borderPane);
         stage.setScene(scene);
 	}
 	

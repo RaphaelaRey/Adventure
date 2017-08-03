@@ -15,13 +15,13 @@ import kamisado.client.ClientModel;
 
 public class Spielbrett {
 	
-	protected ClientModel clientModel;
+	private ClientModel clientModel;
 		
-	private boolean turmBewegt = false; // wenn diese Variable true ist, wurde bereits ein Turm bewegt -> nicht mehr der erste Spielzug
-	private boolean spielBeendet = false; // wenn diese Variable true ist, wurde ein Spiel beendet	
-	protected static int [] aktiverTurmKoordinaten = new int [2];
+	private static boolean turmBewegt = false; // wenn diese Variable true ist, wurde bereits ein Turm bewegt -> nicht mehr der erste Spielzug
+	private static boolean spielBeendet = false; // wenn diese Variable true ist, wurde ein Spiel beendet	
+	private static int [] aktiverTurmKoordinaten = new int [2];
 
-	// Randbreite der Türme und Felder als Konstanten definieren
+	// Infos der Türme und Felder als Konstanten definieren
 	public final int STROKEWIDTHTÜRMESTANDARD = 3;
 	public final int STROKEWIDTHAUSGEWÄHLTERTURM = 8;
 	public final int STROKEWIDTHMÖGLICHEFELDER = 5;
@@ -32,19 +32,18 @@ public class Spielbrett {
 	private Feld [][] felder = new Feld [8][8];	
 	
 	// Array mit Koordinaten der farbigen Felder erstellen
-    private final int [][] orangeFelder = {{0,0},{1,1},{2,2},{3,3},{4,4},{5,5},{6,6},{7,7}};
-    private final int [][] brauneFelder = {{0,7},{1,6},{2,5},{3,4},{4,3},{5,2},{6,1},{7,0}};
-    private final int [][] pinkeFelder = {{0,3},{1,2},{2,1},{3,0},{4,7},{5,6},{6,5},{7,4}};
-    private final int [][] gelbeFelder = {{0,4},{1,5},{2,6},{3,7},{4,0},{5,1},{6,2},{7,3}};
-    private final int [][] blaueFelder = {{0,5},{1,0},{2,3},{3,6},{4,1},{5,4},{6,7},{7,2}};
-    private final int [][] violetteFelder = {{0,6},{1,3},{2,0},{3,5},{4,2},{5,7},{6,4},{7,1}};
-    private final int [][] roteFelder = {{0,1},{1,4},{2,7},{3,2},{4,5},{5,0},{6,3},{7,6}};
-    private final int [][] grüneFelder = {{0,2},{1,7},{2,4},{3,1},{4,6},{5,3},{6,0},{7,5}};
+    private final static int [][] ORANGEFELDER = {{0,0},{1,1},{2,2},{3,3},{4,4},{5,5},{6,6},{7,7}};
+    private final static int [][] BRAUNEFELDER = {{0,7},{1,6},{2,5},{3,4},{4,3},{5,2},{6,1},{7,0}};
+    private final static int [][] PINKEFELDER = {{0,3},{1,2},{2,1},{3,0},{4,7},{5,6},{6,5},{7,4}};
+    private final static int [][] GELBEFELDER = {{0,4},{1,5},{2,6},{3,7},{4,0},{5,1},{6,2},{7,3}};
+    private final static int [][] BLAUEFELDER = {{0,5},{1,0},{2,3},{3,6},{4,1},{5,4},{6,7},{7,2}};
+    private final static int [][] VIOLETTEFELDER = {{0,6},{1,3},{2,0},{3,5},{4,2},{5,7},{6,4},{7,1}};
+    private final static int [][] ROTEFELDER = {{0,1},{1,4},{2,7},{3,2},{4,5},{5,0},{6,3},{7,6}};
+    private final static int [][] GRÜNEFELDER = {{0,2},{1,7},{2,4},{3,1},{4,6},{5,3},{6,0},{7,5}};
     
     // Mögliche Gewinnerfelder
-    protected final int [][] gewinnerFelderSchwarz = {{0,0},{1,0},{2,0},{3,0},{4,0},{5,0},{6,0},{7,0}};
-    protected final int [][] gewinnerFelderWeiss = {{0,7},{1,7},{2,7},{3,7},{4,7},{5,7},{6,7},{7,7}};
-
+    public final static int [][] GEWINNERFELDERSCHWARZ = {{0,0},{1,0},{2,0},{3,0},{4,0},{5,0},{6,0},{7,0}};
+    public final static int [][] GEWINNERFELDERWEISS = {{0,7},{1,7},{2,7},{3,7},{4,7},{5,7},{6,7},{7,7}};
     
     // Je ein Array für die beiden Turmfarben und alle Türme erstellen 
     private Turm [] schwarzeTürme = new Turm [8];					
@@ -52,9 +51,10 @@ public class Spielbrett {
     private static Turm [] türme = new Turm [16];
     
     // Array für die Koordinaten der möglichen Felder erstellen
-	protected ArrayList<int[]> möglicheFelder = new ArrayList<int[]>();
+	private ArrayList<int[]> möglicheFelder = new ArrayList<int[]>();
     
-	private GridPane pane = new GridPane();
+	// Gridpane für Spielbrett erstellen
+	private GridPane gridpane = new GridPane(); 
     
 	// Konstruktor: Felder und Türme erstellen, einfärben und der Gridpane hinzufügen
     public Spielbrett(ClientModel clientModel) {
@@ -64,41 +64,41 @@ public class Spielbrett {
     	for (int i = 0; i < felder.length; i++){
     		for (int j = 0; j < felder.length; j++){
     			felder[i][j] = new Feld(FELDGRÖSSE, new int[]{i, j});
-    			pane.add(felder[i][j], i, j);
+    			gridpane.add(felder[i][j], i, j);
     			felder[i][j].setStroke(Color.BLACK);
     		}
     	}
 		
     	// Felder einfärben
-    	for (int i = 0; i < orangeFelder.length; i++){
-    		felder[orangeFelder[i][0]][orangeFelder[i][1]].setFill(Color.ORANGE);
+    	for (int i = 0; i < ORANGEFELDER.length; i++){
+    		felder[ORANGEFELDER[i][0]][ORANGEFELDER[i][1]].setFill(Color.ORANGE);
     	}
-    	for (int i = 0; i < brauneFelder.length; i++){
-    		felder[brauneFelder[i][0]][brauneFelder[i][1]].setFill(Color.BROWN);
+    	for (int i = 0; i < BRAUNEFELDER.length; i++){
+    		felder[BRAUNEFELDER[i][0]][BRAUNEFELDER[i][1]].setFill(Color.BROWN);
     	}
-    	for (int i = 0; i < pinkeFelder.length; i++){
-    		felder[pinkeFelder[i][0]][pinkeFelder[i][1]].setFill(Color.HOTPINK);
+    	for (int i = 0; i < PINKEFELDER.length; i++){
+    		felder[PINKEFELDER[i][0]][PINKEFELDER[i][1]].setFill(Color.HOTPINK);
     	}
-    	for (int i = 0; i < gelbeFelder.length; i++){
-    		felder[gelbeFelder[i][0]][gelbeFelder[i][1]].setFill(Color.YELLOW);
+    	for (int i = 0; i < GELBEFELDER.length; i++){
+    		felder[GELBEFELDER[i][0]][GELBEFELDER[i][1]].setFill(Color.YELLOW);
     	}
-    	for (int i = 0; i < blaueFelder.length; i++){
-    		felder[blaueFelder[i][0]][blaueFelder[i][1]].setFill(Color.MEDIUMBLUE);
+    	for (int i = 0; i < BLAUEFELDER.length; i++){
+    		felder[BLAUEFELDER[i][0]][BLAUEFELDER[i][1]].setFill(Color.MEDIUMBLUE);
     	}
-    	for (int i = 0; i < violetteFelder.length; i++){
-    		felder[violetteFelder[i][0]][violetteFelder[i][1]].setFill(Color.DARKVIOLET);
+    	for (int i = 0; i < VIOLETTEFELDER.length; i++){
+    		felder[VIOLETTEFELDER[i][0]][VIOLETTEFELDER[i][1]].setFill(Color.DARKVIOLET);
     	}
-    	for (int i = 0; i < roteFelder.length; i++){
-    		felder[roteFelder[i][0]][roteFelder[i][1]].setFill(Color.RED);
+    	for (int i = 0; i < ROTEFELDER.length; i++){
+    		felder[ROTEFELDER[i][0]][ROTEFELDER[i][1]].setFill(Color.RED);
     	}
-    	for (int i = 0; i < grüneFelder.length; i++){
-    		felder[grüneFelder[i][0]][grüneFelder[i][1]].setFill(Color.GREEN);
+    	for (int i = 0; i < GRÜNEFELDER.length; i++){
+    		felder[GRÜNEFELDER[i][0]][GRÜNEFELDER[i][1]].setFill(Color.GREEN);
     	}
 		
     	// Schwarze Türme in Array erstellen, der Gridpane hinzufügen und einfärben gemäss den unterliegenden Feldern
     	for (int i = 0; i < schwarzeTürme.length; i++){
     		schwarzeTürme[i] = new Turm(TURMDURCHMESSER, new int[] {i, 7}); 
-			pane.add(schwarzeTürme[i], i, 7);
+			gridpane.add(schwarzeTürme[i], i, 7);
 			schwarzeTürme[i].setStroke(Color.BLACK);
 			schwarzeTürme[i].setStrokeWidth(STROKEWIDTHTÜRMESTANDARD);
 			schwarzeTürme[i].setFill(felder[i][7].getFill());
@@ -108,7 +108,7 @@ public class Spielbrett {
     	// Weisse Türme in Array erstellen, der Gridpane hinzufügen und einfärben gemäss den unterliegenden Feldern
     	for (int i = 0; i < weisseTürme.length; i++){
     		weisseTürme[i] = new Turm(TURMDURCHMESSER, new int[] {i, 0});
-			pane.add(weisseTürme[i], i, 0);
+			gridpane.add(weisseTürme[i], i, 0);
 			weisseTürme[i].setStroke(Color.WHITE);
 			weisseTürme[i].setStrokeWidth(STROKEWIDTHTÜRMESTANDARD);
 			weisseTürme[i].setFill(felder[i][0].getFill());
@@ -119,13 +119,13 @@ public class Spielbrett {
     	System.arraycopy(weisseTürme, 0, getTürme(), 8, 8);
  
     	// Elemente der GridPane zentrieren  
-    	pane.setAlignment(Pos.CENTER);
+    	gridpane.setAlignment(Pos.CENTER);
     	ColumnConstraints[] constraints = new ColumnConstraints[schwarzeTürme.length];
     	for(int i = 0; i < schwarzeTürme.length; i++){
     		constraints[i] = new ColumnConstraints();
     		constraints[i].setHalignment(HPos.CENTER);
     	}
-    	pane.getColumnConstraints().addAll(constraints);
+    	gridpane.getColumnConstraints().addAll(constraints);
     	
     }
  	
@@ -166,10 +166,10 @@ public class Spielbrett {
 	}
 	
 	public GridPane getPane() {
-		return pane;
+		return gridpane;
 	}
 	public void setPane(GridPane pane) {
-		this.pane = pane;
+		this.gridpane = pane;
 	}
 
 	public Feld[][] getFelder() {
@@ -191,13 +191,5 @@ public class Spielbrett {
 	}
 	public void setMöglicheFelder(ArrayList<int[]> möglicheFelder) {
 		this.möglicheFelder = möglicheFelder;
-	}
-
-	public int[][] getGewinnerFelderSchwarz() {
-		return gewinnerFelderSchwarz;
-	}
-
-	public int[][] getGewinnerFelderWeiss() {
-		return gewinnerFelderWeiss;
 	}
 }
