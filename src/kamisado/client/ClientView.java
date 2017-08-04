@@ -42,11 +42,4 @@ public class ClientView {
 	public void stop(){
 		stage.hide();
 	}
-
 }
-
-
-
-
-
-

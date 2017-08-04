@@ -80,12 +80,39 @@ public class ClientModel {
 		
 	}
 	
-	// Spielbrett erstellen
+	/** Überprüfen, ob zwei int-Arrays gleich sind
+	 * @param Koordinaten des ersten Arrays
+	 * @param Koordinaten des zweiten Arrays
+	 * @return true oder false
+	 */
+	public boolean koordVergleich(int[] koord1, int[] koord2){
+		if(koord1[0]==koord2[0] == true && koord1[1]==koord2[1]== true){
+			return true;
+		}
+		return false;
+	}
+	
+	/** Breite der Türme zurücksetzen
+	 * 
+	 */
+	public void turmStrokeWidthZurücksetzen(){
+		for (int i = 0; i < spielbrett.getTürme().length; i++){
+			spielbrett.getTürme()[i].setStrokeWidth(spielbrett.STROKEWIDTHTÜRMESTANDARD);
+		}	
+	}
+	
+	/** Spielbrett initialisieren
+	 * @param spielbrett
+	 */
 	public void setSpielbrett(Spielbrett spielbrett){
 		this.spielbrett = spielbrett;
 	}
 	
-	// Farbe (schwarz/weiss) eines Turms (basierend auf Koordinaten) herausfinden
+	/** Turmfarbe (schwarz/weiss) basierend auf dessen Koordinaten herausfinden
+	 * @param turmKoordinaten
+	 * @param türme
+	 * @return Turmfarbe
+	 */
 	public Color getTurmFarbe(int[]turmKoordinaten, Turm[]türme){
 		for (int i = 0; i < türme.length; i++){
 			if(koordVergleich(türme[i].getKoordinaten(), turmKoordinaten)==true // ausgewählter Turm herausfinden
@@ -96,7 +123,32 @@ public class ClientModel {
 		return Color.WHITE;
 	}
 	
-	// Zukünftiger gegnerischer Turm definieren
+	/** Den ausgewählten Turm bewegen
+	 * @param ausgewähltesFeld
+	 * @param k (Position des betroffenen Turms im Turm-Array
+	 */
+	public void turmBewegen(Feld ausgewähltesFeld, int k){
+		int xKoords = ausgewähltesFeld.getKoordinaten()[0];
+		int yKoords = ausgewähltesFeld.getKoordinaten()[1];
+		// den zu bewegenden Turm von der Gridpane entfernen und das Feld freigeben
+		spielbrett.getPane().getChildren().remove(spielbrett.getTürme()[k]);
+		spielbrett.getFelder()[spielbrett.getAktiverTurmKoordinaten()[0]][spielbrett.getAktiverTurmKoordinaten()[1]].setFeldBesetzt(false);
+
+		// neue Koordinaten des Turms setzen, den Turm der Gridpane hinzufügen und das Feld besetzen
+		spielbrett.getTürme()[k].setKoordinaten(ausgewähltesFeld.getKoordinaten());
+		spielbrett.setAktiverTurmKoordinaten(ausgewähltesFeld.getKoordinaten());
+		spielbrett.getPane().add(spielbrett.getTürme()[k], xKoords, yKoords);
+		spielbrett.getFelder()[xKoords][yKoords].setFeldBesetzt(true);
+		
+		spielbrett.setTurmBewegt(true);
+	}
+
+	/** Zukünftiger gegnerischer Turm definieren
+	 * @param k (Position des betroffenen Turms im Turm-Array)
+	 * @param ausgewähltesFeld
+	 * @param nächsterAktiverTurm
+	 * @return aktualisierter nächsterAktiverTurm
+	 */
 	public int[] setNächsterGegnerischerTurm(int k, Feld ausgewähltesFeld, int[]nächsterAktiverTurm){
 		if(spielbrett.getMöglicheFelder().size()==0){		
 			ausgewähltesFeld = spielbrett.getFelder()[spielbrett.getTürme()[k].getKoordinaten()[0]][spielbrett.getTürme()[k].getKoordinaten()[1]];
@@ -126,7 +178,11 @@ public class ClientModel {
 		return nächsterAktiverTurm;
 	}
 		
-	// Ganzes Spiel zurücksetzen, nachdem jemand gewonnen hat
+	/** Ganzes Spielbrett zurücksetzen, nachdem jemand gewonnen hat
+	 * @param möglicheFelder
+	 * @param felder
+	 * @param türme
+	 */
 	public void spielZurücksetzen(ArrayList<int[]> möglicheFelder, Feld[][]felder, Turm[] türme){ 
 		möglicheFelderLeeren(möglicheFelder, felder);
 		// Alle Türme vom Spielbrett entfernen und die Felder freigeben
@@ -161,15 +217,11 @@ public class ClientModel {
 		}	
 	}
 	
-	// Überpüfen, ob zwei Arrays gleich sind
-	public boolean koordVergleich(int[] koord1, int[] koord2){
-		if(koord1[0]==koord2[0] == true && koord1[1]==koord2[1]== true){
-			return true;
-		}
-		return false;
-	}
-	
-	// ArrayList mögliche Felder leeren 
+	/** ArrayList mögliche Felder leeren
+	 * @param möglicheFelder
+	 * @param felder
+	 * @return geleerte ArrayList
+	 */
 	public ArrayList<int[]> möglicheFelderLeeren(ArrayList<int[]> möglicheFelder, Feld[][]felder){
 		ArrayList<int[]> toRemove = new ArrayList<>();
 		Iterator<int[]> iter = möglicheFelder.iterator();
@@ -186,16 +238,24 @@ public class ClientModel {
 		return möglicheFelder;		
 	}
 	
-	// Mögliche Felder (geradeaus, diagonal rechts und diagonal links) anzeigen
-	 	public ArrayList<int[]> möglicheFelderAnzeigen(int[] turmKoordinaten){		
-	 		// ArrayList der bestehenden Liste löschen, damit nur die aktuellen möglichen Felder gespeichert sind
-	 		möglicheFelderLeeren(spielbrett.getMöglicheFelder(), spielbrett.getFelder());
-	 		// Mögliche gerade/diagonale Felder für schwarze und weisse Türme der ArrayList hinzufügen
-	 		möglicheFelderHinzufügen(turmKoordinaten, spielbrett.getTürme(), spielbrett.getFelder(), spielbrett.getMöglicheFelder());
-	 		return spielbrett.getMöglicheFelder();
-	 	}
+	/** Mögliche Felder (geradeaus, diagonal rechts und diagonal links) anzeigen
+	 * Dazu wird zuerst die bestehende liste gelöscht, damit nur keine alten möglichen Felder gespeichert sind. 
+	 * Dann werden die aktuellen möglichen Feder mit der Suppportmethode "möglicheFelderHinzufügen" hinzugefügt. 
+	 * @param turmKoordinaten
+	 * @return ArrayList der möglichen Felder
+	 */
+	public ArrayList<int[]> möglicheFelderAnzeigen(int[] turmKoordinaten){		
+		möglicheFelderLeeren(spielbrett.getMöglicheFelder(), spielbrett.getFelder());
+		möglicheFelderHinzufügen(turmKoordinaten, spielbrett.getTürme(), spielbrett.getFelder(), spielbrett.getMöglicheFelder());
+		return spielbrett.getMöglicheFelder();
+	}
 	
-	// Mögliche Felder der ArrayList hinzufügen			
+	/** Mögliche Felder der ArrayList hinzufügen (Supportmethode)
+	 * @param turmKoordinaten
+	 * @param türme
+	 * @param felder
+	 * @param möglicheFelder
+	 */
 	private void möglicheFelderHinzufügen(int[] turmKoordinaten, 
 			Turm[]türme, Feld[][]felder, ArrayList<int[]> möglicheFelder){
 		int xKoords = turmKoordinaten[0];											
@@ -361,8 +421,5 @@ public class ClientModel {
 			}				
 		}
 	}
+
 }
-
-	
-		
-
