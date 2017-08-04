@@ -22,8 +22,8 @@ public class ClientController {
 		spielbrett = view.spielbrett;
 		
 		// Schwarze Türme für Spielbeginn aktivieren
-		for (int i = 0; i < spielbrett.getTürme().length; i++){				
-			Turm t = spielbrett.getTürme()[i];				
+		for (int i = 0; i < Spielbrett.getTürme().length; i++){				
+			Turm t = Spielbrett.getTürme()[i];				
 			t.setOnMouseClicked(new EventHandler<MouseEvent>(){
 				@Override
 				public void handle(MouseEvent event){
@@ -46,8 +46,8 @@ public class ClientController {
 					public void handle(MouseEvent event){
 						if (spielbrett.getMöglicheFelder().contains(ausgewähltesFeld.getKoordinaten())){
 							int[] nächsterAktiverTurm = new int[2];
-							for (int k = 0; k < spielbrett.getTürme().length; k++){
-								if(clientModel.koordVergleich(spielbrett.getTürme()[k].getKoordinaten(), spielbrett.getAktiverTurmKoordinaten())){ //aktiver Turm herausfinden
+							for (int k = 0; k < Spielbrett.getTürme().length; k++){
+								if(clientModel.koordVergleich(Spielbrett.getTürme()[k].getKoordinaten(), spielbrett.getAktiverTurmKoordinaten())){ //aktiver Turm herausfinden
 									clientModel.turmBewegen(ausgewähltesFeld, k);
 									// Überprüfen, ob es einen Gewinner gibt (wenn ja, wird spielBeendet auf true gesetzt) 
 									spielbrett.setGewinner(clientModel.gewinnerDefinieren(ausgewähltesFeld));
@@ -57,6 +57,11 @@ public class ClientController {
 									}
 								}	
 							}
+							// Zukünftiger gegnerischer Turm definieren im Fall einer Blockade 			TODO DOPPELBLOCKADE? -> counter?
+							if(spielbrett.getGewinner()==null && Spielbrett.isBlockiert()==true){
+								clientModel.setNächsterGegnerischerTurmBlockade(nächsterAktiverTurm);	 // TODO Meldung
+							} 				
+							
 							// Überprüfen, wer gewonnen hat und die entsprechende Meldung anzeigen
 							if(spielbrett.getGewinner() == Color.BLACK){
 								System.out.println("schwarz gewinnt"); 
@@ -67,18 +72,13 @@ public class ClientController {
 							}
 							// Spiel zurücksetzen nach Gewinn 
 							if(spielbrett.getGewinner()!=null){
-								clientModel.spielZurücksetzen(spielbrett.getMöglicheFelder(), spielbrett.getFelder(), spielbrett.getTürme());	
+								clientModel.spielZurücksetzen(spielbrett.getMöglicheFelder(), spielbrett.getFelder(), Spielbrett.getTürme());	
 							}
 							spielbrett.setAktiverTurmKoordinaten(nächsterAktiverTurm);							
 						}
 					}					
 				});				
 			}
-		}
-					
-		// TODO Totaler Stillstand, Gewinner definieren (+ Carmen Gewinnermeldung sobald gelöst)	
-		if(spielbrett.getMöglicheFelder().size()==0 && spielbrett.istTurmBewegt()==true){
-		
 		}
 	}
 }

@@ -17,14 +17,15 @@ public class ClientView {
 	public ClientView(Stage stage, ClientModel clientModel) {
 		this.stage = stage; 
 		this.clientModel = clientModel;
-		stage.setMinWidth(826);
-		stage.setMinHeight(886);
-		stage.setMaxWidth(826);
-		stage.setMaxHeight(886);
-		stage.setTitle("Kamisado");
-		
+			
 		spielbrett = new Spielbrett(clientModel);
 		clientModel.setSpielbrett(spielbrett);
+		
+		stage.setTitle("Kamisado");
+		stage.setMinWidth(spielbrett.SPIELBRETTBREITE);
+		stage.setMaxWidth(spielbrett.SPIELBRETTBREITE);
+		stage.setMinHeight(spielbrett.SPIELBRETTHÖHE);
+		stage.setMaxHeight(spielbrett.SPIELBRETTHÖHE);
 		
 		BorderPane borderPane = new BorderPane();
 		Button button = new Button("Menuleiste"); // TODO Carmen durch Menuleiste ersetzen (habe Gridpane bereits in Borderpane hinzugefügt)

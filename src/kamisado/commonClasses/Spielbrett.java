@@ -18,10 +18,13 @@ public class Spielbrett {
 	private ClientModel clientModel;
 		
 	private static boolean turmBewegt = false; // wenn diese Variable true ist, wurde bereits ein Turm bewegt -> nicht mehr der erste Spielzug
+	private static boolean blockiert = false;
 	private static int [] aktiverTurmKoordinaten = new int [2];
 	private static Color gewinner;
 
-	// Infos der Türme und Felder als Konstanten definieren
+	// Infos des Spielbretts, der Türme und Felder als Konstanten definieren
+	public final int SPIELBRETTHÖHE = 886;
+	public final int SPIELBRETTBREITE = 826;
 	public final int STROKEWIDTHTÜRMESTANDARD = 3;
 	public final int STROKEWIDTHAUSGEWÄHLTERTURM = 8;
 	public final int STROKEWIDTHMÖGLICHEFELDER = 5;
@@ -193,5 +196,10 @@ public class Spielbrett {
 		Spielbrett.gewinner = gewinner;
 	}
 
-	
+	public static boolean isBlockiert() {
+		return blockiert;
+	}
+	public static void setBlockiert(boolean blockiert) {
+		Spielbrett.blockiert = blockiert;
+	}
 }
