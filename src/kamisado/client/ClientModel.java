@@ -92,7 +92,7 @@ public class ClientModel {
 		return false;
 	}
 	
-	/** Breite der Türme zurücksetzen
+	/** Breite aller Türme zurücksetzen
 	 * 
 	 */
 	public void turmStrokeWidthZurücksetzen(){
@@ -178,14 +178,38 @@ public class ClientModel {
 		return nächsterAktiverTurm;
 	}
 		
-	/** Ganzes Spielbrett zurücksetzen, nachdem jemand gewonnen hat
+	/** Gewinner definieren
+	 * @param ausgewähltesFeld
+	 * @return die Gewinnerfarbe oder null, falls niemand gewonnen hat
+	 */
+	public Color gewinnerDefinieren(Feld ausgewähltesFeld){
+		for(int l = 0; l < Spielbrett.GEWINNERFELDERSCHWARZ.length; l++){
+			int [] koordGewinnerFeld = {Spielbrett.GEWINNERFELDERSCHWARZ[l][0], Spielbrett.GEWINNERFELDERSCHWARZ[l][1]};
+			if(koordVergleich(ausgewähltesFeld.getKoordinaten(), koordGewinnerFeld)){
+				return Color.BLACK;
+			}
+		}	
+		for(int m = 0; m < Spielbrett.GEWINNERFELDERWEISS.length; m++){
+			int [] koordGewinnerFeld = {Spielbrett.GEWINNERFELDERWEISS[m][0], Spielbrett.GEWINNERFELDERWEISS[m][1]};
+			if(koordVergleich(ausgewähltesFeld.getKoordinaten(), koordGewinnerFeld)){
+				return Color.WHITE;
+			}
+		}
+		return null;
+	}
+	
+	
+	/** Ganzes Spielbrett zurücksetzen, nachdem jemand gewonnen hat, was folgendes beinhaltet:
+	 * - mögliche Felder leeren - Gewinner löschen - turmBesetzt zurücksetzen 
+	 * - alle Türme von der Gridpane entfernen und an den ursprünglichen Platz setzen
 	 * @param möglicheFelder
 	 * @param felder
 	 * @param türme
 	 */
 	public void spielZurücksetzen(ArrayList<int[]> möglicheFelder, Feld[][]felder, Turm[] türme){ 
 		möglicheFelderLeeren(möglicheFelder, felder);
-		// Alle Türme vom Spielbrett entfernen und die Felder freigeben
+		// Gewinner löschen, alle Türme vom Spielbrett entfernen und die Felder freigeben
+		spielbrett.setGewinner(null);
 		spielbrett.getPane().getChildren().removeAll(türme);
 		for (int i = 0; i < spielbrett.getFelder().length; i++){
     		for (int j = 0; j < spielbrett.getFelder().length; j++){

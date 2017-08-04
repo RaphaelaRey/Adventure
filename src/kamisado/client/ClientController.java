@@ -7,6 +7,7 @@ import kamisado.commonClasses.Feld;
 import kamisado.commonClasses.Spielbrett;
 import kamisado.commonClasses.Turm;
 
+//TODO Wie wird definiert, wer die schwarzen Türme hat? Derjenige, der am wenigsten oft gespielt hat? Und wenn gleich dann zufällig?
 
 public class ClientController {
 	 	
@@ -26,7 +27,6 @@ public class ClientController {
 			t.setOnMouseClicked(new EventHandler<MouseEvent>(){
 				@Override
 				public void handle(MouseEvent event){
-					spielbrett.setSpielBeendet(false);
 					if(spielbrett.istTurmBewegt()==false && t.getStroke()==Color.BLACK){	
 						clientModel.turmStrokeWidthZurücksetzen();
 						t.setStrokeWidth(spielbrett.STROKEWIDTHAUSGEWÄHLTERTURM);
@@ -49,32 +49,25 @@ public class ClientController {
 							for (int k = 0; k < spielbrett.getTürme().length; k++){
 								if(clientModel.koordVergleich(spielbrett.getTürme()[k].getKoordinaten(), spielbrett.getAktiverTurmKoordinaten())){ //aktiver Turm herausfinden
 									clientModel.turmBewegen(ausgewähltesFeld, k);
-									// Gewinner? 
-									for(int l = 0; l < Spielbrett.GEWINNERFELDERSCHWARZ.length; l++){
-										int [] koordGewinnerFeld = {Spielbrett.GEWINNERFELDERSCHWARZ[l][0], Spielbrett.GEWINNERFELDERSCHWARZ[l][1]};
-										if(clientModel.koordVergleich(ausgewähltesFeld.getKoordinaten(), koordGewinnerFeld)){
-											// schwarz gewinnt -> TODO Carmen Gewinnermeldung inkl. Frage ob nochmals gespielt werden will (im Moment wird nur das Spielbrett zurückgesetzt)
-											spielbrett.setSpielBeendet(true);		
-										}
-									}	
-									for(int m = 0; m < Spielbrett.GEWINNERFELDERWEISS.length; m++){
-										int [] koordGewinnerFeld = {Spielbrett.GEWINNERFELDERWEISS[m][0], Spielbrett.GEWINNERFELDERWEISS[m][1]};
-										if(clientModel.koordVergleich(ausgewähltesFeld.getKoordinaten(), koordGewinnerFeld)){
-											// weiss gewinnt -> TODO Carmen Gewinnermeldung inkl. Frage ob nochmals gespielt werden will (im Moment wird nur das Spielbrett zurückgesetzt)
-											spielbrett.setSpielBeendet(true);		
-										}
-									}
-									// Spiel zurücksetzen nach Gewinn // TODO Wie wird definiert, wer die schwarzen Türme hat?
-																			// Derjenige, der am wenigsten oft gespielt hat? Und wenn gleich dann zufällig?
-									if(spielbrett.istSpielBeendet()==true){
-										clientModel.spielZurücksetzen(spielbrett.getMöglicheFelder(), spielbrett.getFelder(), spielbrett.getTürme());	
-									}
-									
+									// Überprüfen, ob es einen Gewinner gibt (wenn ja, wird spielBeendet auf true gesetzt) 
+									spielbrett.setGewinner(clientModel.gewinnerDefinieren(ausgewähltesFeld));
 									// Zukünftiger gegnerischer Turm definieren und mögliche Felder anzeigen (sofern das Spiel nicht schon beendet ist)
-									if(spielbrett.istSpielBeendet()==false){
+									if(spielbrett.getGewinner()==null){
 										nächsterAktiverTurm=clientModel.setNächsterGegnerischerTurm(k, ausgewähltesFeld, nächsterAktiverTurm);							
 									}
 								}	
+							}
+							// Überprüfen, wer gewonnen hat und die entsprechende Meldung anzeigen
+							if(spielbrett.getGewinner() == Color.BLACK){
+								System.out.println("schwarz gewinnt"); 
+								// TODO Carmen Gewinnermeldung inkl. Frage ob nochmals gespielt werden will (im Moment wird nur das Spielbrett zurückgesetzt)
+							} else if(spielbrett.getGewinner() == Color.WHITE){
+								System.out.println("Weiss gewinnt"); 
+								// TODO Carmen Gewinnermeldung inkl. Frage ob nochmals gespielt werden will (im Moment wird nur das Spielbrett zurückgesetzt)
+							}
+							// Spiel zurücksetzen nach Gewinn 
+							if(spielbrett.getGewinner()!=null){
+								clientModel.spielZurücksetzen(spielbrett.getMöglicheFelder(), spielbrett.getFelder(), spielbrett.getTürme());	
 							}
 							spielbrett.setAktiverTurmKoordinaten(nächsterAktiverTurm);							
 						}
