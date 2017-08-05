@@ -52,10 +52,9 @@ public class ClientModel {
 				public void run() {
 					try{
 						while(amLaufen == true){
-							SendenEmpfangen.Empfangen(client);
+							Spielbrett tmpSpielbrett = SendenEmpfangen.Empfangen(clientSocket);
 							logger.info("Daten empfangen");
-							SendenEmpfangen.Senden(client);
-							logger.info("Daten gesendet");
+							spielbrett = tmpSpielbrett;
 						}
 					}catch (Exception e){
 						logger.info(e.toString());
@@ -71,10 +70,15 @@ public class ClientModel {
 		}
 	}
 	
+	public void SpielbrettSenden(){
+		SendenEmpfangen.Senden(clientSocket, spielbrett);
+		logger.info("Daten gesendet");
+	}
+	
 	public void clientAnhalten(){
-		if(client != null){
+		if(clientSocket != null){
 			try{
-				client.close();
+				clientSocket.close();
 				logger.info("client Thread beendet");
 			} catch (Exception e){
 				logger.info(e.toString());

@@ -12,10 +12,9 @@ import kamisado.client.ClientView;
 public class SendenEmpfangen {
 	
 	private static final Logger logger = Logger.getLogger("");
-	private static ClientModel model;
 	private static Spielbrett spielbrett;
 	
-	public static void Senden(Socket clientSocket){
+	public static void Senden(Socket clientSocket, Spielbrett spielbrett){
 		ObjectOutputStream senden;
 		try{
 			//Stream erstellen
@@ -23,17 +22,15 @@ public class SendenEmpfangen {
 			logger.info("OutputStream erstellt");
 
 			//neueKoordinaten an Client senden
-			spielbrett = model.getSpielbrett();
 			senden.writeObject(spielbrett);
 			senden.flush();
 			logger.info("Neue Koordinaten gesendet");
-			spielbrett = null;
 		} catch (Exception e){
 			logger.info(e.toString());
 		}
 	}
 	
-	public static void Empfangen(Socket clientSocket){
+	public static Spielbrett Empfangen(Socket clientSocket){
 		ObjectInputStream empfangen;
 		try{
 			empfangen = new ObjectInputStream(clientSocket.getInputStream());
@@ -45,17 +42,19 @@ public class SendenEmpfangen {
 			
 			if(spielbrett != in){
 				spielbrett = in;
-				model.setSpielbrett(spielbrett);
 				logger.info("Koordinaten ersetzt");
 				}
 				//else do nothing
-				
-			spielbrett = null;
+			
 		} catch (Exception e){
 			logger.info(e.toString());
 		}
+		return spielbrett;
 	}
 	
+	public static void setSpielbrett(Spielbrett spielfeld){
+		spielbrett = spielfeld;
+	}
 	
 
 }
