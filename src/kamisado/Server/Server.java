@@ -1,7 +1,5 @@
 package kamisado.Server;
 
-import kamisado.commonClasses.SendenEmpfangen;
-
 public class Server {
 
 	public static void main(String[] args) {

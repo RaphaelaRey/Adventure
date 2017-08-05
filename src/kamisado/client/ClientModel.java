@@ -9,6 +9,7 @@ import java.util.logging.Logger;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.StrokeType;
 import kamisado.commonClasses.Spielbrett;
+import kamisado.Server.ServerModel;
 import kamisado.archiv.Model;
 import kamisado.commonClasses.Feld;
 import kamisado.commonClasses.SendenEmpfangen;
@@ -18,7 +19,7 @@ public class ClientModel {
 	
 	protected Spielbrett spielbrett;
 
-	protected Socket client;
+	protected Socket clientSocket;
 	private boolean amLaufen = true;
 	private String hostName;
 	private int port = 444;
@@ -42,7 +43,7 @@ public class ClientModel {
 			this.hostName= InetAddress.getLocalHost().getHostName();
 			
 			//Verbindung mit Server herstellen
-			this.client = new Socket(hostName, port);
+			this.clientSocket = new Socket(hostName, port);
 			logger.info(hostName + " über Port" + port + " verbunden");
 			
 			//Thread erstellen
@@ -52,6 +53,9 @@ public class ClientModel {
 					try{
 						while(amLaufen == true){
 							SendenEmpfangen.Empfangen(client);
+							logger.info("Daten empfangen");
+							SendenEmpfangen.Senden(client);
+							logger.info("Daten gesendet");
 						}
 					}catch (Exception e){
 						logger.info(e.toString());
@@ -60,7 +64,7 @@ public class ClientModel {
 			}; 
 			Thread b = new Thread(a);
 			b.start();
-			logger.info("thread gestartet");
+			logger.info("Thread gestartet");
 		 
 		}catch (Exception e){
 			logger.info(e.toString());
@@ -104,8 +108,12 @@ public class ClientModel {
 	/** Spielbrett initialisieren
 	 * @param spielbrett
 	 */
-	public void setSpielbrett(Spielbrett spielbrett){
-		this.spielbrett = spielbrett;
+	public void setSpielbrett(Spielbrett Spielbrett){
+		this.spielbrett = Spielbrett;
+	}
+	
+	public Spielbrett getSpielbrett (){
+		return this.spielbrett;
 	}
 	
 	/** Turmfarbe (schwarz/weiss) basierend auf dessen Koordinaten herausfinden
@@ -218,7 +226,7 @@ public class ClientModel {
 					Spielbrett.setBlockadenVerursacher(Color.BLACK);
 					Spielbrett.setBlockadenCounter(Spielbrett.getBlockadenCounter()+1);
 					break;
-				} //TODO webvalidator property change listener
+				} 
 			}
 		}										
 		return nächsterAktiverTurm;

@@ -5,51 +5,52 @@ import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.util.logging.Logger;
 
+import kamisado.Server.ServerModel;
+import kamisado.client.ClientModel;
+import kamisado.client.ClientView;
+
 public class SendenEmpfangen {
 	
-	private static Turm[] türme;
 	private static final Logger logger = Logger.getLogger("");
-	
-	
-	static ObjectOutputStream senden;
-	static ObjectInputStream empfangen;
-	
-	
+	private static ClientModel model;
+	private static Spielbrett spielbrett;
 	
 	public static void Senden(Socket clientSocket){
-		
+		ObjectOutputStream senden;
 		try{
 			//Stream erstellen
 			senden = new ObjectOutputStream(clientSocket.getOutputStream());
 			logger.info("OutputStream erstellt");
 
 			//neueKoordinaten an Client senden
-			türme = kamisado.commonClasses.Spielbrett.getTürme();
-			senden.writeObject(türme);
+			spielbrett = model.getSpielbrett();
+			senden.writeObject(spielbrett);
 			senden.flush();
 			logger.info("Neue Koordinaten gesendet");
+			spielbrett = null;
 		} catch (Exception e){
 			logger.info(e.toString());
 		}
 	}
 	
 	public static void Empfangen(Socket clientSocket){
-		
+		ObjectInputStream empfangen;
 		try{
 			empfangen = new ObjectInputStream(clientSocket.getInputStream());
 			logger.info("Streams erstellt");
 		
 			//neueKoordinaten von Client empfangen
-			Turm[] in = (Turm[]) empfangen.readObject();
-			türme= in;
+			Spielbrett in = (Spielbrett) empfangen.readObject();
 			logger.info("Neue Koordinaten erhalten");
 			
-			if(türme != in){
-				kamisado.commonClasses.Spielbrett.setTürme(türme);
+			if(spielbrett != in){
+				spielbrett = in;
+				model.setSpielbrett(spielbrett);
 				logger.info("Koordinaten ersetzt");
 				}
 				//else do nothing
-			
+				
+			spielbrett = null;
 		} catch (Exception e){
 			logger.info(e.toString());
 		}
