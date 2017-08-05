@@ -49,7 +49,8 @@ public class ClientController {
 							for (int k = 0; k < Spielbrett.getTürme().length; k++){
 								if(clientModel.koordVergleich(Spielbrett.getTürme()[k].getKoordinaten(), spielbrett.getAktiverTurmKoordinaten())){ //aktiver Turm herausfinden
 									clientModel.turmBewegen(ausgewähltesFeld, k);
-									// Überprüfen, ob es einen Gewinner gibt (wenn ja, wird spielBeendet auf true gesetzt) 
+									Spielbrett.setBlockadenCounter(0); // TODO am richtigen ort??
+									// Überprüfen, ob es einen Gewinner gibt 
 									spielbrett.setGewinner(clientModel.gewinnerDefinieren(ausgewähltesFeld));
 									// Zukünftiger gegnerischer Turm definieren und mögliche Felder anzeigen (sofern das Spiel nicht schon beendet ist)
 									if(spielbrett.getGewinner()==null){
@@ -57,10 +58,14 @@ public class ClientController {
 									}
 								}	
 							}
-							// Zukünftiger gegnerischer Turm definieren im Fall einer Blockade 			TODO DOPPELBLOCKADE? -> counter?
+							// Zukünftiger gegnerischer Turm definieren im Fall einer Blockade 			TODO völliger Stillstand? -> counter?
 							if(spielbrett.getGewinner()==null && Spielbrett.isBlockiert()==true){
-								clientModel.setNächsterGegnerischerTurmBlockade(nächsterAktiverTurm);	 // TODO Meldung
-							} 				
+								nächsterAktiverTurm=clientModel.setNächsterGegnerischerTurmBlockade(nächsterAktiverTurm);	 // TODO Meldung
+							} 			
+							// Völliger Stillstand				// TODO Testen
+							if(Spielbrett.getBlockadenCounter()==2){
+								System.out.println("Totale Blockade");
+							}
 							
 							// Überprüfen, wer gewonnen hat und die entsprechende Meldung anzeigen
 							if(spielbrett.getGewinner() == Color.BLACK){

@@ -9,6 +9,7 @@ import java.util.logging.Logger;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.StrokeType;
 import kamisado.commonClasses.Spielbrett;
+import kamisado.archiv.Model;
 import kamisado.commonClasses.Feld;
 import kamisado.commonClasses.SendenEmpfangen;
 import kamisado.commonClasses.Turm;
@@ -91,7 +92,7 @@ public class ClientModel {
 		return false;
 	}
 	
-	/** Breite aller Türme zurücksetzen
+	/** Randbreite aller Türme zurücksetzen
 	 * 
 	 */
 	public void turmStrokeWidthZurücksetzen(){
@@ -180,44 +181,48 @@ public class ClientModel {
 				}
 			}	
 		}
-		
 		return nächsterAktiverTurm;
 	}
 		
-	// Nächster gegnerischer turm definieren im Fall einer Blockade
+	/** Nächster gegnerischer Turm definieren im Fall einer Blockade
+	 * @param aktueller nächsterAktiverTurm
+	 * @return Koordinaten des nächsten gegnerischen Turms
+	 */
 	public int[] setNächsterGegnerischerTurmBlockade(int[]nächsterAktiverTurm){
 		if(getTurmFarbe(nächsterAktiverTurm, Spielbrett.getTürme()) == Color.BLACK){
 			for (int m = 0; m < Spielbrett.getTürme().length; m++){
 				Spielbrett.getTürme()[m].setStrokeWidth(spielbrett.STROKEWIDTHTÜRMESTANDARD);
 				Feld aktivesFeld = spielbrett.getFelder()[nächsterAktiverTurm[0]][nächsterAktiverTurm[1]];
-					if (Spielbrett.getTürme()[m].getStroke()==Color.WHITE
-							&& (Spielbrett.getTürme()[m].getFill()==aktivesFeld.getFill())){
-						nächsterAktiverTurm = Spielbrett.getTürme()[m].getKoordinaten(); 
-						möglicheFelderAnzeigen(Spielbrett.getTürme()[m].getKoordinaten());
-						Spielbrett.getTürme()[m].setStrokeWidth(spielbrett.STROKEWIDTHAUSGEWÄHLTERTURM);
-						Spielbrett.setBlockiert(false);
-						break;
-					}
+				if (Spielbrett.getTürme()[m].getStroke()==Color.WHITE
+						&& (Spielbrett.getTürme()[m].getFill()==aktivesFeld.getFill())){
+					nächsterAktiverTurm = Spielbrett.getTürme()[m].getKoordinaten(); 
+					möglicheFelderAnzeigen(Spielbrett.getTürme()[m].getKoordinaten());
+					Spielbrett.getTürme()[m].setStrokeWidth(spielbrett.STROKEWIDTHAUSGEWÄHLTERTURM);
+					Spielbrett.setBlockiert(false);
+					Spielbrett.setBlockadenVerursacher(Color.WHITE); // der Spieler, der als letzter gefahren ist ist der Verursacher
+					Spielbrett.setBlockadenCounter(Spielbrett.getBlockadenCounter()+1);
+					break;
+				}
 			}
 		} 
 		if(getTurmFarbe(nächsterAktiverTurm, Spielbrett.getTürme()) == Color.WHITE
 				&& Spielbrett.isBlockiert()==true){
 			for (int m = 0; m < Spielbrett.getTürme().length; m++){
 				Spielbrett.getTürme()[m].setStrokeWidth(spielbrett.STROKEWIDTHTÜRMESTANDARD);
-					if (Spielbrett.getTürme()[m].getStroke()==Color.BLACK
-							&& Spielbrett.getTürme()[m].getFill()==spielbrett.getFelder()[nächsterAktiverTurm[0]][nächsterAktiverTurm[1]].getFill()){
-						nächsterAktiverTurm = Spielbrett.getTürme()[m].getKoordinaten(); 
-						möglicheFelderAnzeigen(Spielbrett.getTürme()[m].getKoordinaten());
-						Spielbrett.getTürme()[m].setStrokeWidth(spielbrett.STROKEWIDTHAUSGEWÄHLTERTURM);
-						Spielbrett.setBlockiert(false);
-						break;
-					}
+				if (Spielbrett.getTürme()[m].getStroke()==Color.BLACK
+						&& Spielbrett.getTürme()[m].getFill()==spielbrett.getFelder()[nächsterAktiverTurm[0]][nächsterAktiverTurm[1]].getFill()){
+					nächsterAktiverTurm = Spielbrett.getTürme()[m].getKoordinaten(); 
+					möglicheFelderAnzeigen(Spielbrett.getTürme()[m].getKoordinaten());
+					Spielbrett.getTürme()[m].setStrokeWidth(spielbrett.STROKEWIDTHAUSGEWÄHLTERTURM);
+					Spielbrett.setBlockiert(false);
+					Spielbrett.setBlockadenVerursacher(Color.BLACK);
+					Spielbrett.setBlockadenCounter(Spielbrett.getBlockadenCounter()+1);
+					break;
+				} //TODO webvalidator property change listener
 			}
 		}										
 		return nächsterAktiverTurm;
 	}
-
-	
 	
 	/** Gewinner definieren
 	 * @param ausgewähltesFeld
@@ -238,7 +243,6 @@ public class ClientModel {
 		}
 		return null;
 	}
-	
 	
 	/** Ganzes Spielbrett zurücksetzen, nachdem jemand gewonnen hat, was folgendes beinhaltet:
 	 * - mögliche Felder leeren - Gewinner löschen - turmBesetzt zurücksetzen 
