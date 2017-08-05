@@ -5,7 +5,6 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.logging.Logger;
 
-import kamisado.commonClasses.SendenEmpfangen;
 
 public class ServerModel extends Thread{
 	
@@ -37,11 +36,6 @@ public class ServerModel extends Thread{
 				logger.info(clientSocket.getInetAddress().getHostName() + " verbunden");
 				
 				client = new Client(ServerModel.this, clientSocket);
-				
-				SendenEmpfangen.Empfangen(clientSocket);
-				logger.info("Daten Empfangen von Client ");
-				
-				client.senden();
 				
 				
 			} catch (Exception e){

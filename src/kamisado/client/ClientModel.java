@@ -52,10 +52,9 @@ public class ClientModel {
 				public void run() {
 					try{
 						while(amLaufen == true){
-							SendenEmpfangen.Empfangen(clientSocket);
+							Spielbrett tmpSpielbrett = SendenEmpfangen.Empfangen(clientSocket);
 							logger.info("Daten empfangen");
-							SendenEmpfangen.Senden(clientSocket);
-							logger.info("Daten gesendet");
+							spielbrett = tmpSpielbrett;
 						}
 					}catch (Exception e){
 						logger.info(e.toString());
@@ -69,6 +68,11 @@ public class ClientModel {
 		}catch (Exception e){
 			logger.info(e.toString());
 		}
+	}
+	
+	public void SpielbrettSenden(){
+		SendenEmpfangen.Senden(clientSocket, spielbrett);
+		logger.info("Daten gesendet");
 	}
 	
 	public void clientAnhalten(){

@@ -6,6 +6,7 @@ import java.util.logging.Logger;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import kamisado.commonClasses.SendenEmpfangen;
+import kamisado.commonClasses.Spielbrett;
 
 public class Client {
 	
@@ -19,21 +20,26 @@ public class Client {
 		this.clientSocket = socket;
 		this.clients.add(Client.this);
 		logger.info("Neuer Client zu Liste hinzugefügt " + clientSocket);
-
 		
+		Runnable r = new Runnable() {
+			@Override
+			public void run() {
+				while(true) {
+					Spielbrett tmpSpielbrett = SendenEmpfangen.Empfangen(clientSocket);
+					logger.info("Daten Empfangen von Client ");
+							
+					for (Client c : clients) {
+						SendenEmpfangen.Senden(c.clientSocket, tmpSpielbrett);
+						logger.info("neue Daten gesendet an" + clientSocket.getInetAddress().getHostName());
+					}
+				}
+			}
+		};	
+		Thread t = new Thread(r);
+		t.start();
 				
 		
-					
-				
 		
-		
-	}
-	
-	public void senden(){
-		for (Client c : clients) {
-			SendenEmpfangen.Senden(clientSocket);
-			logger.info("neue Daten gesendet an" + clientSocket.getInetAddress().getHostName());
-		}
 	}
         
 }
