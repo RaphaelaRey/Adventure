@@ -15,7 +15,7 @@ import kamisado.client.ClientModel;
 
 public class Spielbrett {
 	
-	private ClientModel clientModel; 
+	private ClientModel clientModel;
 		
 	private static boolean turmBewegt = false; // wenn diese Variable true ist, wurde bereits ein Turm bewegt -> nicht mehr der erste Spielzug
 	private static boolean blockade = false;

@@ -218,7 +218,7 @@ public class ClientModel {
 					Spielbrett.setBlockadenVerursacher(Color.BLACK);
 					Spielbrett.setBlockadenCounter(Spielbrett.getBlockadenCounter()+1);
 					break;
-				} //TODO webvalidator property change listener
+				} 
 			}
 		}										
 		return nächsterAktiverTurm;

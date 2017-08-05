@@ -58,9 +58,14 @@ public class ClientController {
 									}
 								}	 
 							}
-							// Zukünftiger gegnerischer Turm definieren im Fall einer Blockade 			TODO völliger Stillstand? -> counter?
+							// Zukünftiger gegnerischer Turm definieren im Fall einer Blockade 			
 							if(spielbrett.getGewinner()==null && Spielbrett.isBlockiert()==true){
-								nächsterAktiverTurm=clientModel.setNächsterGegnerischerTurmBlockade(nächsterAktiverTurm);	 // TODO Meldung
+								nächsterAktiverTurm=clientModel.setNächsterGegnerischerTurmBlockade(nächsterAktiverTurm);	 
+								if(Spielbrett.getBlockadenVerursacher()==Color.BLACK){
+									System.out.println("Schwarz hat Blockade verursacht, schwarz ist wieder am Zug"); // TODO Carmen Blockadenmeldung
+								} else if (Spielbrett.getBlockadenVerursacher()==Color.WHITE){
+									System.out.println("Weiss hat Blockade verursacht, weiss ist wieder am Zug");// TODO Carmen Blockadenmeldung
+								}
 							} 			
 							// Völliger Stillstand				// TODO Testen
 							if(Spielbrett.getBlockadenCounter()==2){
@@ -75,10 +80,12 @@ public class ClientController {
 								System.out.println("Weiss gewinnt"); 
 								// TODO Carmen Gewinnermeldung inkl. Frage ob nochmals gespielt werden will (im Moment wird nur das Spielbrett zurückgesetzt)
 							}
+							
 							// Spiel zurücksetzen nach Gewinn 
 							if(spielbrett.getGewinner()!=null){
 								clientModel.spielZurücksetzen(spielbrett.getMöglicheFelder(), spielbrett.getFelder(), Spielbrett.getTürme());	
 							}
+							// Koordinaten des nächsten aktiven Turms ausserhalb der for-Schleife definieren
 							spielbrett.setAktiverTurmKoordinaten(nächsterAktiverTurm);							
 						}
 					}					
