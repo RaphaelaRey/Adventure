@@ -19,7 +19,7 @@ public class ClientController {
 	public ClientController(ClientModel clientModel, ClientView view) {
 		this.clientModel = clientModel;
 		this.view = view;
-		spielbrett = view.spielbrett;
+		spielbrett = view.spielbrett; 
 		
 		// Schwarze Türme für Spielbeginn aktivieren
 		for (int i = 0; i < Spielbrett.getTürme().length; i++){				
