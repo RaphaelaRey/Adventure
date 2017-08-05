@@ -5,6 +5,10 @@ import java.util.ResourceBundle;
 
 import kamisado.ServiceLocator;
 
+/**
+ *Copyright 2015, FHNW, Prof. Dr. Brad Richards All rights reserved.
+ * @author Bradley Richards
+ */
 public class Translator {
 	
 	private ServiceLocator sl = ServiceLocator.getServiceLocator();

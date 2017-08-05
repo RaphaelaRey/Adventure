@@ -4,6 +4,10 @@ import java.util.Locale;
 
 import kamisado.commonClasses.Translator;
 
+/**
+ *Copyright 2015, FHNW, Prof. Dr. Brad Richards All rights reserved.
+ * @author Bradley Richards
+ */
 public class ServiceLocator {
 	
 	private static ServiceLocator serviceLocator;
