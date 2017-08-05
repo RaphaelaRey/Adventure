@@ -56,7 +56,7 @@ public class ClientController {
 									if(spielbrett.getGewinner()==null){
 										nächsterAktiverTurm=clientModel.setNächsterGegnerischerTurm(k, ausgewähltesFeld, nächsterAktiverTurm);							
 									}
-								}	
+								}	 
 							}
 							// Zukünftiger gegnerischer Turm definieren im Fall einer Blockade 			TODO völliger Stillstand? -> counter?
 							if(spielbrett.getGewinner()==null && Spielbrett.isBlockiert()==true){

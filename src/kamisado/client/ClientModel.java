@@ -203,7 +203,7 @@ public class ClientModel {
 					Spielbrett.setBlockadenCounter(Spielbrett.getBlockadenCounter()+1);
 					break;
 				}
-			}
+			} 
 		} 
 		if(getTurmFarbe(nächsterAktiverTurm, Spielbrett.getTürme()) == Color.WHITE
 				&& Spielbrett.isBlockiert()==true){
