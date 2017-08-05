@@ -1,16 +1,16 @@
 package kamisado.Server;
 
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
+
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.logging.Logger;
 
-import kamisado.client.ClientModel;
+import kamisado.commonClasses.SendenEmpfangen;
 
 public class ServerModel extends Thread{
 	
 	private ServerSocket server;
+	private Client client;
 	private boolean amLaufen = true;
 	private final Logger logger = Logger.getLogger("");
 	
@@ -36,8 +36,14 @@ public class ServerModel extends Thread{
 				Socket clientSocket = server.accept();
 				logger.info(clientSocket.getInetAddress().getHostName() + " verbunden");
 				
-				Client neuerClient = new Client(ServerModel.this, clientSocket);
-						
+				client = new Client(ServerModel.this, clientSocket);
+				
+				SendenEmpfangen.Empfangen(clientSocket);
+				logger.info("Daten Empfangen von Client ");
+				
+				client.senden();
+				
+				
 			} catch (Exception e){
 				logger.info(e.toString());
 			}

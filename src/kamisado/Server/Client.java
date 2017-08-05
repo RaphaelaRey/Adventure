@@ -9,29 +9,31 @@ import kamisado.commonClasses.SendenEmpfangen;
 
 public class Client {
 	
-	private Socket ClientSocket;
+	private Socket clientSocket;
 	private ServerModel model;
 	protected final static ObservableList<Client> clients = FXCollections.observableArrayList();
 	private final Logger logger = Logger.getLogger("");
 
 	protected Client(ServerModel model, Socket socket) {
 		this.model = model;
-		this.ClientSocket = socket;
+		this.clientSocket = socket;
 		this.clients.add(Client.this);
-		logger.info("Neuer Client zu Liste hinzugefügt " + ClientSocket);
+		logger.info("Neuer Client zu Liste hinzugefügt " + clientSocket);
 
 		
 				
-		SendenEmpfangen.Empfangen(ClientSocket);
-		logger.info("Daten Empfangen von Client ");
+		
 					
-		for (Client c : clients) {
-			SendenEmpfangen.Senden(ClientSocket);
-			logger.info("neue Daten gesendet an" + ClientSocket.getInetAddress().getHostName());
-					}
 				
 		
 		
+	}
+	
+	public void senden(){
+		for (Client c : clients) {
+			SendenEmpfangen.Senden(clientSocket);
+			logger.info("neue Daten gesendet an" + clientSocket.getInetAddress().getHostName());
+		}
 	}
         
 }

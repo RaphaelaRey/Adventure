@@ -52,9 +52,9 @@ public class ClientModel {
 				public void run() {
 					try{
 						while(amLaufen == true){
-							SendenEmpfangen.Empfangen(client);
+							SendenEmpfangen.Empfangen(clientSocket);
 							logger.info("Daten empfangen");
-							SendenEmpfangen.Senden(client);
+							SendenEmpfangen.Senden(clientSocket);
 							logger.info("Daten gesendet");
 						}
 					}catch (Exception e){
@@ -72,9 +72,9 @@ public class ClientModel {
 	}
 	
 	public void clientAnhalten(){
-		if(client != null){
+		if(clientSocket != null){
 			try{
-				client.close();
+				clientSocket.close();
 				logger.info("client Thread beendet");
 			} catch (Exception e){
 				logger.info(e.toString());
