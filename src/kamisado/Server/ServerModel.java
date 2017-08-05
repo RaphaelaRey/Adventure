@@ -6,14 +6,13 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.logging.Logger;
 
+import kamisado.client.ClientModel;
+
 public class ServerModel extends Thread{
 	
 	private ServerSocket server;
 	private boolean amLaufen = true;
 	private final Logger logger = Logger.getLogger("");
-	
-	ObjectOutputStream anClient;
-	ObjectInputStream vonClient;
 	
 	
 	public ServerModel (int port)  {

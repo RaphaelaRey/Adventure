@@ -18,24 +18,20 @@ public class Client {
 		this.model = model;
 		this.ClientSocket = socket;
 		this.clients.add(Client.this);
-		logger.info("Neuer Client zu Liste hinzugefügt");
+		logger.info("Neuer Client zu Liste hinzugefügt " + ClientSocket);
 
-		// Create thread to read incoming messages
-		Runnable r = new Runnable() {
-			@Override
-			public void run() {
-				while(true) {
-					SendenEmpfangen.Empfangen(ClientSocket);
+		
+				
+		SendenEmpfangen.Empfangen(ClientSocket);
+		logger.info("Daten Empfangen von Client ");
 					
-					for (Client c : clients) {
-						SendenEmpfangen.Senden(ClientSocket);
-						logger.info("neue Daten gesendet an" + ClientSocket.getInetAddress().getHostName());
+		for (Client c : clients) {
+			SendenEmpfangen.Senden(ClientSocket);
+			logger.info("neue Daten gesendet an" + ClientSocket.getInetAddress().getHostName());
 					}
-				}
-			}
-		};
-		Thread t = new Thread(r);
-		t.start();
+				
+		
+		
 	}
         
 }
