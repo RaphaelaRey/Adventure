@@ -37,7 +37,7 @@ public class AnmeldefensterController {
 				String apw=anmeldeView.anmeldenPwtxt.getText();
 				
 				try {
-					FileReader fr = new FileReader("registrierungen.txt");
+					FileReader fr = new FileReader("src/kamisado/registrierungen.txt");
 					BufferedReader reader = new BufferedReader(fr);
 					String zeile;
 					Label label;
