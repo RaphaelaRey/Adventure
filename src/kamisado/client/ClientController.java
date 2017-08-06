@@ -90,7 +90,7 @@ public class ClientController {
 									// TODO Carmen Gewinnermeldung bei völligem Stillstand
 								}
 							}
-							
+							 
 							// Überprüfen, wer gewonnen hat und die entsprechende Meldung anzeigen
 							if(spielbrett.getGewinner() == Color.BLACK){
 								System.out.println("schwarz gewinnt"); 
