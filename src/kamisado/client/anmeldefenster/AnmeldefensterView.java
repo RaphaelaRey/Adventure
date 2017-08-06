@@ -18,6 +18,7 @@ import javafx.stage.Stage;
 public class AnmeldefensterView {
 	
 	private Stage stage;
+	private AnmeldefensterController anmeldeController;
 	
 	public Label einstellungSprache;
 	public Label login;
@@ -29,8 +30,9 @@ public class AnmeldefensterView {
 	public TextField registrierenPwtxt;
 	public Button btnRegistrieren;
 	
-	public AnmeldefensterView(Stage primaryStage) {
+	public AnmeldefensterView(Stage primaryStage, AnmeldefensterController anmeldeController) {
 		this.stage=primaryStage;
+		this.anmeldeController= anmeldeController;
 		ServiceLocator sl=ServiceLocator.getServiceLocator();
 		sl.setTranslator(new Translator("de"));
 		Translator t = sl.getTranslator();

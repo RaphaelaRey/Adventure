@@ -3,6 +3,7 @@ package kamisado.client;
 import java.util.Locale; 
 
 import kamisado.ServiceLocator;
+import kamisado.client.anmeldefenster.AnmeldefensterController;
 import kamisado.client.anmeldefenster.AnmeldefensterView;
 import kamisado.commonClasses.Translator;
 import javafx.scene.Scene;
@@ -22,6 +23,7 @@ public class ClientView {
 	private Stage stage;
 	protected Spielbrett spielbrett;
 	private AnmeldefensterView anmeldeView;
+	private AnmeldefensterController anmeldeController;
 			
 	protected MenuBar menuBar;
 	protected Menu menuDatei;
@@ -90,7 +92,8 @@ public class ClientView {
 //        stage.initModality(Modality.WINDOW_MODAL);
         
         Stage neueStage = new Stage();
-        AnmeldefensterView neueView = new AnmeldefensterView(neueStage);
+        AnmeldefensterView neueView = new AnmeldefensterView(neueStage, anmeldeController);
+        AnmeldefensterController anmeldeController = new AnmeldefensterController(neueView, this);
         neueView.start();
         
 	}
