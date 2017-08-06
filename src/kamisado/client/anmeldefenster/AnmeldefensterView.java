@@ -39,6 +39,7 @@ public class AnmeldefensterView {
 	public Label login;
 	public TextField anmeldenNametxt;
 	public TextField anmeldenPwtxt;
+	public TextField anmeldenIPtxt;
 	public Button btnAnmelden;
 	public Label neuregistrierenLabel;
 	public TextField registrierenNametxt;
@@ -94,8 +95,9 @@ public class AnmeldefensterView {
 		HBox hbox = new HBox();
 		anmeldenNametxt=new TextField(t.getString("Benutzername"));
 		anmeldenPwtxt = new TextField(t.getString("Passwort"));
+		anmeldenIPtxt = new TextField(t.getString("IP"));
 		btnAnmelden = new Button(t.getString("ButtonAnmelden"));
-		hbox.getChildren().addAll(anmeldenNametxt, anmeldenPwtxt, btnAnmelden);
+		hbox.getChildren().addAll(anmeldenNametxt, anmeldenPwtxt,anmeldenIPtxt, btnAnmelden);
 		
 		neuregistrierenLabel = new Label(t.getString("Neuregistrieren"));
 		
