@@ -1,10 +1,16 @@
 package kamisado.client;
 
-import javafx.event.EventHandler; 
+import javafx.event.EventHandler;
+import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
+import javafx.stage.Stage;
+import kamisado.ServiceLocator;
+import kamisado.client.infofenster.InfofensterController;
+import kamisado.client.infofenster.InfofensterView;
 import kamisado.commonClasses.Feld;
 import kamisado.commonClasses.Spielbrett;
+import kamisado.commonClasses.Translator;
 import kamisado.commonClasses.Turm;
 
 //TODO Wie wird definiert, wer die schwarzen Türme hat? Derjenige, der am wenigsten oft gespielt hat? Und wenn gleich dann zufällig?
@@ -20,6 +26,8 @@ public class ClientController {
 		this.clientModel = clientModel;
 		this.view = view;
 		spielbrett = view.spielbrett; 
+		ServiceLocator sl = ServiceLocator.getServiceLocator();
+		Translator transl = sl.getTranslator();
 		
 		// Schwarze Türme für Spielbeginn aktivieren
 		for (int i = 0; i < Spielbrett.getTürme().length; i++){				
@@ -44,6 +52,7 @@ public class ClientController {
 				ausgewähltesFeld.setOnMouseClicked(new EventHandler<MouseEvent>(){
 					@Override
 					public void handle(MouseEvent event){
+						Label label;
 						if (spielbrett.getMöglicheFelder().contains(ausgewähltesFeld.getKoordinaten())){
 							int[] nächsterAktiverTurm = new int[2];
 							for (int k = 0; k < Spielbrett.getTürme().length; k++){
@@ -76,6 +85,11 @@ public class ClientController {
 							if(spielbrett.getGewinner() == Color.BLACK){
 								System.out.println("schwarz gewinnt"); 
 								// TODO Carmen Gewinnermeldung inkl. Frage ob nochmals gespielt werden will (im Moment wird nur das Spielbrett zurückgesetzt)
+								Stage stage = new Stage();
+								label=new Label(transl.getString("GewinnerMeldung"));
+								InfofensterView iview = new InfofensterView(stage,label);
+								InfofensterController icontroller = new InfofensterController(iview);
+								iview.start();
 							} else if(spielbrett.getGewinner() == Color.WHITE){
 								System.out.println("Weiss gewinnt"); 
 								// TODO Carmen Gewinnermeldung inkl. Frage ob nochmals gespielt werden will (im Moment wird nur das Spielbrett zurückgesetzt)
