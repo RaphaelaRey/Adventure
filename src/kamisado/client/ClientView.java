@@ -91,7 +91,6 @@ public class ClientView {
         AnmeldefensterView neueView = new AnmeldefensterView(neueStage, anmeldeController, clientModel);
         AnmeldefensterController anmeldeController = new AnmeldefensterController(neueView, this);
         neueView.start();
-        
 	}
 	
 	// Start und show Methoden

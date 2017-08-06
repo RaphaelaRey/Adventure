@@ -148,7 +148,6 @@ public class AnmeldefensterView {
 		anmeldenIPtxt.setText(t.getString("IP"));
 		
 		regeln.setText(t.getString("Regeln"));
-		
 	}
 
 	public void start() {
