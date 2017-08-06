@@ -151,6 +151,18 @@ public class AnmeldefensterController {
 			}
 		});
 		
+		anmeldeView.menuHilfeRegeln.setOnAction(new EventHandler<ActionEvent>(){
+			public void handle(ActionEvent event) {
+				Label label;
+				Stage stage = new Stage();
+				label=new Label(t.getString("Regeln"));
+				InfofensterView iview = new InfofensterView(stage,label);
+				InfofensterController icontroller = new InfofensterController(iview);
+				iview.start();				
+			}
+			
+		});
+		
 		
 		
 	}
