@@ -16,17 +16,17 @@ import kamisado.client.ClientView;
 public class SendenEmpfangen {
 	
 	private static transient final Logger logger = Logger.getLogger("");
-	private static Spielbrett spielbrett;
+	private static Turm[] türme;
 	
-	public static void Senden(Socket clientSocket, Spielbrett spielbrett){
+	public static void Senden(Socket clientSocket, Turm[] Türme){
 		ObjectOutputStream senden;
 		try{
 			//Stream erstellen
 			senden = new ObjectOutputStream(clientSocket.getOutputStream());
 			logger.info("OutputStream erstellt");
-
+			
 			//neueKoordinaten an Client senden
-			senden.writeObject(spielbrett);
+			senden.writeObject(Türme);
 			senden.flush();
 			logger.info("Neue Koordinaten gesendet");
 		} catch (Exception e){
@@ -34,18 +34,18 @@ public class SendenEmpfangen {
 		}
 	}
 	
-	public static Spielbrett Empfangen(Socket clientSocket){
+	public static Turm[] Empfangen(Socket clientSocket){
 		ObjectInputStream empfangen;
 		try{
 			empfangen = new ObjectInputStream(clientSocket.getInputStream());
 			logger.info("Streams erstellt");
 		
 			//neueKoordinaten von Client empfangen
-			Spielbrett in = (Spielbrett) empfangen.readObject();
+			Turm[] in = (Turm[]) empfangen.readObject();
 			logger.info("Neue Koordinaten erhalten");
 			
-			if(spielbrett != in){
-				spielbrett = in;
+			if(türme != in){
+				türme = in;
 				logger.info("Koordinaten ersetzt");
 				}
 				//else do nothing
@@ -53,11 +53,11 @@ public class SendenEmpfangen {
 		} catch (Exception e){
 			logger.info(e.toString());
 		}
-		return spielbrett;
+		return türme;
 	}
 	
-	public static void setSpielbrett(Spielbrett spielfeld){
-		spielbrett = spielfeld;
+	public static void setTürme(Turm[] Türme){
+		türme = Türme;
 	}
 	
 

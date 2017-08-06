@@ -6,7 +6,7 @@ import java.util.logging.Logger;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import kamisado.commonClasses.SendenEmpfangen;
-import kamisado.commonClasses.Spielbrett;
+import kamisado.commonClasses.Turm;
 
 /**
  * @author Tobias Deprato
@@ -29,11 +29,11 @@ public class Client {
 			@Override
 			public void run() {
 				while(true) {
-					Spielbrett tmpSpielbrett = SendenEmpfangen.Empfangen(clientSocket);
+					Turm[] tmpTürme = SendenEmpfangen.Empfangen(clientSocket);
 					logger.info("Daten Empfangen von Client ");
 							
 					for (Client c : clients) {
-						SendenEmpfangen.Senden(c.clientSocket, tmpSpielbrett);
+						SendenEmpfangen.Senden(c.clientSocket, tmpTürme);
 						logger.info("neue Daten gesendet an" + clientSocket.getInetAddress().getHostName());
 					}
 				}

@@ -1,6 +1,5 @@
 package kamisado.commonClasses;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 
 import javafx.geometry.HPos;
@@ -14,9 +13,9 @@ import kamisado.client.ClientModel;
  * @author Raphaela Rey
  */
 
-public class Spielbrett implements Serializable{
+public class Spielbrett{
 	
-	private transient ClientModel clientModel;
+	private ClientModel clientModel;
 		
 	private static boolean turmBewegt = false; // wenn diese Variable true ist, wurde bereits ein Turm bewegt -> nicht mehr der erste Spielzug
 	private static boolean blockade = false;
@@ -60,7 +59,7 @@ public class Spielbrett implements Serializable{
 	private ArrayList<int[]> möglicheFelder = new ArrayList<int[]>();
     
 	// Gridpane für Spielbrett erstellen
-	private transient GridPane gridpane = new GridPane(); 
+	private GridPane gridpane = new GridPane(); 
     
 	// Konstruktor: Felder und Türme erstellen, einfärben und der Gridpane hinzufügen
     public Spielbrett(ClientModel clientModel) {
@@ -153,8 +152,8 @@ public class Spielbrett implements Serializable{
 	public static Turm [] getTürme() {
 		return türme;
 	}
-	public static void setTürme(Turm [] neuTürme) {
-		türme = neuTürme;
+	public static void setTürme(Turm [] Türme) {
+		türme = Türme;
 	}
 
 	public Turm[] getSchwarzeTürme() {
