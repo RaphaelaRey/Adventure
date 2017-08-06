@@ -40,6 +40,7 @@ public class ClientController {
 						t.setStrokeWidth(spielbrett.STROKEWIDTHAUSGEWÄHLTERTURM);
 						spielbrett.setAktiverTurmKoordinaten(t.getKoordinaten());
 						clientModel.möglicheFelderAnzeigen(spielbrett.getAktiverTurmKoordinaten());
+						clientModel.SpielbrettSenden();
 					}				
   				}
 			});
@@ -85,11 +86,11 @@ public class ClientController {
 							if(spielbrett.getGewinner() == Color.BLACK){
 								System.out.println("schwarz gewinnt"); 
 								// TODO Carmen Gewinnermeldung inkl. Frage ob nochmals gespielt werden will (im Moment wird nur das Spielbrett zurückgesetzt)
-								Stage stage = new Stage();
-								label=new Label(transl.getString("GewinnerMeldung"));
-								InfofensterView iview = new InfofensterView(stage,label);
-								InfofensterController icontroller = new InfofensterController(iview);
-								iview.start();
+//								Stage stage = new Stage();
+//								label=new Label(transl.getString("GewinnerMeldung"));
+//								InfofensterView iview = new InfofensterView(stage,label);
+//								InfofensterController icontroller = new InfofensterController(iview);
+//								iview.start();
 							} else if(spielbrett.getGewinner() == Color.WHITE){
 								System.out.println("Weiss gewinnt"); 
 								// TODO Carmen Gewinnermeldung inkl. Frage ob nochmals gespielt werden will (im Moment wird nur das Spielbrett zurückgesetzt)
@@ -100,7 +101,8 @@ public class ClientController {
 								clientModel.spielZurücksetzen(spielbrett.getMöglicheFelder(), spielbrett.getFelder(), Spielbrett.getTürme());	
 							}
 							// Koordinaten des nächsten aktiven Turms ausserhalb der for-Schleife definieren
-							spielbrett.setAktiverTurmKoordinaten(nächsterAktiverTurm);							
+							spielbrett.setAktiverTurmKoordinaten(nächsterAktiverTurm);	
+							clientModel.SpielbrettSenden();
 						}
 					}					
 				});				
