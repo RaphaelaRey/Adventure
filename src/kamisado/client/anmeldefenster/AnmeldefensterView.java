@@ -142,6 +142,7 @@ public class AnmeldefensterView {
 		menuDatei.setText(t.getString("MenuDatei"));
 		menuDateiAbmelden.setText(t.getString("MenuAbmelden"));
 		menuDateiLöschen.setText(t.getString("MenuLöschen"));
+		anmeldenIPtxt.setText(t.getString("IP"));
 		
 		regeln.setText(t.getString("Regeln"));
 		
