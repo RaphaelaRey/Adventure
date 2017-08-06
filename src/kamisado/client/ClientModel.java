@@ -129,6 +129,10 @@ public class ClientModel {
 		
 	}
 	
+	public String getIP(){
+		return this.ipAdresse;
+	}
+	
 	/** Überprüfen, ob zwei int-Arrays gleich sind
 	 * @param Koordinaten des ersten Arrays
 	 * @param Koordinaten des zweiten Arrays
