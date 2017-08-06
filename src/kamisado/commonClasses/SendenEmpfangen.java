@@ -15,7 +15,7 @@ import kamisado.client.ClientView;
 
 public class SendenEmpfangen {
 	
-	private static transient final Logger logger = Logger.getLogger("");
+	private static final Logger logger = Logger.getLogger("");
 	private static Turm[] türme;
 	
 	public static void Senden(Socket clientSocket, Turm[] Türme){
@@ -42,7 +42,7 @@ public class SendenEmpfangen {
 		
 			//neueKoordinaten von Client empfangen
 			Turm[] in = (Turm[]) empfangen.readObject();
-			logger.info("Neue Koordinaten erhalten");
+			logger.info("Neue Türme erhalten");
 			
 			if(türme != in){
 				türme = in;
