@@ -3,15 +3,14 @@ package kamisado.client;
 import java.util.Locale; 
 
 import kamisado.ServiceLocator;
+import kamisado.client.anmeldefenster.AnmeldefensterController;
 import kamisado.client.anmeldefenster.AnmeldefensterView;
 import kamisado.commonClasses.Translator;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
 import javafx.scene.layout.BorderPane;
-import javafx.stage.Modality;
 import javafx.stage.Stage;
 import kamisado.commonClasses.Spielbrett;
 
@@ -22,6 +21,7 @@ public class ClientView {
 	private Stage stage;
 	protected Spielbrett spielbrett;
 	private AnmeldefensterView anmeldeView;
+	private AnmeldefensterController anmeldeController;
 			
 	protected MenuBar menuBar;
 	protected Menu menuDatei;
@@ -85,12 +85,11 @@ public class ClientView {
 		
 		Scene scene = new Scene(borderPane);
         stage.setScene(scene);
-                
-//        stage.initOwner(stage);
-//        stage.initModality(Modality.WINDOW_MODAL);
-        
+                  
         Stage neueStage = new Stage();
-        AnmeldefensterView neueView = new AnmeldefensterView(neueStage);
+        neueStage.setAlwaysOnTop(true);
+        AnmeldefensterView neueView = new AnmeldefensterView(neueStage, anmeldeController);
+        AnmeldefensterController anmeldeController = new AnmeldefensterController(neueView, this);
         neueView.start();
         
 	}
@@ -107,20 +106,14 @@ public class ClientView {
 		Translator t=ServiceLocator.getServiceLocator().getTranslator();
 		menuOptionen.setText(t.getString("MenuOptionen"));
 		menuOptionenSprache.setText(t.getString("MenuSprache"));
-		anmeldeView.einstellungSprache.setText(t.getString("EinstellungSprache"));
-		anmeldeView.login.setText(t.getString("Login"));
-		anmeldeView.anmeldenNametxt.setText(t.getString("Benutzername"));
-		anmeldeView.anmeldenPwtxt.setText(t.getString("Passwort"));
-		anmeldeView.btnAnmelden.setText(t.getString("ButtonAnmelden"));
-		anmeldeView.neuregistrierenLabel.setText(t.getString("Neuregistrieren"));
-		anmeldeView.registrierenPwtxt.setText(t.getString("PasswortLänge"));
-		anmeldeView.btnRegistrieren.setText(t.getString("ButtonRegistrieren"));
 		menuHilfe.setText(t.getString("MenuHilfe"));
 		menuHilfeRegeln.setText(t.getString("MenuRegeln"));
 		menuDatei.setText(t.getString("MenuDatei"));
 		menuDateiAbmelden.setText(t.getString("MenuAbmelden"));
 		menuDateiLöschen.setText(t.getString("MenuLöschen"));
 		//controller.startMeldung.setText(t.getString("StartMeldung"));
+		
+		anmeldeView.regeln.setText(t.getString("regeln"));
 
 		}
 }

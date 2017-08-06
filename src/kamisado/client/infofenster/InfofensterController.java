@@ -18,7 +18,6 @@ public class InfofensterController {
 		infoView.ok.setOnAction(new EventHandler<ActionEvent>(){
 			@Override
 			public void handle(ActionEvent event) {
-				System.out.println("stop");
 				infoView.stop();
 				
 			}

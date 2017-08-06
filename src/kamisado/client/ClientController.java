@@ -71,38 +71,68 @@ public class ClientController {
 							if(spielbrett.getGewinner()==null && Spielbrett.isBlockiert()==true){
 								nächsterAktiverTurm=clientModel.setNächsterGegnerischerTurmBlockade(nächsterAktiverTurm);	 
 								if(Spielbrett.getBlockadenVerursacher()==Color.BLACK){
+									//TODO SYSO Anweisung löschen
 									System.out.println("Schwarz hat Blockade verursacht, schwarz ist wieder am Zug"); 
-									// TODO Carmen Blockadenmeldung
+									//Blockadenmeldung
+									Stage stage = new Stage();
+									label=new Label(transl.getString("BlockadeMeldungSchwarz"));
+									InfofensterView iview = new InfofensterView(stage,label);
+									InfofensterController icontroller = new InfofensterController(iview);
+									iview.start();
 								} else if (Spielbrett.getBlockadenVerursacher()==Color.WHITE){
+									//TODO SYSO Anweisung löschen
 									System.out.println("Weiss hat Blockade verursacht, weiss ist wieder am Zug");
-									// TODO Carmen Blockadenmeldung
+									//Blockadenmeldung
+									Stage stage = new Stage();
+									label=new Label(transl.getString("BlockadeMeldungWeiss"));
+									InfofensterView iview = new InfofensterView(stage,label);
+									InfofensterController icontroller = new InfofensterController(iview);
+									iview.start();
 								}
 							} 			
 							// Völliger Stillstand				// TODO trifft nicht zu, wenn die Blockade zweimal von der gleichen Person kommt
 							if(Spielbrett.getBlockadenCounter()==2){
 								if(Spielbrett.getBlockadenVerursacher()==Color.BLACK){
 									spielbrett.setGewinner(Color.WHITE);
+									//TODO SYSO Anweisung löschen
 									System.out.println("Schwarz hat totalen Stillstand verursacht, weiss gewinnt"); 
-									// TODO Carmen Gewinnermeldung bei völligem Stillstand
+									// Gewinnermeldung bei völligem Stillstand
+									Stage stage = new Stage();
+									label=new Label(transl.getString("GewinnerMeldungStillstandweiss"));
+									InfofensterView iview = new InfofensterView(stage,label);
+									InfofensterController icontroller = new InfofensterController(iview);
+									iview.start();
 								} else{
 									spielbrett.setGewinner(Color.BLACK);
+									//TODO SYSO Anweisung löschen
 									System.out.println("Weiss hat totalen Stillstand verursacht, schwarz gewinnt");
-									// TODO Carmen Gewinnermeldung bei völligem Stillstand
+									//Gewinnermeldung bei völligem Stillstand
+									Stage stage = new Stage();
+									label=new Label(transl.getString("GewinnerMeldungStillstandSchwarz"));
+									InfofensterView iview = new InfofensterView(stage,label);
+									InfofensterController icontroller = new InfofensterController(iview);
+									iview.start();
 								}
 							}
-							
+							 
 							// Überprüfen, wer gewonnen hat und die entsprechende Meldung anzeigen
 							if(spielbrett.getGewinner() == Color.BLACK){
 								System.out.println("schwarz gewinnt"); 
-								// TODO Carmen Gewinnermeldung inkl. Frage ob nochmals gespielt werden will (im Moment wird nur das Spielbrett zurückgesetzt)
-//								Stage stage = new Stage();
-//								label=new Label(transl.getString("GewinnerMeldung"));
-//								InfofensterView iview = new InfofensterView(stage,label);
-//								InfofensterController icontroller = new InfofensterController(iview);
-//								iview.start();
+								//Gewinnermeldung inkl. Frage ob nochmals gespielt werden will (im Moment wird nur das Spielbrett zurückgesetzt)
+								Stage stage = new Stage();
+								label=new Label(transl.getString("GewinnerMeldungSchwarz"));
+								InfofensterView iview = new InfofensterView(stage,label);
+								InfofensterController icontroller = new InfofensterController(iview);
+								iview.start();
 							} else if(spielbrett.getGewinner() == Color.WHITE){
+								//TODO SYSO Anweisung löschen
 								System.out.println("Weiss gewinnt"); 
-								// TODO Carmen Gewinnermeldung inkl. Frage ob nochmals gespielt werden will (im Moment wird nur das Spielbrett zurückgesetzt)
+								//Gewinnermeldung inkl. Frage ob nochmals gespielt werden will (im Moment wird nur das Spielbrett zurückgesetzt)
+								Stage stage = new Stage();
+								label=new Label(transl.getString("GewinnerMeldungWeiss"));
+								InfofensterView iview = new InfofensterView(stage,label);
+								InfofensterController icontroller = new InfofensterController(iview);
+								iview.start();
 							}
 							
 							// Spiel zurücksetzen nach Gewinn 

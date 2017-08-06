@@ -37,7 +37,7 @@ public class AnmeldefensterController {
 				String apw=anmeldeView.anmeldenPwtxt.getText();
 				
 				try {
-					FileReader fr = new FileReader("registrierungen.txt");
+					FileReader fr = new FileReader("src/kamisado/registrierungen.txt");
 					BufferedReader reader = new BufferedReader(fr);
 					String zeile;
 					Label label;
@@ -149,6 +149,18 @@ public class AnmeldefensterController {
 				InfofensterController icontroller = new InfofensterController(iview);
 				iview.start();
 			}
+		});
+		
+		anmeldeView.menuHilfeRegeln.setOnAction(new EventHandler<ActionEvent>(){
+			public void handle(ActionEvent event) {
+//				Label label;
+				Stage stage = new Stage();
+//				label=new Label(t.getString("Regeln"));
+				InfofensterView iview = new InfofensterView(stage,anmeldeView.regeln);
+				InfofensterController icontroller = new InfofensterController(iview);
+				iview.start();				
+			}
+			
 		});
 		
 		
