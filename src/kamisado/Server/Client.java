@@ -8,6 +8,10 @@ import javafx.collections.ObservableList;
 import kamisado.commonClasses.SendenEmpfangen;
 import kamisado.commonClasses.Spielbrett;
 
+/**
+ * @author Tobias Deprato
+ */
+
 public class Client {
 	
 	private Socket clientSocket;

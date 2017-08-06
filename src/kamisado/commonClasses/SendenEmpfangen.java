@@ -9,9 +9,13 @@ import kamisado.Server.ServerModel;
 import kamisado.client.ClientModel;
 import kamisado.client.ClientView;
 
+/**
+ * @author Tobias Deprato
+ */
+
 public class SendenEmpfangen {
 	
-	private static final Logger logger = Logger.getLogger("");
+	private static transient final Logger logger = Logger.getLogger("");
 	private static Spielbrett spielbrett;
 	
 	public static void Senden(Socket clientSocket, Spielbrett spielbrett){

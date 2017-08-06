@@ -5,6 +5,9 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.logging.Logger;
 
+/**
+ * @author Tobias Deprato
+ */
 
 public class ServerModel extends Thread{
 	

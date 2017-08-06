@@ -1,5 +1,6 @@
 package kamisado.client;
 
+import java.io.Serializable;
 import java.net.InetAddress;
 import java.net.Socket;
 import java.util.ArrayList;
@@ -15,23 +16,23 @@ import kamisado.commonClasses.Feld;
 import kamisado.commonClasses.SendenEmpfangen;
 import kamisado.commonClasses.Turm;
 
-public class ClientModel {
+public class ClientModel implements Serializable{
 	
 	protected Spielbrett spielbrett;
 
-	protected Socket clientSocket;
+	protected transient Socket clientSocket;
 	private boolean amLaufen = true;
-	private String hostName;
+	private String name;
 	private int port = 444;
 	
 	//protected ObjectInputStream vonServer;
 	//protected ObjectOutputStream anServer;
-	private final Logger logger = Logger.getLogger("");
+	private transient final Logger logger = Logger.getLogger("");
 	
 	public ClientModel() {
 		try{
-			this.hostName= InetAddress.getLocalHost().getHostName();
-			Verbinden(hostName, port);
+			this.name= InetAddress.getLocalHost().getHostName();
+			Verbinden(name, port);
 		} catch (Exception e){
 			logger.info(e.toString());
 		}
@@ -40,7 +41,7 @@ public class ClientModel {
 	public void Verbinden(String hostName, int port) {
 		
 		try{
-			this.hostName= InetAddress.getLocalHost().getHostName();
+			this.name= InetAddress.getLocalHost().getHostName();
 			
 			//Verbindung mit Server herstellen
 			this.clientSocket = new Socket(hostName, port);
