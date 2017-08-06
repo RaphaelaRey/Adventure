@@ -206,9 +206,9 @@ public class ClientModel implements Serializable{
 	 * @author Raphaela Rey
 	 */
 	public int[] setNächsterGegnerischerTurmBlockade(int[]nächsterAktiverTurm){
+		turmStrokeWidthZurücksetzen();
 		if(getTurmFarbe(nächsterAktiverTurm, Spielbrett.getTürme()) == Color.BLACK){
 			for (int m = 0; m < Spielbrett.getTürme().length; m++){
-				Spielbrett.getTürme()[m].setStrokeWidth(spielbrett.STROKEWIDTHTÜRMESTANDARD);
 				Feld aktivesFeld = spielbrett.getFelder()[nächsterAktiverTurm[0]][nächsterAktiverTurm[1]];
 				if (Spielbrett.getTürme()[m].getStroke()==Color.WHITE
 						&& (Spielbrett.getTürme()[m].getFill()==aktivesFeld.getFill())){
