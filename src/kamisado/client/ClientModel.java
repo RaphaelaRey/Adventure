@@ -162,9 +162,6 @@ public class ClientModel {
 	 * @return aktualisierter nächsterAktiverTurm
 	 */
 	public int[] setNächsterGegnerischerTurm(int k, Feld ausgewähltesFeld, int[]nächsterAktiverTurm){
-		if(spielbrett.getMöglicheFelder().size()==0){		
-			ausgewähltesFeld = spielbrett.getFelder()[Spielbrett.getTürme()[k].getKoordinaten()[0]][Spielbrett.getTürme()[k].getKoordinaten()[1]];
-		}
 		// Nächster gegnerischer Turm falls der vorherige Turm schwarz war
 		if(Spielbrett.getTürme()[k].getStroke()==Color.BLACK){
 			for (int i = 0; i < Spielbrett.getTürme().length; i++){
@@ -176,6 +173,9 @@ public class ClientModel {
 					Spielbrett.getTürme()[i].setStrokeWidth(spielbrett.STROKEWIDTHAUSGEWÄHLTERTURM);
 					if(spielbrett.getMöglicheFelder().size()==0){		
 						Spielbrett.setBlockiert(true);
+					} else{
+						Spielbrett.setBlockadenCounter(0);
+						Spielbrett.setBlockadenVerursacher(null);
 					}
 				}
 			}	
@@ -189,6 +189,9 @@ public class ClientModel {
 					Spielbrett.getTürme()[i].setStrokeWidth(spielbrett.STROKEWIDTHAUSGEWÄHLTERTURM);
 					if(spielbrett.getMöglicheFelder().size()==0){		
 						Spielbrett.setBlockiert(true);
+					} else{
+						Spielbrett.setBlockadenCounter(0);
+						Spielbrett.setBlockadenVerursacher(null);
 					}
 				}
 			}	
@@ -199,6 +202,7 @@ public class ClientModel {
 	/** Nächster gegnerischer Turm definieren im Fall einer Blockade
 	 * @param aktueller nächsterAktiverTurm
 	 * @return Koordinaten des nächsten gegnerischen Turms
+	 * @author Raphaela Rey
 	 */
 	public int[] setNächsterGegnerischerTurmBlockade(int[]nächsterAktiverTurm){
 		if(getTurmFarbe(nächsterAktiverTurm, Spielbrett.getTürme()) == Color.BLACK){
@@ -210,7 +214,11 @@ public class ClientModel {
 					nächsterAktiverTurm = Spielbrett.getTürme()[m].getKoordinaten(); 
 					möglicheFelderAnzeigen(Spielbrett.getTürme()[m].getKoordinaten());
 					Spielbrett.getTürme()[m].setStrokeWidth(spielbrett.STROKEWIDTHAUSGEWÄHLTERTURM);
+					
 					Spielbrett.setBlockiert(false);
+					if(Spielbrett.getBlockadenVerursacher()==Color.WHITE){
+						Spielbrett.setBlockadenCounter(0);
+					}
 					Spielbrett.setBlockadenVerursacher(Color.WHITE); // der Spieler, der als letzter gefahren ist ist der Verursacher
 					Spielbrett.setBlockadenCounter(Spielbrett.getBlockadenCounter()+1);
 					break;
@@ -226,7 +234,11 @@ public class ClientModel {
 					nächsterAktiverTurm = Spielbrett.getTürme()[m].getKoordinaten(); 
 					möglicheFelderAnzeigen(Spielbrett.getTürme()[m].getKoordinaten());
 					Spielbrett.getTürme()[m].setStrokeWidth(spielbrett.STROKEWIDTHAUSGEWÄHLTERTURM);
+					
 					Spielbrett.setBlockiert(false);
+					if(Spielbrett.getBlockadenVerursacher()==Color.BLACK){
+						Spielbrett.setBlockadenCounter(0);
+					}
 					Spielbrett.setBlockadenVerursacher(Color.BLACK);
 					Spielbrett.setBlockadenCounter(Spielbrett.getBlockadenCounter()+1);
 					break;
