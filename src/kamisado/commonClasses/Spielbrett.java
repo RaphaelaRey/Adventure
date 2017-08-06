@@ -16,7 +16,7 @@ import kamisado.client.ClientModel;
 
 public class Spielbrett implements Serializable{
 	
-	private ClientModel clientModel;
+	private transient ClientModel clientModel;
 		
 	private static boolean turmBewegt = false; // wenn diese Variable true ist, wurde bereits ein Turm bewegt -> nicht mehr der erste Spielzug
 	private static boolean blockade = false;
@@ -60,7 +60,7 @@ public class Spielbrett implements Serializable{
 	private ArrayList<int[]> möglicheFelder = new ArrayList<int[]>();
     
 	// Gridpane für Spielbrett erstellen
-	private GridPane gridpane = new GridPane(); 
+	private transient GridPane gridpane = new GridPane(); 
     
 	// Konstruktor: Felder und Türme erstellen, einfärben und der Gridpane hinzufügen
     public Spielbrett(ClientModel clientModel) {

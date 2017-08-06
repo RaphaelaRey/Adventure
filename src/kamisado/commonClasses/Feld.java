@@ -1,12 +1,14 @@
 package kamisado.commonClasses;
 
+import java.io.Serializable;
+
 import javafx.scene.shape.Rectangle;
 
 /**
  * @author Raphaela Rey
  */
 
-public class Feld extends Rectangle{
+public class Feld extends Rectangle implements Serializable{
 	
 	private boolean feldBesetzt = false;
 	int[] koordinaten = new int[2];

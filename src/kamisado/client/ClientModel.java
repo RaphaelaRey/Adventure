@@ -1,6 +1,5 @@
 package kamisado.client;
 
-import java.io.Serializable;
 import java.net.InetAddress;
 import java.net.Socket;
 import java.util.ArrayList;
@@ -10,13 +9,11 @@ import java.util.logging.Logger;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.StrokeType;
 import kamisado.commonClasses.Spielbrett;
-import kamisado.Server.ServerModel;
-import kamisado.archiv.Model;
 import kamisado.commonClasses.Feld;
 import kamisado.commonClasses.SendenEmpfangen;
 import kamisado.commonClasses.Turm;
 
-public class ClientModel implements Serializable{
+public class ClientModel {
 	
 	protected Spielbrett spielbrett;
 
