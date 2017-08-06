@@ -28,14 +28,14 @@ public class InfofensterView {
 		
 		stage.setTitle("INFORMATION");
 		
-		BorderPane root = new BorderPane();
-		root.setCenter(label);
-		root.setBottom(ok);
-		root.setAlignment(ok, Pos.BOTTOM_CENTER);
-		root.setMargin(ok, new Insets(25,25,25,25));
-		root.setMargin(label, new Insets(15,15,15,15));		
+		BorderPane bpane = new BorderPane();
+		bpane.setCenter(label);
+		bpane.setBottom(ok);
+		bpane.setAlignment(ok, Pos.BOTTOM_CENTER);
+		bpane.setMargin(ok, new Insets(25,25,25,25));
+		bpane.setMargin(label, new Insets(15,15,15,15));		
 						
-		Scene scene = new Scene(root);
+		Scene scene = new Scene(bpane);
 		stage.setScene(scene);
 	}
 

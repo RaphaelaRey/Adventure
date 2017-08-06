@@ -115,6 +115,7 @@ public class ClientView {
 //		neuregistrierenLabel.setText(t.getString("Neuregistrieren"));
 //		registrierenPwtxt.setText(t.getString("PasswortLänge"));
 //		btnRegistrieren.setText(t.getString("ButtonRegistrieren"));
+		
 		menuHilfe.setText(t.getString("MenuHilfe"));
 		menuHilfeRegeln.setText(t.getString("MenuRegeln"));
 		menuDatei.setText(t.getString("MenuDatei"));

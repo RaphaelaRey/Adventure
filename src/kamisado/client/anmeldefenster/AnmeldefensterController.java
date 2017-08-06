@@ -22,6 +22,7 @@ public class AnmeldefensterController {
 	
 	private AnmeldefensterView anmeldeView;
 	private ClientView clientView;
+	
 
 	public AnmeldefensterController(AnmeldefensterView anmeldeView, ClientView clientView) {
 		//TODO wo muss das Textfile gespeichert werden, damit beide Clients auf das selbe File zugreifen bei der Anmeldung

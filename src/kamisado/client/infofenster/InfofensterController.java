@@ -10,6 +10,7 @@ import javafx.event.EventHandler;
 public class InfofensterController {
 	
 	private InfofensterView infoView;
+	
 
 	public InfofensterController(InfofensterView infoView) {
 		this.infoView=infoView;

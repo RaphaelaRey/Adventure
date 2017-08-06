@@ -76,12 +76,10 @@ public class AnmeldefensterView {
 	
 	public void start() {
 		stage.show();
-		
 	}
 
 	public void stop() {
 		stage.hide();
-		
 	}
 
 }
