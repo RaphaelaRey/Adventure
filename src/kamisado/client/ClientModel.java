@@ -1,11 +1,14 @@
 package kamisado.client;
 
 import java.net.InetAddress;
+import java.net.NetworkInterface;
 import java.net.Socket;
 import java.util.ArrayList;
+import java.util.Enumeration;
 import java.util.Iterator;
 import java.util.logging.Logger;
 
+import javafx.application.Platform;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.StrokeType;
 import kamisado.commonClasses.Spielbrett;
@@ -20,27 +23,32 @@ public class ClientModel {
 	protected transient Socket clientSocket;
 	private boolean amLaufen = true;
 	private String name;
+	private static String ipAdresse;
 	private int port = 444;
 	
 	private final Logger logger = Logger.getLogger("");
 	
 	public ClientModel() {
 		try{
-			this.name= InetAddress.getLocalHost().getHostName();
-			Verbinden(name, port);
+			InetAddress ich = InetAddress.getLocalHost();
+			this.name = "Fetsch";
+			ipAdresse = ich.getHostAddress();
+			Verbinden(ipAdresse, name);
 		} catch (Exception e){
 			logger.info(e.toString());
 		}
 	}
-	
-	public void Verbinden(String hostName, int port) {
+
+	public void Verbinden(String ipAdresse, String name) {
 		
 		try{
-			this.name= InetAddress.getLocalHost().getHostName();
+				//Verbindung mit Server herstellen
+				this.clientSocket = new Socket(ipAdresse, port);
+				logger.info(ipAdresse + " über Port " + port + " verbunden");
+		
 			
-			//Verbindung mit Server herstellen
-			this.clientSocket = new Socket(hostName, port);
-			logger.info(hostName + " über Port" + port + " verbunden");
+			
+			
 			
 			//Thread erstellen
 			Runnable a = new Runnable() {
@@ -48,12 +56,7 @@ public class ClientModel {
 				public void run() {
 					try{
 						while(amLaufen == true){
-							Turm[] tmpTürme = SendenEmpfangen.Empfangen(clientSocket);
-							logger.info("Daten empfangen");
-							TürmeEntfernen(spielbrett.getTürme());
-							spielbrett.setTürme(tmpTürme);
-							TürmeHinzufügen(spielbrett.getTürme());
-							logger.info("Client Türme ersetzt");
+							TürmeEmpfangen();
 						}
 					}catch (Exception e){
 						logger.info(e.toString());
@@ -64,35 +67,61 @@ public class ClientModel {
 			b.start();
 			logger.info("Thread gestartet");
 		 
-		}catch (Exception e){
+		} catch (Exception e){
 			logger.info(e.toString());
 		}
 	}
 	
-	public void SpielbrettSenden(){
+	public void TürmeEmpfangen(){
+		Turm[] Türme = Spielbrett.getTürme();
+		Turm[] tmpTürme = SendenEmpfangen.Empfangen(clientSocket);
+		logger.info("Daten empfangen");
+		
+					TürmeEntfernen(Türme);
+	
+					logger.info("Türme entfernt auf GridPane");
+					Spielbrett.setTürme(tmpTürme);
+					logger.info("Türme ersetzt auf Client");
+		
+					TürmeHinzufügen(Türme);
+					logger.info("Client Türme ersetzt");
+				
+		
+		
+	}
+	
+	public void TürmeSenden(){
 		SendenEmpfangen.Senden(clientSocket, spielbrett.getTürme());
 		logger.info("Daten gesendet");
 	}
 	
 	public void TürmeEntfernen(Turm[] Türme){
 		//Alle Türme von GridPane entfernen
-		int[] koordinaten;
-		for(int i = 0; i < Türme.length; i++){
-			koordinaten = Türme[i].getKoordinaten();
-			spielbrett.getPane().getChildren().remove(koordinaten[0], koordinaten[1]);
-		}
-		
+		Platform.runLater(new Runnable(){
+					@Override
+					public void run(){
+					int[] koordinaten;
+					for(int i = 0; i < Türme.length; i++){
+						koordinaten = Türme[i].getKoordinaten();
+						spielbrett.getPane().getChildren().remove(koordinaten[0], koordinaten[1]);
+					}
+				}
+		});
 	}
 	
 	public void TürmeHinzufügen(Turm[] Türme){
 		//Alle Türme von GridPane entfernen
-		int[] koordinaten;
-		for(int i = 0; i < Türme.length; i++){
-			koordinaten = Türme[i].getKoordinaten();
-			spielbrett.getPane().add(Türme[i], koordinaten[0], koordinaten[1]);
-		}
-		
-	}
+		Platform.runLater(new Runnable(){
+			@Override
+			public void run(){
+					int[] koordinaten;
+					for(int i = 0; i < Türme.length; i++){
+						koordinaten = Türme[i].getKoordinaten();
+						spielbrett.getPane().add(Türme[i], koordinaten[0], koordinaten[1]);
+					}
+			}
+	});
+}
 	
 	public void clientAnhalten(){
 		if(clientSocket != null){

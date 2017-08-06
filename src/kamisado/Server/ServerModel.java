@@ -21,7 +21,7 @@ public class ServerModel extends Thread{
 		
 		try{
 			//Server starten
-			this.server = new ServerSocket(port);
+			this.server = new ServerSocket(port, 2, null);
 			logger.info("Neuer Server gestartet");
 			
 			this.start();

@@ -38,7 +38,7 @@ public class SendenEmpfangen {
 		ObjectInputStream empfangen;
 		try{
 			empfangen = new ObjectInputStream(clientSocket.getInputStream());
-			logger.info("Streams erstellt");
+			logger.info("InputStream erstellt");
 		
 			//neueKoordinaten von Client empfangen
 			Turm[] in = (Turm[]) empfangen.readObject();

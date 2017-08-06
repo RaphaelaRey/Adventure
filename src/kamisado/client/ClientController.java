@@ -40,7 +40,7 @@ public class ClientController {
 						t.setStrokeWidth(spielbrett.STROKEWIDTHAUSGEWÄHLTERTURM);
 						spielbrett.setAktiverTurmKoordinaten(t.getKoordinaten());
 						clientModel.möglicheFelderAnzeigen(spielbrett.getAktiverTurmKoordinaten());
-						clientModel.SpielbrettSenden();
+						
 					}				
   				}
 			});
@@ -111,8 +111,9 @@ public class ClientController {
 							}
 							// Koordinaten des nächsten aktiven Turms ausserhalb der for-Schleife definieren
 							spielbrett.setAktiverTurmKoordinaten(nächsterAktiverTurm);	
-							clientModel.SpielbrettSenden();
+							
 						}
+						clientModel.TürmeSenden();
 					}					
 				});				
 			}
