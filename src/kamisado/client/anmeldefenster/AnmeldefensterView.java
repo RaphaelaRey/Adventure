@@ -45,6 +45,8 @@ public class AnmeldefensterView {
 	public TextField registrierenPwtxt;
 	public Button btnRegistrieren;
 	
+	public Label regeln;
+	
 	public AnmeldefensterView(Stage primaryStage, AnmeldefensterController anmeldeController) {
 		this.stage=primaryStage;
 		this.anmeldeController= anmeldeController;
@@ -79,6 +81,8 @@ public class AnmeldefensterView {
 		menuDatei.getItems().addAll(menuDateiAbmelden, menuDateiLöschen);
 		menuDateiAbmelden.setDisable(true);
 		menuDateiLöschen.setDisable(true);
+		
+		regeln = new Label(t.getString("Regeln"));
 		
 		menuBar.getMenus().addAll(menuDatei, menuOptionen, menuHilfe);
 		
@@ -136,6 +140,8 @@ public class AnmeldefensterView {
 		menuDatei.setText(t.getString("MenuDatei"));
 		menuDateiAbmelden.setText(t.getString("MenuAbmelden"));
 		menuDateiLöschen.setText(t.getString("MenuLöschen"));
+		
+		regeln.setText(t.getString("Regeln"));
 		
 	}
 

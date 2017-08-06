@@ -7,12 +7,10 @@ import kamisado.client.anmeldefenster.AnmeldefensterController;
 import kamisado.client.anmeldefenster.AnmeldefensterView;
 import kamisado.commonClasses.Translator;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
 import javafx.scene.layout.BorderPane;
-import javafx.stage.Modality;
 import javafx.stage.Stage;
 import kamisado.commonClasses.Spielbrett;
 
@@ -87,10 +85,7 @@ public class ClientView {
 		
 		Scene scene = new Scene(borderPane);
         stage.setScene(scene);
-                
-//        stage.initOwner(stage);
-//        stage.initModality(Modality.WINDOW_MODAL);
-        
+                  
         Stage neueStage = new Stage();
         neueStage.setAlwaysOnTop(true);
         AnmeldefensterView neueView = new AnmeldefensterView(neueStage, anmeldeController);
@@ -117,6 +112,8 @@ public class ClientView {
 		menuDateiAbmelden.setText(t.getString("MenuAbmelden"));
 		menuDateiLöschen.setText(t.getString("MenuLöschen"));
 		//controller.startMeldung.setText(t.getString("StartMeldung"));
+		
+		anmeldeView.regeln.setText(t.getString("regeln"));
 
 		}
 }
