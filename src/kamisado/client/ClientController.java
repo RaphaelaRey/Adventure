@@ -95,7 +95,7 @@ public class ClientController {
 							if(spielbrett.getGewinner() == Color.BLACK){
 								System.out.println("schwarz gewinnt"); 
 								// TODO Carmen Gewinnermeldung inkl. Frage ob nochmals gespielt werden will (im Moment wird nur das Spielbrett zurückgesetzt)
-								Stage stage = new Stage();	// TODO übeprüfen
+								Stage stage = new Stage();
 								label=new Label(transl.getString("Gewinnermeldung"));
 								InfofensterView iview = new InfofensterView(stage,label);
 								InfofensterController icontroller = new InfofensterController(iview);
