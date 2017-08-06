@@ -92,6 +92,7 @@ public class ClientView {
 //        stage.initModality(Modality.WINDOW_MODAL);
         
         Stage neueStage = new Stage();
+        neueStage.setAlwaysOnTop(true);
         AnmeldefensterView neueView = new AnmeldefensterView(neueStage, anmeldeController);
         AnmeldefensterController anmeldeController = new AnmeldefensterController(neueView, this);
         neueView.start();
