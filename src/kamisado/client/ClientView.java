@@ -110,14 +110,6 @@ public class ClientView {
 		Translator t=ServiceLocator.getServiceLocator().getTranslator();
 		menuOptionen.setText(t.getString("MenuOptionen"));
 		menuOptionenSprache.setText(t.getString("MenuSprache"));
-//		anmeldeView.einstellungSprache.setText(t.getString("EinstellungSprache"));
-//		anmeldeView.login.setText(t.getString("Login"));
-//		anmeldeView.anmeldenNametxt.setText(t.getString("Benutzername"));
-//		anmeldeView.anmeldenPwtxt.setText(t.getString("Passwort"));
-//		anmeldeView.btnAnmelden.setText(t.getString("ButtonAnmelden"));
-//		anmeldeView.neuregistrierenLabel.setText(t.getString("Neuregistrieren"));
-//		anmeldeView.registrierenPwtxt.setText(t.getString("PasswortLänge"));
-//		anmeldeView.btnRegistrieren.setText(t.getString("ButtonRegistrieren"));
 		menuHilfe.setText(t.getString("MenuHilfe"));
 		menuHilfeRegeln.setText(t.getString("MenuRegeln"));
 		menuDatei.setText(t.getString("MenuDatei"));
