@@ -1,5 +1,6 @@
 package kamisado.commonClasses;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 import javafx.geometry.HPos;
@@ -13,7 +14,7 @@ import kamisado.client.ClientModel;
  * @author Raphaela Rey
  */
 
-public class Spielbrett {
+public class Spielbrett implements Serializable{
 	
 	private ClientModel clientModel;
 		
