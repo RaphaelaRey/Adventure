@@ -22,9 +22,7 @@ public class ClientModel {
 	private String name;
 	private int port = 444;
 	
-	//protected ObjectInputStream vonServer;
-	//protected ObjectOutputStream anServer;
-	private transient final Logger logger = Logger.getLogger("");
+	private final Logger logger = Logger.getLogger("");
 	
 	public ClientModel() {
 		try{
@@ -52,7 +50,10 @@ public class ClientModel {
 						while(amLaufen == true){
 							Turm[] tmpTürme = SendenEmpfangen.Empfangen(clientSocket);
 							logger.info("Daten empfangen");
+							TürmeEntfernen(spielbrett.getTürme());
 							spielbrett.setTürme(tmpTürme);
+							TürmeHinzufügen(spielbrett.getTürme());
+							logger.info("Client Türme ersetzt");
 						}
 					}catch (Exception e){
 						logger.info(e.toString());
@@ -71,6 +72,26 @@ public class ClientModel {
 	public void SpielbrettSenden(){
 		SendenEmpfangen.Senden(clientSocket, spielbrett.getTürme());
 		logger.info("Daten gesendet");
+	}
+	
+	public void TürmeEntfernen(Turm[] Türme){
+		//Alle Türme von GridPane entfernen
+		int[] koordinaten;
+		for(int i = 0; i < Türme.length; i++){
+			koordinaten = Türme[i].getKoordinaten();
+			spielbrett.getPane().getChildren().remove(koordinaten[0], koordinaten[1]);
+		}
+		
+	}
+	
+	public void TürmeHinzufügen(Turm[] Türme){
+		//Alle Türme von GridPane entfernen
+		int[] koordinaten;
+		for(int i = 0; i < Türme.length; i++){
+			koordinaten = Türme[i].getKoordinaten();
+			spielbrett.getPane().add(Türme[i], koordinaten[0], koordinaten[1]);
+		}
+		
 	}
 	
 	public void clientAnhalten(){
