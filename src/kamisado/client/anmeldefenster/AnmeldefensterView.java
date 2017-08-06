@@ -19,15 +19,15 @@ public class AnmeldefensterView {
 	
 	private Stage stage;
 	
-	protected Label einstellungSprache;
-	protected Label login;
-	protected TextField anmeldenNametxt;
-	protected TextField anmeldenPwtxt;
-	protected Button btnAnmelden;
-	protected Label neuregistrierenLabel;
-	protected TextField registrierenNametxt;
-	protected TextField registrierenPwtxt;
-	protected Button btnRegistrieren;
+	public Label einstellungSprache;
+	public Label login;
+	public TextField anmeldenNametxt;
+	public TextField anmeldenPwtxt;
+	public Button btnAnmelden;
+	public Label neuregistrierenLabel;
+	public TextField registrierenNametxt;
+	public TextField registrierenPwtxt;
+	public Button btnRegistrieren;
 	
 	public AnmeldefensterView(Stage primaryStage) {
 		this.stage=primaryStage;

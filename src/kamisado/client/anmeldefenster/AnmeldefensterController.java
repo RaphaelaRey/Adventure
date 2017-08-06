@@ -1,6 +1,6 @@
 package kamisado.client.anmeldefenster;
 
-import java.io.BufferedReader;
+import java.io.BufferedReader; 
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;

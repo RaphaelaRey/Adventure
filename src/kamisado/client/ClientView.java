@@ -1,6 +1,6 @@
 package kamisado.client;
 
-import java.util.Locale;
+import java.util.Locale; 
 
 import kamisado.ServiceLocator;
 import kamisado.client.anmeldefenster.AnmeldefensterView;
@@ -21,6 +21,7 @@ public class ClientView {
 	private ClientModel clientModel;
 	private Stage stage;
 	protected Spielbrett spielbrett;
+	private AnmeldefensterView anmeldeView;
 			
 	protected MenuBar menuBar;
 	protected Menu menuDatei;
@@ -32,9 +33,10 @@ public class ClientView {
 	public MenuItem menuHilfeRegeln;
 	
     // Konstruktor
-	public ClientView(Stage stage, ClientModel clientModel) {
+	public ClientView(Stage stage, ClientModel clientModel, AnmeldefensterView anmeldeView) {
 		this.stage = stage; 
 		this.clientModel = clientModel;
+		this.anmeldeView = anmeldeView;
 				
 		ServiceLocator sl=ServiceLocator.getServiceLocator();
 		sl.setTranslator(new Translator("de"));
@@ -105,17 +107,14 @@ public class ClientView {
 		Translator t=ServiceLocator.getServiceLocator().getTranslator();
 		menuOptionen.setText(t.getString("MenuOptionen"));
 		menuOptionenSprache.setText(t.getString("MenuSprache"));
-		
-		//TODO Diese Elemente sind aus der InfofensterView.. wie kann auf diese zugegriffen werden?
-//		einstellungSprache.setText(t.getString("EinstellungSprache"));
-//		login.setText(t.getString("Login"));
-//		anmeldenNametxt.setText(t.getString("Benutzername"));
-//		anmeldenPwtxt.setText(t.getString("Passwort"));
-//		btnAnmelden.setText(t.getString("ButtonAnmelden"));
-//		neuregistrierenLabel.setText(t.getString("Neuregistrieren"));
-//		registrierenPwtxt.setText(t.getString("PasswortLänge"));
-//		btnRegistrieren.setText(t.getString("ButtonRegistrieren"));
-		
+		anmeldeView.einstellungSprache.setText(t.getString("EinstellungSprache"));
+		anmeldeView.login.setText(t.getString("Login"));
+		anmeldeView.anmeldenNametxt.setText(t.getString("Benutzername"));
+		anmeldeView.anmeldenPwtxt.setText(t.getString("Passwort"));
+		anmeldeView.btnAnmelden.setText(t.getString("ButtonAnmelden"));
+		anmeldeView.neuregistrierenLabel.setText(t.getString("Neuregistrieren"));
+		anmeldeView.registrierenPwtxt.setText(t.getString("PasswortLänge"));
+		anmeldeView.btnRegistrieren.setText(t.getString("ButtonRegistrieren"));
 		menuHilfe.setText(t.getString("MenuHilfe"));
 		menuHilfeRegeln.setText(t.getString("MenuRegeln"));
 		menuDatei.setText(t.getString("MenuDatei"));
