@@ -1,6 +1,7 @@
 package kamisado.client.anmeldefenster;
 
 import kamisado.ServiceLocator;
+import kamisado.client.ClientModel;
 import kamisado.commonClasses.Translator;
 
 import java.util.Locale;
@@ -25,6 +26,7 @@ public class AnmeldefensterView {
 	
 	private Stage stage;
 	private AnmeldefensterController anmeldeController;
+	private ClientModel clientModel;
 	
 	protected MenuBar menuBar;
 	protected Menu menuDatei;
@@ -48,9 +50,10 @@ public class AnmeldefensterView {
 	
 	public Label regeln;
 	
-	public AnmeldefensterView(Stage primaryStage, AnmeldefensterController anmeldeController) {
+	public AnmeldefensterView(Stage primaryStage, AnmeldefensterController anmeldeController, ClientModel clientModel) {
 		this.stage=primaryStage;
 		this.anmeldeController= anmeldeController;
+		this.clientModel=clientModel;
 		ServiceLocator sl=ServiceLocator.getServiceLocator();
 		//sl.setTranslator(new Translator("de"));
 		Translator t = sl.getTranslator();
@@ -95,7 +98,7 @@ public class AnmeldefensterView {
 		HBox hbox = new HBox();
 		anmeldenNametxt=new TextField(t.getString("Benutzername"));
 		anmeldenPwtxt = new TextField(t.getString("Passwort"));
-		anmeldenIPtxt = new TextField(t.getString("IP"));
+		anmeldenIPtxt = new TextField(clientModel.getIP());
 		btnAnmelden = new Button(t.getString("ButtonAnmelden"));
 		hbox.getChildren().addAll(anmeldenNametxt, anmeldenPwtxt,anmeldenIPtxt, btnAnmelden);
 		

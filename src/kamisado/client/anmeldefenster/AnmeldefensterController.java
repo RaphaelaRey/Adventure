@@ -1,6 +1,6 @@
 package kamisado.client.anmeldefenster;
 
-import java.io.BufferedReader; 
+import java.io.BufferedReader;  
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -23,7 +23,6 @@ public class AnmeldefensterController {
 	private AnmeldefensterView anmeldeView;
 	private ClientView clientView;
 	
-
 	public AnmeldefensterController(AnmeldefensterView anmeldeView, ClientView clientView) {
 		//TODO wo muss das Textfile gespeichert werden, damit beide Clients auf das selbe File zugreifen bei der Anmeldung
 		this.anmeldeView = anmeldeView;
