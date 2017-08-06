@@ -42,14 +42,10 @@ public class ClientModel {
 	public void Verbinden(String ipAdresse, String name) {
 		
 		try{
-				//Verbindung mit Server herstellen
-				this.clientSocket = new Socket(ipAdresse, port);
-				logger.info(ipAdresse + " über Port " + port + " verbunden");
-		
-			
-			
-			
-			
+			//Verbindung mit Server herstellen
+			this.clientSocket = new Socket(ipAdresse, port);
+			logger.info(ipAdresse + " über Port " + port + " verbunden");
+	
 			//Thread erstellen
 			Runnable a = new Runnable() {
 				@Override
@@ -76,15 +72,12 @@ public class ClientModel {
 		Turm[] Türme = Spielbrett.getTürme();
 		Turm[] tmpTürme = SendenEmpfangen.Empfangen(clientSocket);
 		logger.info("Daten empfangen");
-		
-					TürmeEntfernen(Türme);
-	
-					logger.info("Türme entfernt auf GridPane");
-					Spielbrett.setTürme(tmpTürme);
-					logger.info("Türme ersetzt auf Client");
-		
-					TürmeHinzufügen(Türme);
-					logger.info("Client Türme ersetzt");
+		TürmeEntfernen(Türme);
+		logger.info("Türme entfernt auf GridPane");
+		Spielbrett.setTürme(tmpTürme);
+		logger.info("Türme ersetzt auf Client");
+		TürmeHinzufügen(Türme);
+		logger.info("Client Türme ersetzt");
 				
 		
 		
@@ -120,8 +113,8 @@ public class ClientModel {
 						spielbrett.getPane().add(Türme[i], koordinaten[0], koordinaten[1]);
 					}
 			}
-	});
-}
+		});
+	}
 	
 	public void clientAnhalten(){
 		if(clientSocket != null){
