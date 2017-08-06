@@ -59,7 +59,6 @@ public class ClientController {
 							for (int k = 0; k < Spielbrett.getTürme().length; k++){
 								if(clientModel.koordVergleich(Spielbrett.getTürme()[k].getKoordinaten(), spielbrett.getAktiverTurmKoordinaten())){ //aktiver Turm herausfinden
 									clientModel.turmBewegen(ausgewähltesFeld, k);
-									Spielbrett.setBlockadenCounter(0); // TODO am richtigen ort??
 									// Überprüfen, ob es einen Gewinner gibt 
 									spielbrett.setGewinner(clientModel.gewinnerDefinieren(ausgewähltesFeld));
 									// Zukünftiger gegnerischer Turm definieren und mögliche Felder anzeigen (sofern das Spiel nicht schon beendet ist)
@@ -72,14 +71,24 @@ public class ClientController {
 							if(spielbrett.getGewinner()==null && Spielbrett.isBlockiert()==true){
 								nächsterAktiverTurm=clientModel.setNächsterGegnerischerTurmBlockade(nächsterAktiverTurm);	 
 								if(Spielbrett.getBlockadenVerursacher()==Color.BLACK){
-									System.out.println("Schwarz hat Blockade verursacht, schwarz ist wieder am Zug"); // TODO Carmen Blockadenmeldung
+									System.out.println("Schwarz hat Blockade verursacht, schwarz ist wieder am Zug"); 
+									// TODO Carmen Blockadenmeldung
 								} else if (Spielbrett.getBlockadenVerursacher()==Color.WHITE){
-									System.out.println("Weiss hat Blockade verursacht, weiss ist wieder am Zug");// TODO Carmen Blockadenmeldung
+									System.out.println("Weiss hat Blockade verursacht, weiss ist wieder am Zug");
+									// TODO Carmen Blockadenmeldung
 								}
 							} 			
-							// Völliger Stillstand				// TODO Testen
+							// Völliger Stillstand				// TODO trifft nicht zu, wenn die Blockade zweimal von der gleichen Person kommt
 							if(Spielbrett.getBlockadenCounter()==2){
-								System.out.println("Totale Blockade");
+								if(Spielbrett.getBlockadenVerursacher()==Color.BLACK){
+									spielbrett.setGewinner(Color.WHITE);
+									System.out.println("Schwarz hat totalen Stillstand verursacht, weiss gewinnt"); 
+									// TODO Carmen Gewinnermeldung bei völligem Stillstand
+								} else{
+									spielbrett.setGewinner(Color.BLACK);
+									System.out.println("Weiss hat totalen Stillstand verursacht, schwarz gewinnt");
+									// TODO Carmen Gewinnermeldung bei völligem Stillstand
+								}
 							}
 							
 							// Überprüfen, wer gewonnen hat und die entsprechende Meldung anzeigen
