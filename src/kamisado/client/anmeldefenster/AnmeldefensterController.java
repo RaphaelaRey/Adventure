@@ -23,8 +23,8 @@ public class AnmeldefensterController {
 	private AnmeldefensterView anmeldeView;
 	private ClientView clientView;
 	
-	private String name;
-	private String pw;
+	private static String name;
+	private static String pw;
 	
 	public AnmeldefensterController(AnmeldefensterView anmeldeView, ClientView clientView) {
 		//TODO wo muss das Textfile gespeichert werden, damit beide Clients auf das selbe File zugreifen bei der Anmeldung
@@ -169,11 +169,11 @@ public class AnmeldefensterController {
 		
 	}
 	
-	public String getName(){
+	public static String getName(){
 		return name;
 	}
 	
-	public String getPasswort(){
+	public static String getPasswort(){
 		return pw;
 	}
 

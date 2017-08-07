@@ -9,6 +9,7 @@ import java.util.logging.Logger;
 import javafx.application.Platform;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.StrokeType;
+import kamisado.client.anmeldefenster.AnmeldefensterController;
 import kamisado.commonClasses.Spielbrett;
 import kamisado.commonClasses.Feld;
 import kamisado.commonClasses.SendenEmpfangen;
@@ -20,7 +21,8 @@ public class ClientModel {
 
 	protected transient Socket clientSocket;
 	private boolean amLaufen = true;
-	private String name;
+	private static String name;
+	private static String pw;
 	private static String ipAdresse;
 	private int port = 444;
 	
@@ -29,7 +31,8 @@ public class ClientModel {
 	public ClientModel() {
 		try{
 			InetAddress ich = InetAddress.getLocalHost();
-			this.name = "Fetsch";
+			this.name = AnmeldefensterController.getName();
+			this.pw = AnmeldefensterController.getPasswort();
 			ipAdresse = ich.getHostAddress();
 			Verbinden(ipAdresse, name);
 		} catch (Exception e){
@@ -70,12 +73,10 @@ public class ClientModel {
 		Turm[] Türme = Spielbrett.getTürme();
 		Turm[] tmpTürme = SendenEmpfangen.Empfangen(clientSocket);
 		logger.info("Daten empfangen");
-		TürmeEntfernen(Türme);
-		logger.info("Türme entfernt auf GridPane");
 		Spielbrett.setTürme(tmpTürme);
 		logger.info("Türme ersetzt auf Client");
-		TürmeHinzufügen(Türme);
-		logger.info("Client Türme ersetzt");
+		UpdateSpielfeld(Türme);
+		logger.info("Spielfeld aktualisiert");
 				
 		
 		
@@ -86,33 +87,45 @@ public class ClientModel {
 		logger.info("Daten gesendet");
 	}
 	
-	public void TürmeEntfernen(Turm[] Türme){
-		//Alle Türme von GridPane entfernen
+	public void UpdateSpielfeld(Turm[] Türme){
+		
 		Platform.runLater(new Runnable(){
 					@Override
 					public void run(){
-					int[] koordinaten;
-					for(int i = 0; i < Türme.length; i++){
-						koordinaten = Türme[i].getKoordinaten();
-						spielbrett.getPane().getChildren().remove(koordinaten[0], koordinaten[1]);
+					
+						spielbrett.getPane().getChildren().removeAll(Türme);
+						for (int i = 0; i < spielbrett.getFelder().length; i++){
+				    		for (int j = 0; j < spielbrett.getFelder().length; j++){
+				    			spielbrett.getFelder()[i][j].setFeldBesetzt(false);
+				    		}
+						}	
+						
+						
+						for(int p = 0; p < Türme.length; p++){
+							if(Türme[p].getStroke()==Color.BLACK){
+								for(int l = 0; l < spielbrett.getFelder()[7].length; l++){
+									if(Türme[p].getFill()==spielbrett.getFelder()[l][7].getFill()){
+										Türme[p].setKoordinaten(spielbrett.getFelder()[l][7].getKoordinaten());
+										Türme[p].setStrokeWidth(spielbrett.STROKEWIDTHTÜRMESTANDARD);
+										spielbrett.getPane().add(Türme[p], l, 7);	
+										
+									}
+								}
+							}else{
+								for(int l = 0; l < spielbrett.getFelder()[0].length; l++){
+									if(Türme[p].getFill()==spielbrett.getFelder()[l][0].getFill()){
+										Türme[p].setKoordinaten(spielbrett.getFelder()[l][0].getKoordinaten());
+										Türme[p].setStrokeWidth(spielbrett.STROKEWIDTHTÜRMESTANDARD);
+										spielbrett.getPane().add(Türme[p], l, 0);	
+										
+									}
+								}
+							}
+						}
 					}
-				}
 		});
 	}
-	
-	public void TürmeHinzufügen(Turm[] Türme){
-		//Alle Türme von GridPane entfernen
-		Platform.runLater(new Runnable(){
-			@Override
-			public void run(){
-					int[] koordinaten;
-					for(int i = 0; i < Türme.length; i++){
-						koordinaten = Türme[i].getKoordinaten();
-						spielbrett.getPane().add(Türme[i], koordinaten[0], koordinaten[1]);
-					}
-			}
-		});
-	}
+					
 	
 	public void clientAnhalten(){
 		if(clientSocket != null){
@@ -125,6 +138,10 @@ public class ClientModel {
 		}
 		
 		
+	}
+	
+	public void setName(String name){
+		this.name = name;
 	}
 	
 	public String getIP(){
