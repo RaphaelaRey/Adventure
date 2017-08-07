@@ -28,18 +28,18 @@ public class ClientModel {
 	
 	private final Logger logger = Logger.getLogger("");
 	
-	public ClientModel() {
-		try{
-			InetAddress ich = InetAddress.getLocalHost();
-			this.name = AnmeldefensterController.getName();
-			this.pw = AnmeldefensterController.getPasswort();
-			ipAdresse = ich.getHostAddress();
-			ipAdresse = AnmeldefensterController.getIP();
-			Verbinden(ipAdresse, name, pw);
-		} catch (Exception e){
-			logger.info(e.toString());
-		}
-	}
+//	public ClientModel() {
+//		try{
+//			InetAddress ich = InetAddress.getLocalHost();
+//			this.name = AnmeldefensterController.getName();
+	//			this.pw = AnmeldefensterController.getPasswort();
+		//	ipAdresse = ich.getHostAddress();
+		//	ipAdresse = AnmeldefensterController.getIP();
+		//	Verbinden(ipAdresse, name, pw);
+	//	} catch (Exception e){
+	//		logger.info(e.toString());
+	//	}
+//	}
 
 	public void Verbinden(String ipAdresse, String name, String pw) {
 		 String namePW = name + ",";
