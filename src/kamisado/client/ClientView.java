@@ -7,6 +7,7 @@ import kamisado.client.anmeldefenster.AnmeldefensterController;
 import kamisado.client.anmeldefenster.AnmeldefensterView;
 import kamisado.commonClasses.Translator;
 import javafx.scene.Scene;
+import javafx.scene.control.Label;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
@@ -31,6 +32,13 @@ public class ClientView {
 	protected Menu menuOptionenSprache;
 	protected Menu menuHilfe;
 	public MenuItem menuHilfeRegeln;
+	
+	public Label BlockadeMeldungSchwarz;
+	public Label BlockadeMeldungWeiss;
+	public Label GewinnerMeldungStillstandWeiss;
+	public Label GewinnerMeldungStillstandSchwarz;
+	public Label GewinnerMeldungSchwarz;
+	public Label GewinnerMeldungWeiss;
 	
     // Konstruktor
 	public ClientView(Stage stage, ClientModel clientModel, AnmeldefensterView anmeldeView) {
@@ -81,6 +89,13 @@ public class ClientView {
 		
 		borderPane.setTop(menuBar);
 		
+		BlockadeMeldungSchwarz = new Label(t.getString("BlockadeMeldungSchwarz"));
+		BlockadeMeldungWeiss = new Label(t.getString("BlockadeMeldungWeiss"));
+		GewinnerMeldungStillstandWeiss = new Label(t.getString("GewinnerMeldungStillstandWeiss"));
+		GewinnerMeldungStillstandSchwarz = new Label(t.getString("GewinnerMeldungStillstandSchwarz"));
+		GewinnerMeldungSchwarz = new Label(t.getString("GewinnerMeldungSchwarz"));
+		GewinnerMeldungWeiss = new Label(t.getString("GewinnerMeldungWeiss"));
+		
 		borderPane.setCenter(spielbrett.getPane());
 		
 		Scene scene = new Scene(borderPane);
@@ -110,6 +125,12 @@ public class ClientView {
 		menuDatei.setText(t.getString("MenuDatei"));
 		menuDateiAbmelden.setText(t.getString("MenuAbmelden"));
 		menuDateiLöschen.setText(t.getString("MenuLöschen"));
-		//controller.startMeldung.setText(t.getString("StartMeldung"));
+		BlockadeMeldungSchwarz.setText(t.getString("BlockadeMeldungSchwarz"));
+		BlockadeMeldungWeiss.setText(t.getString("BlockadeMeldungWeiss"));
+		GewinnerMeldungStillstandWeiss.setText(t.getString("GewinnerMeldungStillstandWeiss"));
+		GewinnerMeldungStillstandSchwarz.setText(t.getString("GewinnerMeldungStillstandSchwarz"));
+		GewinnerMeldungSchwarz.setText(t.getString("GewinnerMeldungSchwarz"));
+		GewinnerMeldungWeiss.setText(t.getString("GewinnerMeldungWeiss"));
+		
 		}
 }
