@@ -51,6 +51,12 @@ public class AnmeldefensterView {
 	public Button btnRegistrieren;
 	
 	public Label regeln;
+	public Label startMeldung;
+	public Label PWfalschMeldung;
+	public Label BenutzerExistiertNicht;
+	public Label BenutzernameVergeben;
+	public Label RegistrierMeldung;
+	public Label PasswortZuKurz;
 	
 	public AnmeldefensterView(Stage primaryStage, AnmeldefensterController anmeldeController, ClientModel clientModel, ClientView clientView) {
 		this.stage=primaryStage;
@@ -91,6 +97,12 @@ public class AnmeldefensterView {
 		menuDateiLöschen.setDisable(true);
 		
 		regeln = new Label(t.getString("Regeln"));
+		startMeldung = new Label(t.getString("StartMeldung"));
+		PWfalschMeldung = new Label(t.getString("PWfalschMeldung"));
+		BenutzerExistiertNicht = new Label(t.getString("BenutzerExistiertNicht"));
+		BenutzernameVergeben = new Label(t.getString("BenutzernameVergeben"));
+		RegistrierMeldung = new Label(t.getString("RegistrierMeldung"));
+		PasswortZuKurz = new Label(t.getString("PasswortZuKurz"));
 		
 		menuBar.getMenus().addAll(menuDatei, menuOptionen, menuHilfe);
 		
@@ -151,6 +163,12 @@ public class AnmeldefensterView {
 		menuDateiLöschen.setText(t.getString("MenuLöschen"));
 		anmeldenIPtxt.setText(t.getString("IP"));
 		
+		startMeldung.setText(t.getString("StartMeldung"));
+		PWfalschMeldung.setText(t.getString("PWfalschMeldung"));
+		BenutzerExistiertNicht.setText(t.getString("BenutzerExistiertNicht"));
+		BenutzernameVergeben.setText(t.getString("BenutzernameVergeben"));
+		RegistrierMeldung.setText(t.getString("RegistrierMeldung"));
+		PasswortZuKurz.setText(t.getString("PasswortZuKurz"));
 		regeln.setText(t.getString("Regeln"));
 	}
 

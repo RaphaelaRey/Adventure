@@ -53,28 +53,28 @@ public class AnmeldefensterController {
 								clientView.menuDateiLöschen.setDisable(false);
 								//Meldung zu Beginn des Spiels
 								Stage stage = new Stage();
-								label=new Label(t.getString("StartMeldung"));
-								InfofensterView iview = new InfofensterView(stage,label);
+								InfofensterView iview = new InfofensterView(stage,anmeldeView.startMeldung);
 								InfofensterController icontroller = new InfofensterController(iview);
 								iview.start();
+								stage.setAlwaysOnTop(true);
 								anmeldeView.stop();
 							}else if(parts[0].equals(name)&&!parts[1].equals(pw)){
 								benutzerExistiert = true;
 								//Meldung, dass Passwort falsch ist
 								Stage stage = new Stage();
-								label=new Label(t.getString("PWfalschMeldung"));
-								InfofensterView iview = new InfofensterView(stage,label);
+								InfofensterView iview = new InfofensterView(stage,anmeldeView.PWfalschMeldung);
 								InfofensterController icontroller = new InfofensterController(iview);
 								iview.start();
+								stage.setAlwaysOnTop(true);
 							}													
 					}
 					if(benutzerExistiert==false){
 						//Meldung, dass Benutzer nicht exisitert
 						Stage stage = new Stage();
-						label=new Label(t.getString("BenutzerExistiertNicht"));
-						InfofensterView iview = new InfofensterView(stage,label);
+						InfofensterView iview = new InfofensterView(stage,anmeldeView.BenutzerExistiertNicht);
 						InfofensterController icontroller = new InfofensterController(iview);
 						iview.start();
+						stage.setAlwaysOnTop(true);
 					}
 					reader.close();
 				} catch (IOException e1) {
@@ -102,9 +102,9 @@ public class AnmeldefensterController {
 						if(parts[0].equals(name)){
 							//Meldung, dasss Benutzername bereits vergeben ist
 							Stage stage = new Stage();
-							label = new Label(t.getString("BenutzernameVergeben"));
-							InfofensterView iview = new InfofensterView(stage, label);
+							InfofensterView iview = new InfofensterView(stage, anmeldeView.BenutzernameVergeben);
 							iview.start();
+							stage.setAlwaysOnTop(true);
 							benutzerVergeben = true;
 						} 
 					}
@@ -119,17 +119,17 @@ public class AnmeldefensterController {
 							
 							//Meldung, dass die Registrierung erfolgreich war
 							Stage stage = new Stage();
-							label=new Label(t.getString("RegistrierMeldung"));
-							InfofensterView iview = new InfofensterView(stage,label);
+							InfofensterView iview = new InfofensterView(stage,anmeldeView.RegistrierMeldung);
 							InfofensterController icontroller = new InfofensterController(iview);
 							iview.start();
+							stage.setAlwaysOnTop(true);
 						}	else{
 							//Meldung, dass Passwort zu kurz ist
 							Stage stage = new Stage();
-							label=new Label(t.getString("PasswortZuKurz"));
-							InfofensterView iview = new InfofensterView(stage,label);
+							InfofensterView iview = new InfofensterView(stage,anmeldeView.PasswortZuKurz);
 							InfofensterController icontroller = new InfofensterController(iview);
 							iview.start();
+							stage.setAlwaysOnTop(true);
 						}
 					}
 					
@@ -146,8 +146,7 @@ public class AnmeldefensterController {
 				Label label;
 				//Fenster mit Regeln
 				Stage stage = new Stage();
-				label=new Label(t.getString("Regeln"));
-				InfofensterView iview = new InfofensterView(stage,label);
+				InfofensterView iview = new InfofensterView(stage,anmeldeView.regeln);
 				InfofensterController icontroller = new InfofensterController(iview);
 				iview.start();
 				stage.setAlwaysOnTop(true);
