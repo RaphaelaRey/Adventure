@@ -26,9 +26,7 @@ public class ClientController {
 		this.clientModel = clientModel;
 		this.view = view;
 		spielbrett = view.spielbrett; 
-		ServiceLocator sl = ServiceLocator.getServiceLocator();
-		Translator transl = sl.getTranslator();
-		
+				
 		// Schwarze Türme für Spielbeginn aktivieren
 		for (int i = 0; i < Spielbrett.getTürme().length; i++){				
 			Turm t = Spielbrett.getTürme()[i];				
@@ -75,8 +73,7 @@ public class ClientController {
 									System.out.println("Schwarz hat Blockade verursacht, schwarz ist wieder am Zug"); 
 									//Blockadenmeldung
 									Stage stage = new Stage();
-									label=new Label(transl.getString("BlockadeMeldungSchwarz"));
-									InfofensterView iview = new InfofensterView(stage,label);
+									InfofensterView iview = new InfofensterView(stage,view.BlockadeMeldungSchwarz);
 									InfofensterController icontroller = new InfofensterController(iview);
 									iview.start();
 								} else if (Spielbrett.getBlockadenVerursacher()==Color.WHITE){
@@ -84,8 +81,7 @@ public class ClientController {
 									System.out.println("Weiss hat Blockade verursacht, weiss ist wieder am Zug");
 									//Blockadenmeldung
 									Stage stage = new Stage();
-									label=new Label(transl.getString("BlockadeMeldungWeiss"));
-									InfofensterView iview = new InfofensterView(stage,label);
+									InfofensterView iview = new InfofensterView(stage,view.BlockadeMeldungWeiss);
 									InfofensterController icontroller = new InfofensterController(iview);
 									iview.start();
 								}
@@ -98,8 +94,7 @@ public class ClientController {
 									System.out.println("Schwarz hat totalen Stillstand verursacht, weiss gewinnt"); 
 									// Gewinnermeldung bei völligem Stillstand
 									Stage stage = new Stage();
-									label=new Label(transl.getString("GewinnerMeldungStillstandweiss"));
-									InfofensterView iview = new InfofensterView(stage,label);
+									InfofensterView iview = new InfofensterView(stage,view.GewinnerMeldungStillstandWeiss);
 									InfofensterController icontroller = new InfofensterController(iview);
 									iview.start();
 								} else{
@@ -108,8 +103,7 @@ public class ClientController {
 									System.out.println("Weiss hat totalen Stillstand verursacht, schwarz gewinnt");
 									//Gewinnermeldung bei völligem Stillstand
 									Stage stage = new Stage();
-									label=new Label(transl.getString("GewinnerMeldungStillstandSchwarz"));
-									InfofensterView iview = new InfofensterView(stage,label);
+									InfofensterView iview = new InfofensterView(stage,view.GewinnerMeldungStillstandSchwarz);
 									InfofensterController icontroller = new InfofensterController(iview);
 									iview.start();
 								}
@@ -120,8 +114,7 @@ public class ClientController {
 								System.out.println("schwarz gewinnt"); 
 								//Gewinnermeldung inkl. Frage ob nochmals gespielt werden will (im Moment wird nur das Spielbrett zurückgesetzt)
 								Stage stage = new Stage();
-								label=new Label(transl.getString("GewinnerMeldungSchwarz"));
-								InfofensterView iview = new InfofensterView(stage,label);
+								InfofensterView iview = new InfofensterView(stage,view.GewinnerMeldungSchwarz);
 								InfofensterController icontroller = new InfofensterController(iview);
 								iview.start();
 							} else if(spielbrett.getGewinner() == Color.WHITE){
@@ -129,8 +122,7 @@ public class ClientController {
 								System.out.println("Weiss gewinnt"); 
 								//Gewinnermeldung inkl. Frage ob nochmals gespielt werden will (im Moment wird nur das Spielbrett zurückgesetzt)
 								Stage stage = new Stage();
-								label=new Label(transl.getString("GewinnerMeldungWeiss"));
-								InfofensterView iview = new InfofensterView(stage,label);
+								InfofensterView iview = new InfofensterView(stage,view.GewinnerMeldungWeiss);
 								InfofensterController icontroller = new InfofensterController(iview);
 								iview.start();
 							}
