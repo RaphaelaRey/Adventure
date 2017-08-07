@@ -167,8 +167,6 @@ public class AnmeldefensterController {
 			
 		});
 		
-		
-		
 	}
 	
 	public String getName(){
