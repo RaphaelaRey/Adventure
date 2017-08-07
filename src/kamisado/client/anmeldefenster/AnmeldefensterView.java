@@ -2,6 +2,7 @@ package kamisado.client.anmeldefenster;
 
 import kamisado.ServiceLocator;
 import kamisado.client.ClientModel;
+import kamisado.client.ClientView;
 import kamisado.commonClasses.Translator;
 
 import java.util.Locale;
@@ -27,6 +28,7 @@ public class AnmeldefensterView {
 	private Stage stage;
 	private AnmeldefensterController anmeldeController;
 	private ClientModel clientModel;
+	private ClientView clientView;
 	
 	protected MenuBar menuBar;
 	protected Menu menuDatei;
@@ -50,10 +52,11 @@ public class AnmeldefensterView {
 	
 	public Label regeln;
 	
-	public AnmeldefensterView(Stage primaryStage, AnmeldefensterController anmeldeController, ClientModel clientModel) {
+	public AnmeldefensterView(Stage primaryStage, AnmeldefensterController anmeldeController, ClientModel clientModel, ClientView clientView) {
 		this.stage=primaryStage;
 		this.anmeldeController= anmeldeController;
 		this.clientModel=clientModel;
+		this.clientView=clientView;
 		ServiceLocator sl=ServiceLocator.getServiceLocator();
 		//sl.setTranslator(new Translator("de"));
 		Translator t = sl.getTranslator();
@@ -72,6 +75,7 @@ public class AnmeldefensterView {
 			menuOptionenSprache.getItems().add(sprache);
 			sprache.setOnAction(event -> {
 				sl.setTranslator(new Translator(locale.getLanguage()));
+				clientView.updateTexts();
 				updateTexts();
 			});
 		}	
@@ -128,7 +132,7 @@ public class AnmeldefensterView {
 		
 	}
 	
-	private void updateTexts() {
+	public void updateTexts() {
 		Translator t=ServiceLocator.getServiceLocator().getTranslator();
 		menuOptionen.setText(t.getString("MenuOptionen"));
 		menuOptionenSprache.setText(t.getString("MenuSprache"));
