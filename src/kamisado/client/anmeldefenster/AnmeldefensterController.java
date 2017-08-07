@@ -40,7 +40,7 @@ public class AnmeldefensterController {
 					BufferedReader reader = new BufferedReader(fr);
 					String zeile;
 					Label label;
-					boolean benutzerExistiert = false;
+					boolean benutzerExistiert = false; 
 					while((zeile=reader.readLine())!=null){
 						String[] parts = zeile.split(",");	
 							//Überprüfung der Bedingungen, dass Benutzer angemeldet ist
