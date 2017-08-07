@@ -1,5 +1,6 @@
 package kamisado.client;
 
+import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
@@ -140,5 +141,16 @@ public class ClientController {
 				});				
 			}
 		}
+		
+		view.menuDateiAbmelden.setOnAction(new EventHandler<ActionEvent>(){
+			@Override
+			public void handle(ActionEvent event) {
+				clientModel.clientAnhalten();
+				
+			}
+			
+		});
 	}
+	
+	
 }
