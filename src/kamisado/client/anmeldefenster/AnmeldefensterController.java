@@ -147,6 +147,7 @@ public class AnmeldefensterController {
 				InfofensterView iview = new InfofensterView(stage,label);
 				InfofensterController icontroller = new InfofensterController(iview);
 				iview.start();
+				stage.setAlwaysOnTop(true);
 			}
 		});
 		
@@ -157,7 +158,8 @@ public class AnmeldefensterController {
 //				label=new Label(t.getString("Regeln"));
 				InfofensterView iview = new InfofensterView(stage,anmeldeView.regeln);
 				InfofensterController icontroller = new InfofensterController(iview);
-				iview.start();				
+				iview.start();	
+				stage.setAlwaysOnTop(true);
 			}
 			
 		});
