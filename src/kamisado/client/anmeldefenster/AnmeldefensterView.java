@@ -32,7 +32,7 @@ public class AnmeldefensterView {
 	
 	protected MenuBar menuBar;
 	protected Menu menuDatei;
-	public MenuItem menuDateiAbmelden;
+	//public MenuItem menuDateiAbmelden;
 	public MenuItem menuDateiLöschen;
 	protected Menu menuOptionen;
 	protected Menu menuOptionenSprache;
@@ -67,6 +67,7 @@ public class AnmeldefensterView {
 		//sl.setTranslator(new Translator("de"));
 		Translator t = sl.getTranslator();
 		
+		//TODO Carmen Titel muss noch übersetzt werden
 		primaryStage.setTitle(t.getString("Anmeldung"));
 		
 		GridPane gpane=new GridPane();
@@ -90,10 +91,12 @@ public class AnmeldefensterView {
 		menuHilfe.getItems().add(menuHilfeRegeln);
 		
 		menuDatei = new Menu(t.getString("MenuDatei"));
-		menuDateiAbmelden = new MenuItem(t.getString("MenuAbmelden"));
+		//menuDateiAbmelden = new MenuItem(t.getString("MenuAbmelden"));
 		menuDateiLöschen = new MenuItem(t.getString("MenuLöschen"));
-		menuDatei.getItems().addAll(menuDateiAbmelden, menuDateiLöschen);
-		menuDateiAbmelden.setDisable(true);
+		menuDatei.getItems().add(menuDateiLöschen);
+		//menuDatei.getItems().addAll(menuDateiAbmelden, menuDateiLöschen);
+		//menuDateiAbmelden.setDisable(true);
+		//TODO Carmen ist das erst nach Anmeldung sichtbar?
 		menuDateiLöschen.setDisable(true);
 		
 		regeln = new Label(t.getString("Regeln"));
@@ -159,7 +162,7 @@ public class AnmeldefensterView {
 		menuHilfe.setText(t.getString("MenuHilfe"));
 		menuHilfeRegeln.setText(t.getString("MenuRegeln"));
 		menuDatei.setText(t.getString("MenuDatei"));
-		menuDateiAbmelden.setText(t.getString("MenuAbmelden"));
+		//menuDateiAbmelden.setText(t.getString("MenuAbmelden"));
 		menuDateiLöschen.setText(t.getString("MenuLöschen"));
 		anmeldenIPtxt.setText(t.getString("IP"));
 		
