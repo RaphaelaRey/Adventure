@@ -104,7 +104,7 @@ public class ClientView {
         Stage neueStage = new Stage();
         neueStage.setAlwaysOnTop(true);
         AnmeldefensterView neueView = new AnmeldefensterView(neueStage, anmeldeController, clientModel, this);
-        AnmeldefensterController anmeldeController = new AnmeldefensterController(neueView, this);
+        AnmeldefensterController anmeldeController = new AnmeldefensterController(neueView, this, clientModel);
         neueView.start();
 	}
 	

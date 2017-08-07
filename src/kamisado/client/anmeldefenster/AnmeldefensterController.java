@@ -9,6 +9,7 @@ import javafx.event.EventHandler;
 import javafx.scene.control.Label;
 import javafx.stage.Stage;
 import kamisado.ServiceLocator;
+import kamisado.client.ClientModel;
 import kamisado.client.ClientView;
 import kamisado.client.infofenster.InfofensterController;
 import kamisado.client.infofenster.InfofensterView;
@@ -22,15 +23,17 @@ public class AnmeldefensterController {
 	
 	private AnmeldefensterView anmeldeView;
 	private ClientView clientView;
+	private ClientModel clientModel;
 	
 	private static String name;
 	private static String pw;
 	private static String ip;
 	
-	public AnmeldefensterController(AnmeldefensterView anmeldeView, ClientView clientView) {
+	public AnmeldefensterController(AnmeldefensterView anmeldeView, ClientView clientView, ClientModel clientModel) {
 		//TODO wo muss das Textfile gespeichert werden, damit beide Clients auf das selbe File zugreifen bei der Anmeldung
 		this.anmeldeView = anmeldeView;
 		this.clientView= clientView;
+		this.clientModel=clientModel;
 		ServiceLocator sl = ServiceLocator.getServiceLocator();
 		Translator t = sl.getTranslator();
 		
@@ -59,6 +62,7 @@ public class AnmeldefensterController {
 								InfofensterController icontroller = new InfofensterController(iview);
 								iview.start();
 								stage.setAlwaysOnTop(true);
+								clientModel.Verbinden(ip, name, pw);
 								anmeldeView.stop();
 							}else if(parts[0].equals(name)&&!parts[1].equals(pw)){
 								benutzerExistiert = true;
