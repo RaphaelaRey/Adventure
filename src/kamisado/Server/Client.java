@@ -19,7 +19,7 @@ public class Client {
 	protected final static ObservableList<Client> clients = FXCollections.observableArrayList();
 	private final Logger logger = Logger.getLogger("");
 
-	protected Client(ServerModel model, Socket socket) {
+	protected Client(ServerModel model, Socket socket, String name) {
 		this.model = model;
 		this.clientSocket = socket;
 		this.clients.add(Client.this);
