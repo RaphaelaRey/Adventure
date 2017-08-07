@@ -25,6 +25,7 @@ public class AnmeldefensterController {
 	
 	private static String name;
 	private static String pw;
+	private static String ip;
 	
 	public AnmeldefensterController(AnmeldefensterView anmeldeView, ClientView clientView) {
 		//TODO wo muss das Textfile gespeichert werden, damit beide Clients auf das selbe File zugreifen bei der Anmeldung
@@ -37,15 +38,16 @@ public class AnmeldefensterController {
 			public void handle(ActionEvent e){
 				name=anmeldeView.anmeldenNametxt.getText();
 				pw=anmeldeView.anmeldenPwtxt.getText();
+				ip=anmeldeView.anmeldenIPtxt.getText();
 				
 				try {
 					FileReader fr = new FileReader("src/kamisado/registrierungen.txt");
 					BufferedReader reader = new BufferedReader(fr);
 					String zeile;
 					Label label;
-					boolean benutzerExistiert = false; 
+					boolean benutzerExistiert = false;
 					while((zeile=reader.readLine())!=null){
-						String[] parts = zeile.split(",");	
+						String[] parts = zeile.split(",");
 							//Überprüfung der Bedingungen, dass Benutzer angemeldet ist
 							if(parts[0].equals(name)&&parts[1].equals(pw)){
 								benutzerExistiert = true;
@@ -174,6 +176,9 @@ public class AnmeldefensterController {
 	
 	public static String getPasswort(){
 		return pw;
+	}
+	public static String getIP(){
+		return ip;
 	}
 
 }

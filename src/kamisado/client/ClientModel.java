@@ -34,18 +34,21 @@ public class ClientModel {
 			this.name = AnmeldefensterController.getName();
 			this.pw = AnmeldefensterController.getPasswort();
 			ipAdresse = ich.getHostAddress();
-			Verbinden(ipAdresse, name);
+			ipAdresse = AnmeldefensterController.getIP();
+			Verbinden(ipAdresse, name, pw);
 		} catch (Exception e){
 			logger.info(e.toString());
 		}
 	}
 
-	public void Verbinden(String ipAdresse, String name) {
-		
+	public void Verbinden(String ipAdresse, String name, String pw) {
+		 String namePW = name + ",";
 		try{
 			//Verbindung mit Server herstellen
 			this.clientSocket = new Socket(ipAdresse, port);
 			logger.info(ipAdresse + " über Port " + port + " verbunden");
+			
+			
 			
 			//Thread erstellen
 			Runnable a = new Runnable() {
@@ -53,6 +56,7 @@ public class ClientModel {
 				public void run() {
 					try{
 						while(amLaufen == true){
+							//SendenEmpfangen.Senden(clientSocket, namePW);
 							TürmeEmpfangen();
 						}
 					}catch (Exception e){
@@ -101,26 +105,11 @@ public class ClientModel {
 						}	
 						
 						
-						for(int p = 0; p < Türme.length; p++){
-							if(Türme[p].getStroke()==Color.BLACK){
-								for(int l = 0; l < spielbrett.getFelder()[7].length; l++){
-									if(Türme[p].getFill()==spielbrett.getFelder()[l][7].getFill()){
-										Türme[p].setKoordinaten(spielbrett.getFelder()[l][7].getKoordinaten());
-										Türme[p].setStrokeWidth(spielbrett.STROKEWIDTHTÜRMESTANDARD);
-										spielbrett.getPane().add(Türme[p], l, 7);	
-										
-									}
-								}
-							}else{
-								for(int l = 0; l < spielbrett.getFelder()[0].length; l++){
-									if(Türme[p].getFill()==spielbrett.getFelder()[l][0].getFill()){
-										Türme[p].setKoordinaten(spielbrett.getFelder()[l][0].getKoordinaten());
-										Türme[p].setStrokeWidth(spielbrett.STROKEWIDTHTÜRMESTANDARD);
-										spielbrett.getPane().add(Türme[p], l, 0);	
-										
-									}
-								}
-							}
+						for(int i = 0; i < Türme.length; i++){
+							int xKoords = Türme[i].getKoordinaten()[0];
+							int yKoords = Türme[i].getKoordinaten()[1];
+							spielbrett.getPane().add(Türme[i], xKoords, yKoords);
+							
 						}
 					}
 		});
