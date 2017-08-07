@@ -41,12 +41,7 @@ public class ServerModel extends Thread{
 				//Verbindung mit Client herstellen
 				Socket clientSocket = server.accept();
 				logger.info(clientSocket.getInetAddress().getHostName() + " verbunden");
-				ObjectInputStream empfangen;
-				empfangen = new ObjectInputStream(clientSocket.getInputStream());
-				this.name = (String) empfangen.readObject();
-				logger.info("Name empfangen");
-				empfangen.close();
-				
+								
 				client = new Client(ServerModel.this, clientSocket, this.name);
 				
 				

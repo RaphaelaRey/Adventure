@@ -47,21 +47,6 @@ public class ClientModel {
 			this.clientSocket = new Socket(ipAdresse, port);
 			logger.info(ipAdresse + " über Port " + port + " verbunden");
 			
-			ObjectOutputStream senden;
-			try{
-				//Stream erstellen
-				senden = new ObjectOutputStream(clientSocket.getOutputStream());
-				logger.info("OutputStream erstellt");
-				
-				//neueKoordinaten an Client senden
-				senden.writeObject(this.name);
-				senden.flush();
-				logger.info("Name gesendet");
-				senden.close();
-			} catch (Exception e){
-				logger.info(e.toString());
-			}
-	
 			//Thread erstellen
 			Runnable a = new Runnable() {
 				@Override
