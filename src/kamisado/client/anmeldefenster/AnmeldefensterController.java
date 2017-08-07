@@ -23,6 +23,9 @@ public class AnmeldefensterController {
 	private AnmeldefensterView anmeldeView;
 	private ClientView clientView;
 	
+	private String name;
+	private String pw;
+	
 	public AnmeldefensterController(AnmeldefensterView anmeldeView, ClientView clientView) {
 		//TODO wo muss das Textfile gespeichert werden, damit beide Clients auf das selbe File zugreifen bei der Anmeldung
 		this.anmeldeView = anmeldeView;
@@ -32,8 +35,8 @@ public class AnmeldefensterController {
 		
 		anmeldeView.btnAnmelden.setOnAction(new EventHandler<ActionEvent>(){
 			public void handle(ActionEvent e){
-				String aname=anmeldeView.anmeldenNametxt.getText();
-				String apw=anmeldeView.anmeldenPwtxt.getText();
+				name=anmeldeView.anmeldenNametxt.getText();
+				pw=anmeldeView.anmeldenPwtxt.getText();
 				
 				try {
 					FileReader fr = new FileReader("src/kamisado/registrierungen.txt");
@@ -44,7 +47,7 @@ public class AnmeldefensterController {
 					while((zeile=reader.readLine())!=null){
 						String[] parts = zeile.split(",");	
 							//Überprüfung der Bedingungen, dass Benutzer angemeldet ist
-							if(parts[0].equals(aname)&&parts[1].equals(apw)){
+							if(parts[0].equals(name)&&parts[1].equals(pw)){
 								benutzerExistiert = true;
 								clientView.menuDateiAbmelden.setDisable(false);
 								clientView.menuDateiLöschen.setDisable(false);
@@ -55,7 +58,7 @@ public class AnmeldefensterController {
 								InfofensterController icontroller = new InfofensterController(iview);
 								iview.start();
 								anmeldeView.stop();
-							}else if(parts[0].equals(aname)&&!parts[1].equals(apw)){
+							}else if(parts[0].equals(name)&&!parts[1].equals(pw)){
 								benutzerExistiert = true;
 								//Meldung, dass Passwort falsch ist
 								Stage stage = new Stage();
@@ -83,8 +86,8 @@ public class AnmeldefensterController {
 		
 		anmeldeView.btnRegistrieren.setOnAction(new EventHandler<ActionEvent> (){
 			public void handle(ActionEvent e2){
-				 String rname = anmeldeView.registrierenNametxt.getText();
-				 String rpw = anmeldeView.registrierenPwtxt.getText();	
+				 name = anmeldeView.registrierenNametxt.getText();
+				 pw = anmeldeView.registrierenPwtxt.getText();	
 				 			 				 
 				 //überprüfen, ob Benutzername bereits vergeben ist
 				 try {
@@ -96,7 +99,7 @@ public class AnmeldefensterController {
 					while((zeile=reader.readLine())!= null){
 						String[] parts = zeile.split(",");
 							
-						if(parts[0].equals(rname)){
+						if(parts[0].equals(name)){
 							//Meldung, dasss Benutzername bereits vergeben ist
 							Stage stage = new Stage();
 							label = new Label(t.getString("BenutzernameVergeben"));
@@ -107,10 +110,10 @@ public class AnmeldefensterController {
 					}
 					//Wenn der Benutzername nicht vergeben ist und das Passwort genügend Zeichen beinhaltet, werden die Daten in das File geschrieben
 					if(benutzerVergeben==false){
-						if(rpw.length()>=5){
+						if(pw.length()>=5){
 							FileWriter fw = new FileWriter("registrierungen.txt", true);
-							fw.write(rname+",");
-							fw.write(rpw);
+							fw.write(name+",");
+							fw.write(pw);
 							fw.write("\n");
 							fw.close();
 							
@@ -164,6 +167,14 @@ public class AnmeldefensterController {
 		
 		
 		
+	}
+	
+	public String getName(){
+		return name;
+	}
+	
+	public String getPasswort(){
+		return pw;
 	}
 
 }
