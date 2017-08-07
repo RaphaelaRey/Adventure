@@ -19,15 +19,12 @@ public class Client {
 	protected final static ObservableList<Client> clients = FXCollections.observableArrayList();
 	private final Logger logger = Logger.getLogger("");
 
-	protected Client(ServerModel model, Socket socket) {
+	protected Client(ServerModel model, Socket socket, String name) {
 		this.model = model;
 		this.clientSocket = socket;
 		this.clients.add(Client.this);
 		logger.info("Neuer Client zu Liste hinzugefügt " + clientSocket);
 		
-		Runnable r = new Runnable() {
-			@Override
-			public void run() {
 				while(true) {
 					Turm[] tmpTürme = SendenEmpfangen.Empfangen(clientSocket);
 					logger.info("Daten Empfangen von Client ");
@@ -37,13 +34,7 @@ public class Client {
 						logger.info("neue Daten gesendet an" + clientSocket.getInetAddress().getHostName());
 					}
 				}
-			}
-		};	
-		Thread t = new Thread(r);
-		t.start();
-				
-		
-		
+			
 	}
         
 }

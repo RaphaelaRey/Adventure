@@ -1,10 +1,8 @@
 package kamisado.client;
 
 import java.net.InetAddress;
-import java.net.NetworkInterface;
 import java.net.Socket;
 import java.util.ArrayList;
-import java.util.Enumeration;
 import java.util.Iterator;
 import java.util.logging.Logger;
 
@@ -45,7 +43,7 @@ public class ClientModel {
 			//Verbindung mit Server herstellen
 			this.clientSocket = new Socket(ipAdresse, port);
 			logger.info(ipAdresse + " über Port " + port + " verbunden");
-	
+			
 			//Thread erstellen
 			Runnable a = new Runnable() {
 				@Override

@@ -88,7 +88,7 @@ public class ClientView {
                   
         Stage neueStage = new Stage();
         neueStage.setAlwaysOnTop(true);
-        AnmeldefensterView neueView = new AnmeldefensterView(neueStage, anmeldeController, clientModel);
+        AnmeldefensterView neueView = new AnmeldefensterView(neueStage, anmeldeController, clientModel, this);
         AnmeldefensterController anmeldeController = new AnmeldefensterController(neueView, this);
         neueView.start();
 	}
@@ -101,7 +101,7 @@ public class ClientView {
 		stage.hide();
 	}
 	
-	protected void updateTexts(){
+	public void updateTexts(){
 		Translator t=ServiceLocator.getServiceLocator().getTranslator();
 		menuOptionen.setText(t.getString("MenuOptionen"));
 		menuOptionenSprache.setText(t.getString("MenuSprache"));
@@ -111,8 +111,5 @@ public class ClientView {
 		menuDateiAbmelden.setText(t.getString("MenuAbmelden"));
 		menuDateiLöschen.setText(t.getString("MenuLöschen"));
 		//controller.startMeldung.setText(t.getString("StartMeldung"));
-		
-		anmeldeView.regeln.setText(t.getString("regeln"));
-
 		}
 }

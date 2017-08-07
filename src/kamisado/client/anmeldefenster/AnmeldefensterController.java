@@ -43,7 +43,7 @@ public class AnmeldefensterController {
 					BufferedReader reader = new BufferedReader(fr);
 					String zeile;
 					Label label;
-					boolean benutzerExistiert = false;
+					boolean benutzerExistiert = false; 
 					while((zeile=reader.readLine())!=null){
 						String[] parts = zeile.split(",");	
 							//Überprüfung der Bedingungen, dass Benutzer angemeldet ist
@@ -150,6 +150,7 @@ public class AnmeldefensterController {
 				InfofensterView iview = new InfofensterView(stage,label);
 				InfofensterController icontroller = new InfofensterController(iview);
 				iview.start();
+				stage.setAlwaysOnTop(true);
 			}
 		});
 		
@@ -160,7 +161,8 @@ public class AnmeldefensterController {
 //				label=new Label(t.getString("Regeln"));
 				InfofensterView iview = new InfofensterView(stage,anmeldeView.regeln);
 				InfofensterController icontroller = new InfofensterController(iview);
-				iview.start();				
+				iview.start();	
+				stage.setAlwaysOnTop(true);
 			}
 			
 		});
