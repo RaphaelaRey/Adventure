@@ -25,9 +25,6 @@ public class Client {
 		this.clients.add(Client.this);
 		logger.info("Neuer Client zu Liste hinzugefügt " + clientSocket);
 		
-		Runnable r = new Runnable() {
-			@Override
-			public void run() {
 				while(true) {
 					Turm[] tmpTürme = SendenEmpfangen.Empfangen(clientSocket);
 					logger.info("Daten Empfangen von Client ");
@@ -37,13 +34,7 @@ public class Client {
 						logger.info("neue Daten gesendet an" + clientSocket.getInetAddress().getHostName());
 					}
 				}
-			}
-		};	
-		Thread t = new Thread(r);
-		t.start();
-				
-		
-		
+			
 	}
         
 }

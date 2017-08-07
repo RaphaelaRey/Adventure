@@ -5,10 +5,6 @@ import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.util.logging.Logger;
 
-import kamisado.Server.ServerModel;
-import kamisado.client.ClientModel;
-import kamisado.client.ClientView;
-
 /**
  * @author Tobias Deprato
  */
