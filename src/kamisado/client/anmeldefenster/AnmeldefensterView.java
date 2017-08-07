@@ -114,7 +114,7 @@ public class AnmeldefensterView {
 		HBox hbox = new HBox();
 		anmeldenNametxt=new TextField(t.getString("Benutzername"));
 		anmeldenPwtxt = new TextField(t.getString("Passwort"));
-		anmeldenIPtxt = new TextField(clientModel.getIP());
+		anmeldenIPtxt = new TextField(t.getString("IP"));
 		btnAnmelden = new Button(t.getString("ButtonAnmelden"));
 		hbox.getChildren().addAll(anmeldenNametxt, anmeldenPwtxt,anmeldenIPtxt, btnAnmelden);
 		
