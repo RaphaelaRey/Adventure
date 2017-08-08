@@ -101,7 +101,7 @@ public class SendenEmpfangen {
 	
 	public static Turm[] Empfangen(Socket clientSocket){
 		ObjectInputStream empfangen;
-		Turm[] in;
+		Turm[] in = new Turm[16];
 		try{
 			empfangen = new ObjectInputStream(clientSocket.getInputStream());
 			logger.info("InputStream erstellt");
@@ -109,11 +109,11 @@ public class SendenEmpfangen {
 			//neueKoordinaten von Client empfangen
 			 in = (Turm[]) empfangen.readObject();
 			logger.info("Neue Türme erhalten");
-			setTürme(in);			
+//			setTürme(in);			
 		} catch (Exception e){
 			logger.info(e.toString());
 		}
-		return neueTürme;
+		return in;
 	}	
 	
 	public static ArrayList<int[]> EmpfangenMF(Socket clientSocket){

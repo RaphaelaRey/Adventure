@@ -16,6 +16,7 @@ public class Turm extends Circle implements Serializable {
 	private int turmRadius;
 	private String füllFarbe;
 	private String strokeFarbe;
+	private boolean aktiverTurm;
 
 	// Konstruktor: Der Radius und die Koordinaten des Kreises (x- und y-Koordinate in Array) werden mitgegeben
 	public Turm(int radius, int[] koord) {
@@ -53,5 +54,13 @@ public class Turm extends Circle implements Serializable {
 
 	public void setTurmRadius(int turmRadius) {
 		this.turmRadius = turmRadius;
+	}
+
+	public boolean isAktiverTurm() {
+		return aktiverTurm;
+	}
+
+	public void setAktiverTurm(boolean aktiverTurm) {
+		this.aktiverTurm = aktiverTurm;
 	}
 }
