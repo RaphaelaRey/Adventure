@@ -69,9 +69,12 @@ public class ClientModel {
 	public void TürmeEmpfangen(){
 		Turm[] Türme = Spielbrett.getTürme();
 		Turm[] tmpTürme = SendenEmpfangen.Empfangen(clientSocket);
-		logger.info("Türme empfangen");
-		UpdateSpielfeld(Türme, tmpTürme);
-		logger.info("Spielfeld aktualisiert");		
+		if(tmpTürme != null && tmpTürme[0] != null) {
+			logger.info("Türme empfangen");
+			UpdateSpielfeld(Türme, tmpTürme);
+			logger.info("Spielfeld aktualisiert");
+		}
+		
 	}	
 	
 	public void TürmeSenden(){
