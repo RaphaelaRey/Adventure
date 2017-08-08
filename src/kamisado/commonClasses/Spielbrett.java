@@ -107,6 +107,8 @@ public class Spielbrett{
 			schwarzeTürme[i].setStroke(Color.BLACK);
 			schwarzeTürme[i].setStrokeWidth(STROKEWIDTHTÜRMESTANDARD);
 			schwarzeTürme[i].setFill(felder[i][7].getFill());
+			schwarzeTürme[i].setFüllFarbe(felder[i][7].getFill());
+			schwarzeTürme[i].setTurmRadius(TURMDURCHMESSER);
 			felder[i][7].setFeldBesetzt(true);
 			
     	}
@@ -117,6 +119,8 @@ public class Spielbrett{
 			weisseTürme[i].setStroke(Color.WHITE);
 			weisseTürme[i].setStrokeWidth(STROKEWIDTHTÜRMESTANDARD);
 			weisseTürme[i].setFill(felder[i][0].getFill());
+			weisseTürme[i].setFüllFarbe(felder[i][0].getFill());
+			weisseTürme[i].setTurmRadius(TURMDURCHMESSER);
 			felder[i][0].setFeldBesetzt(true);
     	}
     	// Weisse und schwarze Türme in gemeinsames Array kopieren
