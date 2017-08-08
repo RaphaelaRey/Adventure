@@ -112,7 +112,7 @@ public class ClientController {
 								InfofensterController icontroller = new InfofensterController(iview);
 								iview.start();
 							} else if(spielbrett.getGewinner() == Color.WHITE){
-								//Gewinnermeldung TODO Carmen Frage ob erneut gespielt werden will
+								//Gewinnermeldung 
 								Stage stage = new Stage();
 								InfofensterView iview = new InfofensterView(stage,view.GewinnerMeldungWeiss);
 								InfofensterController icontroller = new InfofensterController(iview);
