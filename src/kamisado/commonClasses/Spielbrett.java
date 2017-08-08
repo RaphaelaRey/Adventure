@@ -23,6 +23,8 @@ public class Spielbrett{
 	private static Color blockadenVerursacher = null;
 	private static int [] aktiverTurmKoordinaten = new int [2];
 	private static Color gewinner;
+	
+	private static String [] benutzerFarben = {"Color.BLACK", "Color.WHITE"};
 
 	// Infos des Spielbretts, der Türme und Felder als Konstanten definieren
 	public final int SPIELBRETTHÖHE = 886;
@@ -223,5 +225,12 @@ public class Spielbrett{
 	}
 	public static void setBlockadenVerursacher(Color blockadenVerursacher) {
 		Spielbrett.blockadenVerursacher = blockadenVerursacher;
+	}
+
+	public static String[] getBenutzerFarben() {
+		return benutzerFarben;
+	}
+	public static void setBenutzerFarben(String[] benutzerFarben) {
+		Spielbrett.benutzerFarben = benutzerFarben;
 	}
 }
