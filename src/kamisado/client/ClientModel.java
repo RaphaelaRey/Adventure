@@ -25,6 +25,7 @@ public class ClientModel {
 	private static String pw;
 	private static String ipAdresse;
 	private int port = 444;
+	private int[] neueKoordinaten;
 	
 	private final Logger logger = Logger.getLogger("");
 	
@@ -60,6 +61,8 @@ public class ClientModel {
 						while(amLaufen == true){
 							
 							TürmeEmpfangen();
+							KoordinatenEmpfangen();
+							Spielbrett.setAktiverTurmKoordinaten(neueKoordinaten);
 						}
 					}catch (Exception e){
 						logger.info(e.toString());
@@ -77,24 +80,31 @@ public class ClientModel {
 	public void TürmeEmpfangen(){
 		Turm[] Türme = Spielbrett.getTürme();
 		Turm[] tmpTürme = SendenEmpfangen.Empfangen(clientSocket);
-		int[] tmpKoord = SendenEmpfangen.EmpfangenInt(clientSocket);
-		logger.info("Daten empfangen");
+		logger.info("Türme empfangen");
 		//Spielbrett.setTürme(tmpTürme);
 		//logger.info("Türme ersetzt auf Client");
-		UpdateSpielfeld(tmpTürme, Türme, tmpKoord);
+		UpdateSpielfeld(tmpTürme, Türme);
 		logger.info("Spielfeld aktualisiert");
 				
 		
 		
 	}
 	
+	public void KoordinatenEmpfangen(){
+		int[] tmpKoord = SendenEmpfangen.EmpfangenInt(clientSocket);
+		logger.info("Koordinaten empfangen");
+		neueKoordinaten = tmpKoord;
+		
+	}
+	
 	public void TürmeSenden(){
-		SendenEmpfangen.Senden(clientSocket, Spielbrett.getTürme(), Spielbrett.getAktiverTurmKoordinaten());
+		SendenEmpfangen.Senden(clientSocket, Spielbrett.getTürme());
+		SendenEmpfangen.Senden(clientSocket, neueKoordinaten);
 		logger.info("Daten gesendet");
 	}
 	
-	public void UpdateSpielfeld(Turm[] türme, Turm[]alteTürme, int[] aktiverTurm){
-		Spielbrett.setAktiverTurmKoordinaten(aktiverTurm);
+	public void UpdateSpielfeld(Turm[] türme, Turm[]alteTürme){
+	
 		
 		Platform.runLater(new Runnable(){
 					@Override
