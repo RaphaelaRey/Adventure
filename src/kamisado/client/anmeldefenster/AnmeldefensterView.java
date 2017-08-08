@@ -100,10 +100,7 @@ public class AnmeldefensterView {
 		menuDatei = new Menu(t.getString("MenuDatei"));
 		menuDateiLöschen = new MenuItem(t.getString("MenuLöschen"));
 		menuDatei.getItems().add(menuDateiLöschen);
-		
-		//TODO Carmen ist das erst nach Anmeldung sichtbar?
-		//menuDateiLöschen.setDisable(true);
-		
+	
 		regeln = new Label(t.getString("Regeln"));
 		startMeldung = new Label(t.getString("StartMeldung"));
 		PWfalschMeldung = new Label(t.getString("PWfalschMeldung"));

@@ -77,7 +77,7 @@ public class LöschenfensterController {
 								schreiben.write("\n");
 								schreiben.close();
 							}	
-							//TODO Carmen neues Infofenster mit Meldung, dass löschen erfolgreich war
+							//Meldung, dass Account löschen erfolgreich war
 							Stage stage = new Stage();
 							InfofensterView iview = new InfofensterView(stage,anmeldeView.ErfolgreichMeldung);
 							InfofensterController icontroller = new InfofensterController(iview);
@@ -86,7 +86,7 @@ public class LöschenfensterController {
 							break;
 						}else if(parts[0].equals(name)&&!parts[1].equals(pw)){
 							benutzerExistiert = true;
-							//TODO Carmen neues Infofenster mit Meldung, dass PW falsch ist
+							//Meldung, dass Passwort falsch ist
 							Stage stage = new Stage();
 							InfofensterView iview = new InfofensterView(stage,anmeldeView.PasswortFalschMeldung);
 							InfofensterController icontroller = new InfofensterController(iview);
@@ -95,7 +95,7 @@ public class LöschenfensterController {
 						}
 					}
 					if(benutzerExistiert==false){
-						//TODO Carmen Meldung, dass Benutzer nicht existiert
+						//Meldung, dass Benutzer, welcher gelöscht werden soll, nicht im File gespeichert ist
 						Stage stage = new Stage();
 						InfofensterView iview = new InfofensterView(stage,anmeldeView.BenutzerExistiertNichtMeldung);
 						InfofensterController icontroller = new InfofensterController(iview);
