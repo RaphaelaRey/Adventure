@@ -56,7 +56,7 @@ public class ServerModel extends Thread{
 	
 	public boolean AnmeldungPrüfen(String AnmeldeInfos){
 		boolean anmeldung = false;
-		 // TODO Carmen clientController hierhin auslagern
+		 // TODO Carmen clientController hierhin auslagern 
 		
 		return anmeldung;
 	}
