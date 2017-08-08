@@ -110,8 +110,10 @@ public class ClientModel {
 							int xKoords = türme[i].getKoordinaten()[0];
 							int yKoords = türme[i].getKoordinaten()[1];
 							türme[i].setRadius(40);
+							türme[i].setStrokeWidth(3);
 							spielbrett.getPane().add(türme[i], xKoords, yKoords);
 							türme[i].setFill(Color.valueOf(türme[i].getFüllFarbe()));
+							türme[i].setStroke(Color.valueOf(türme[i].getStrokeFarbe()));
 							spielbrett.getFelder()[xKoords][yKoords].setFeldBesetzt(true);
 							
 						}
