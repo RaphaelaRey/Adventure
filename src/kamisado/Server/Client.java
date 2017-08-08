@@ -40,7 +40,7 @@ public class Client {
 					logger.info("Daten Empfangen von Client ");
 							
 					for (Client c : clients) {
-//						SendenEmpfangen.Senden(c.clientSocket, tmpTürme);
+						SendenEmpfangen.Senden(c.clientSocket, tmpTürme);
 //						SendenEmpfangen.Senden(c.clientSocket, tmpKoord);
 //						SendenEmpfangen.Senden(c.clientSocket, tmpMFelder);
 						logger.info("neue Daten gesendet an" + clientSocket.getInetAddress().getHostName());

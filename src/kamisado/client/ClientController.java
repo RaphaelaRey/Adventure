@@ -126,6 +126,8 @@ public class ClientController {
 							// Koordinaten des nächsten aktiven Turms ausserhalb der for-Schleife definieren
 							spielbrett.setAktiverTurmKoordinaten(nächsterAktiverTurm);	
 							
+							clientModel.getTurm(nächsterAktiverTurm).setAktiverTurm(true);
+							
 						}
 						clientModel.TürmeSenden();
 					}					

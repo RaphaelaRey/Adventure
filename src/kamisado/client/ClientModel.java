@@ -142,12 +142,11 @@ public class ClientModel {
 	public Turm getTurm(int[] turmKoordinaten){
 		Turm[] türme = Spielbrett.getTürme();
 		for(int i = 0; i < türme.length; i++){
-				if(türme[i].getKoordinaten() == turmKoordinaten){
-					this.t = türme[i];
-					this.turmInt = i;
+				if(koordVergleich(türme[i].getKoordinaten(), turmKoordinaten)){
+					return türme[i];
 				}
 		}
-		return t;
+		return null;
 	}
 	
 	public Feld getFeld(int[] feldKoordinaten){
