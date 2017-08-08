@@ -1,6 +1,7 @@
 package kamisado.Server;
 
 import java.net.Socket;
+import java.util.ArrayList;
 import java.util.logging.Logger;
 
 import javafx.collections.FXCollections;
@@ -36,11 +37,13 @@ public class Client {
 				while(true) {
 					Turm[] tmpTürme = SendenEmpfangen.Empfangen(clientSocket);
 					int[] tmpKoord = SendenEmpfangen.EmpfangenInt(clientSocket);
+					ArrayList<int[]> tmpMFelder = SendenEmpfangen.EmpfangenMF(clientSocket);
 					logger.info("Daten Empfangen von Client ");
 							
 					for (Client c : clients) {
 						SendenEmpfangen.Senden(c.clientSocket, tmpTürme);
 						SendenEmpfangen.Senden(c.clientSocket, tmpKoord);
+						SendenEmpfangen.Senden(c.clientSocket, tmpMFelder);
 						logger.info("neue Daten gesendet an" + clientSocket.getInetAddress().getHostName());
 					}
 				}

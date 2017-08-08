@@ -36,7 +36,7 @@ public class Spielbrett{
 	public final int TURMDURCHMESSER = 40;
 	
 	// Zweidimensionales Array für alle Felder erstellen
-	private Feld [][] felder = new Feld [8][8];	
+	private static Feld [][] felder = new Feld [8][8];	
 	
 	// Array mit Koordinaten der farbigen Felder erstellen
     private final static int [][] ORANGEFELDER = {{0,0},{1,1},{2,2},{3,3},{4,4},{5,5},{6,6},{7,7}};
@@ -58,7 +58,7 @@ public class Spielbrett{
     private static Turm [] türme = new Turm [16];
     
     // Array für die Koordinaten der möglichen Felder erstellen
-	private ArrayList<int[]> möglicheFelder = new ArrayList<int[]>();
+	private static ArrayList<int[]> möglicheFelder = new ArrayList<int[]>();
     
 	// Gridpane für Spielbrett erstellen
 	private GridPane gridpane = new GridPane(); 
@@ -180,18 +180,18 @@ public class Spielbrett{
 		this.gridpane = pane;
 	}
 
-	public Feld[][] getFelder() {
+	public static Feld[][] getFelder() {
 		return felder;
 	}
 	public void setFelder(Feld[][] felder) {
 		this.felder = felder;
 	}
 
-	public ArrayList<int[]> getMöglicheFelder() {
+	public static ArrayList<int[]> getMöglicheFelder() {
 		return möglicheFelder;
 	}
-	public void setMöglicheFelder(ArrayList<int[]> möglicheFelder) {
-		this.möglicheFelder = möglicheFelder;
+	public static void setMöglicheFelder(ArrayList<int[]> möglicheFelder) {
+		Spielbrett.möglicheFelder = möglicheFelder;
 	}
 
 	public Color getGewinner() {
