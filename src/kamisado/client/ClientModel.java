@@ -19,7 +19,7 @@ public class ClientModel {
 	
 	protected Spielbrett spielbrett;
 
-	protected transient Socket clientSocket;
+	protected Socket clientSocket;
 	private boolean amLaufen = true;
 	private static String name;
 	private static String pw;
