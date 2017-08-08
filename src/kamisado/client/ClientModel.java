@@ -63,6 +63,7 @@ public class ClientModel {
 							TürmeEmpfangen();
 							KoordinatenEmpfangen();
 							Spielbrett.setAktiverTurmKoordinaten(neueKoordinaten);
+							möglicheFelderAnzeigen(neueKoordinaten);
 						}
 					}catch (Exception e){
 						logger.info(e.toString());
