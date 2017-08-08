@@ -416,7 +416,7 @@ public class ClientModel {
 			Turm[]türme, Feld[][]felder, ArrayList<int[]> möglicheFelder){
 		int xKoords = turmKoordinaten[0];											
 		int yKoords = turmKoordinaten[1];	
-		// TODO Löschen wenn nicht funktioniert
+		// TODO Raphaela Löschen wenn nicht funktioniert
 //		for(int i = 1; i < felder[0].length; i++){
 //			Feld möglichGeradeaus;
 //			Feld möglichDiagRechts;
