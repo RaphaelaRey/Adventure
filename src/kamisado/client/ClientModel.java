@@ -77,10 +77,11 @@ public class ClientModel {
 	public void TürmeEmpfangen(){
 		Turm[] Türme = Spielbrett.getTürme();
 		Turm[] tmpTürme = SendenEmpfangen.Empfangen(clientSocket);
+		int[] tmpKoord = SendenEmpfangen.EmpfangenInt(clientSocket);
 		logger.info("Daten empfangen");
 		//Spielbrett.setTürme(tmpTürme);
 		//logger.info("Türme ersetzt auf Client");
-		UpdateSpielfeld(tmpTürme, Türme);
+		UpdateSpielfeld(tmpTürme, Türme, tmpKoord);
 		logger.info("Spielfeld aktualisiert");
 				
 		
@@ -88,11 +89,12 @@ public class ClientModel {
 	}
 	
 	public void TürmeSenden(){
-		SendenEmpfangen.Senden(clientSocket, Spielbrett.getTürme());
+		SendenEmpfangen.Senden(clientSocket, Spielbrett.getTürme(), Spielbrett.getAktiverTurmKoordinaten());
 		logger.info("Daten gesendet");
 	}
 	
-	public void UpdateSpielfeld(Turm[] türme, Turm[]alteTürme){
+	public void UpdateSpielfeld(Turm[] türme, Turm[]alteTürme, int[] aktiverTurm){
+		Spielbrett.setAktiverTurmKoordinaten(aktiverTurm);
 		
 		Platform.runLater(new Runnable(){
 					@Override

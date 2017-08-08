@@ -143,12 +143,7 @@ public class Spielbrett{
     }
  	
  	// Getter und setter
- 	public int[] getAktiverTurmKoordinaten() {
- 		return aktiverTurmKoordinaten;
- 	}
- 	public void setAktiverTurmKoordinaten(int[] aktiverTurmKoordinaten) {
- 		this.aktiverTurmKoordinaten = aktiverTurmKoordinaten;
- 	}
+ 	
  	
 	public boolean istTurmBewegt() {
 		return turmBewegt;
@@ -232,5 +227,13 @@ public class Spielbrett{
 	}
 	public static void setBenutzerFarben(String[] benutzerFarben) {
 		Spielbrett.benutzerFarben = benutzerFarben;
+	}
+
+	public static int [] getAktiverTurmKoordinaten() {
+		return aktiverTurmKoordinaten;
+	}
+
+	public static void setAktiverTurmKoordinaten(int [] aktiverTurmKoordinaten) {
+		Spielbrett.aktiverTurmKoordinaten = aktiverTurmKoordinaten;
 	}
 }

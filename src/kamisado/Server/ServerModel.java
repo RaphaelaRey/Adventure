@@ -54,5 +54,12 @@ public class ServerModel extends Thread{
 		}
 	}
 	
+	public boolean AnmeldungPrüfen(String AnmeldeInfos){
+		boolean anmeldung = false;
+		
+		
+		return anmeldung;
+	}
+	
 }
 
