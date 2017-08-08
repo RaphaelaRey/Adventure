@@ -108,6 +108,7 @@ public class ClientModel {
 							int xKoords = türme[i].getKoordinaten()[0];
 							int yKoords = türme[i].getKoordinaten()[1];
 							spielbrett.getPane().add(türme[i], xKoords, yKoords);
+							spielbrett.getFelder()[xKoords][yKoords].setFeldBesetzt(true);
 							
 						}
 						Spielbrett.setTürme(türme);
