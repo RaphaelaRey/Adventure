@@ -16,7 +16,7 @@ public class SendenEmpfangen {
 	private static String namePW;
 	private static int[] koordinaten;
 	
-	public static void Senden(Socket clientSocket, Turm[] Türme, int[] koordinaten){
+	public static void Senden(Socket clientSocket, Turm[] Türme){
 		ObjectOutputStream senden;
 		try{
 			//Stream erstellen
@@ -25,9 +25,8 @@ public class SendenEmpfangen {
 			
 			//neueKoordinaten an Client senden
 			senden.writeObject(Türme);
-			senden.writeObject(koordinaten);
 			senden.flush();
-			logger.info("Neue Koordinaten gesendet");
+			logger.info("Neue Türme gesendet");
 		} catch (Exception e){
 			logger.info(e.toString());
 		}
@@ -44,6 +43,22 @@ public class SendenEmpfangen {
 			senden.writeObject(namePW);
 			senden.flush();
 			logger.info("Anmeldedaten gesendet");
+		} catch (Exception e){
+			logger.info(e.toString());
+		}
+	}
+	
+	public static void Senden(Socket clientSocket, int[] Koord){
+		ObjectOutputStream senden;
+		try{
+			//Stream erstellen
+			senden = new ObjectOutputStream(clientSocket.getOutputStream());
+			logger.info("OutputStream erstellt");
+			
+			//neueKoordinaten an Client senden
+			senden.writeObject(Koord);
+			senden.flush();
+			logger.info("Neue Koordinaten gesendet");
 		} catch (Exception e){
 			logger.info(e.toString());
 		}
