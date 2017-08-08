@@ -73,6 +73,13 @@ public class ClientModel {
 			logger.info("Türme empfangen");
 			UpdateSpielfeld(Türme, tmpTürme);
 			logger.info("Spielfeld aktualisiert");
+			
+			for (int i = 0; i < tmpTürme.length; i++){
+				if(tmpTürme[i].isAktiverTurm()==true){
+					Spielbrett.setAktiverTurmKoordinaten(tmpTürme[i].getKoordinaten());
+				}
+			}
+			
 		}
 		
 	}	

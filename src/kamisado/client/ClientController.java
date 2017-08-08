@@ -37,8 +37,8 @@ public class ClientController {
 					if(spielbrett.istTurmBewegt()==false && t.getStroke()==Color.BLACK){	
 						clientModel.turmStrokeWidthZurücksetzen();
 						t.setStrokeWidth(spielbrett.STROKEWIDTHAUSGEWÄHLTERTURM);
-						spielbrett.setAktiverTurmKoordinaten(t.getKoordinaten());
-						clientModel.möglicheFelderAnzeigen(spielbrett.getAktiverTurmKoordinaten());
+						Spielbrett.setAktiverTurmKoordinaten(t.getKoordinaten());	// TODO Raphaela weiss das der andere Client?
+						clientModel.möglicheFelderAnzeigen(Spielbrett.getAktiverTurmKoordinaten());
 						
 					}				
   				}
@@ -46,17 +46,17 @@ public class ClientController {
 		}
 		
 		// Turm bewegen, überprüfen ob jemand die Grundlinie des Gegners erreicht hat, ob jemand gewonnen hat und das Spiel zurücksetzen			
-		for(int i = 0; i < spielbrett.getFelder().length; i++){
-			for (int j = 0; j < spielbrett.getFelder().length; j++){
-				Feld ausgewähltesFeld = spielbrett.getFelder()[i][j];
+		for(int i = 0; i < Spielbrett.getFelder().length; i++){
+			for (int j = 0; j < Spielbrett.getFelder().length; j++){
+				Feld ausgewähltesFeld = Spielbrett.getFelder()[i][j];
 				ausgewähltesFeld.setOnMouseClicked(new EventHandler<MouseEvent>(){
 					@Override
 					public void handle(MouseEvent event){
 						Label label;
-						if (spielbrett.getMöglicheFelder().contains(ausgewähltesFeld.getKoordinaten())){
+						if (Spielbrett.getMöglicheFelder().contains(ausgewähltesFeld.getKoordinaten())){
 							int[] nächsterAktiverTurm = new int[2];
 							for (int k = 0; k < Spielbrett.getTürme().length; k++){
-								if(clientModel.koordVergleich(Spielbrett.getTürme()[k].getKoordinaten(), spielbrett.getAktiverTurmKoordinaten())){ //aktiver Turm herausfinden
+								if(clientModel.koordVergleich(Spielbrett.getTürme()[k].getKoordinaten(), Spielbrett.getAktiverTurmKoordinaten())){ //aktiver Turm herausfinden
 									clientModel.turmBewegen(ausgewähltesFeld, k);
 									// Überprüfen, ob es einen Gewinner gibt 
 									spielbrett.setGewinner(clientModel.gewinnerDefinieren(ausgewähltesFeld));
@@ -121,10 +121,11 @@ public class ClientController {
 							
 							// Spiel zurücksetzen nach Gewinn 
 							if(spielbrett.getGewinner()!=null){
-								clientModel.spielZurücksetzen(spielbrett.getMöglicheFelder(), spielbrett.getFelder(), Spielbrett.getTürme());	
+								clientModel.spielZurücksetzen(Spielbrett.getMöglicheFelder(), Spielbrett.getFelder(), Spielbrett.getTürme());	
 							}
 							// Koordinaten des nächsten aktiven Turms ausserhalb der for-Schleife definieren
-							spielbrett.setAktiverTurmKoordinaten(nächsterAktiverTurm);	
+							
+//							Spielbrett.setAktiverTurmKoordinaten(nächsterAktiverTurm);	
 							
 							clientModel.getTurm(nächsterAktiverTurm).setAktiverTurm(true);
 							
