@@ -138,6 +138,9 @@ public class ClientController {
 		view.menuDateiAbmelden.setOnAction(new EventHandler<ActionEvent>(){
 			@Override
 			public void handle(ActionEvent event) {
+				//TODO Carmen hier soll das Anmeldefenster wieder gestartet werden
+//				Stage stage = new Stage();
+//				AnmeldefensterView anmeldeView = new AnmeldefensterView(stage,)
 				clientModel.clientAnhalten();
 				
 			}
