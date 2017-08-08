@@ -28,7 +28,7 @@ public class ClientModel {
 	
 	private final Logger logger = Logger.getLogger("");
 	
-//	public ClientModel() {
+//	public ClientModel() { 
 //		try{
 //			InetAddress ich = InetAddress.getLocalHost();
 //			this.name = AnmeldefensterController.getName();
@@ -56,7 +56,7 @@ public class ClientModel {
 				public void run() {
 					try{
 						while(amLaufen == true){
-							//SendenEmpfangen.Senden(clientSocket, namePW);
+							
 							TürmeEmpfangen();
 						}
 					}catch (Exception e){
@@ -67,19 +67,18 @@ public class ClientModel {
 			Thread b = new Thread(a);
 			b.start();
 			logger.info("Thread gestartet");
-		 
+			
 		} catch (Exception e){
 			logger.info(e.toString());
 		}
-	}
-	
+	}	
 	public void TürmeEmpfangen(){
 		Turm[] Türme = Spielbrett.getTürme();
 		Turm[] tmpTürme = SendenEmpfangen.Empfangen(clientSocket);
 		logger.info("Daten empfangen");
-		Spielbrett.setTürme(tmpTürme);
-		logger.info("Türme ersetzt auf Client");
-		UpdateSpielfeld(Türme);
+		//Spielbrett.setTürme(tmpTürme);
+		//logger.info("Türme ersetzt auf Client");
+		UpdateSpielfeld(tmpTürme, Türme);
 		logger.info("Spielfeld aktualisiert");
 				
 		
@@ -91,13 +90,13 @@ public class ClientModel {
 		logger.info("Daten gesendet");
 	}
 	
-	public void UpdateSpielfeld(Turm[] Türme){
+	public void UpdateSpielfeld(Turm[] türme, Turm[]alteTürme){
 		
 		Platform.runLater(new Runnable(){
 					@Override
 					public void run(){
 					
-						spielbrett.getPane().getChildren().removeAll(Türme);
+						spielbrett.getPane().getChildren().removeAll(alteTürme);
 						for (int i = 0; i < spielbrett.getFelder().length; i++){
 				    		for (int j = 0; j < spielbrett.getFelder().length; j++){
 				    			spielbrett.getFelder()[i][j].setFeldBesetzt(false);
@@ -105,12 +104,13 @@ public class ClientModel {
 						}	
 						
 						
-						for(int i = 0; i < Türme.length; i++){
-							int xKoords = Türme[i].getKoordinaten()[0];
-							int yKoords = Türme[i].getKoordinaten()[1];
-							spielbrett.getPane().add(Türme[i], xKoords, yKoords);
+						for(int i = 0; i < türme.length; i++){
+							int xKoords = türme[i].getKoordinaten()[0];
+							int yKoords = türme[i].getKoordinaten()[1];
+							spielbrett.getPane().add(türme[i], xKoords, yKoords);
 							
 						}
+						Spielbrett.setTürme(türme);
 					}
 		});
 	}

@@ -39,19 +39,12 @@ public class SendenEmpfangen {
 			//neueKoordinaten von Client empfangen
 			Turm[] in = (Turm[]) empfangen.readObject();
 			logger.info("Neue Türme erhalten");
-			
-			if(türme != in){
-				türme = in;
-				logger.info("Koordinaten ersetzt");
-				}
-				//else do nothing
-			
+						
 		} catch (Exception e){
 			logger.info(e.toString());
 		}
 		return türme;
-	}
-	
+	}	
 	public static void setTürme(Turm[] Türme){
 		türme = Türme;
 	}
