@@ -1,6 +1,6 @@
 package kamisado.client.anmeldefenster;
 
-import java.io.BufferedReader;  
+import java.io.BufferedReader;   
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -13,6 +13,8 @@ import kamisado.client.ClientModel;
 import kamisado.client.ClientView;
 import kamisado.client.infofenster.InfofensterController;
 import kamisado.client.infofenster.InfofensterView;
+import kamisado.client.löschenfenster.LöschenfensterController;
+import kamisado.client.löschenfenster.LöschenfensterView;
 import kamisado.commonClasses.Translator;
 
 /**
@@ -116,7 +118,7 @@ public class AnmeldefensterController {
 					//Wenn der Benutzername nicht vergeben ist und das Passwort genügend Zeichen beinhaltet, werden die Daten in das File geschrieben
 					if(benutzerVergeben==false){
 						if(pw.length()>=5){
-							FileWriter fw = new FileWriter("registrierungen.txt", true);
+							FileWriter fw = new FileWriter("src/kamisado/registrierungen.txt", true);
 							fw.write(name+",");
 							fw.write(pw);
 							fw.write("\n");
@@ -160,13 +162,23 @@ public class AnmeldefensterController {
 		
 		anmeldeView.menuHilfeRegeln.setOnAction(new EventHandler<ActionEvent>(){
 			public void handle(ActionEvent event) {
-//				Label label;
 				Stage stage = new Stage();
-//				label=new Label(t.getString("Regeln"));
 				InfofensterView iview = new InfofensterView(stage,anmeldeView.regeln);
 				InfofensterController icontroller = new InfofensterController(iview);
 				iview.start();	
 				stage.setAlwaysOnTop(true);
+			}
+			
+		});
+		
+		anmeldeView.menuDateiLöschen.setOnAction(new EventHandler<ActionEvent>(){
+			public void handle(ActionEvent event) {
+				Stage stage = new Stage();
+				LöschenfensterView lview = new LöschenfensterView(stage);
+				LöschenfensterController lcontroller = new LöschenfensterController(lview, anmeldeView);
+				lview.start();
+				stage.setAlwaysOnTop(true);
+				
 			}
 			
 		});

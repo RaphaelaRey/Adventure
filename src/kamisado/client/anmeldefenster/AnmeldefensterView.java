@@ -32,7 +32,6 @@ public class AnmeldefensterView {
 	
 	protected MenuBar menuBar;
 	protected Menu menuDatei;
-	//public MenuItem menuDateiAbmelden;
 	public MenuItem menuDateiLöschen;
 	protected Menu menuOptionen;
 	protected Menu menuOptionenSprache;
@@ -57,6 +56,14 @@ public class AnmeldefensterView {
 	public Label BenutzernameVergeben;
 	public Label RegistrierMeldung;
 	public Label PasswortZuKurz;
+	
+	//Ab hier muss bei update Text hinzugefügt werden
+	public Label LöschMeldung;
+	public Label ErfolgreichMeldung;
+	public Label PasswortFalschMeldung;
+	public Label BenutzerExistiertNichtMeldung;
+	public Button bestätigen;
+	
 	
 	public AnmeldefensterView(Stage primaryStage, AnmeldefensterController anmeldeController, ClientModel clientModel, ClientView clientView) {
 		this.stage=primaryStage;
@@ -91,13 +98,11 @@ public class AnmeldefensterView {
 		menuHilfe.getItems().add(menuHilfeRegeln);
 		
 		menuDatei = new Menu(t.getString("MenuDatei"));
-		//menuDateiAbmelden = new MenuItem(t.getString("MenuAbmelden"));
 		menuDateiLöschen = new MenuItem(t.getString("MenuLöschen"));
 		menuDatei.getItems().add(menuDateiLöschen);
-		//menuDatei.getItems().addAll(menuDateiAbmelden, menuDateiLöschen);
-		//menuDateiAbmelden.setDisable(true);
+		
 		//TODO Carmen ist das erst nach Anmeldung sichtbar?
-		menuDateiLöschen.setDisable(true);
+		//menuDateiLöschen.setDisable(true);
 		
 		regeln = new Label(t.getString("Regeln"));
 		startMeldung = new Label(t.getString("StartMeldung"));
@@ -106,6 +111,13 @@ public class AnmeldefensterView {
 		BenutzernameVergeben = new Label(t.getString("BenutzernameVergeben"));
 		RegistrierMeldung = new Label(t.getString("RegistrierMeldung"));
 		PasswortZuKurz = new Label(t.getString("PasswortZuKurz"));
+		
+		//ab Hier neu
+		LöschMeldung = new Label(t.getString("LöschMeldung"));
+		ErfolgreichMeldung = new Label(t.getString("ErfolgreichMeldung"));
+		PasswortFalschMeldung = new Label(t.getString("PasswortFalschMeldung"));
+		BenutzerExistiertNichtMeldung = new Label(t.getString("BenutzerExistiertNichtMeldung"));
+		bestätigen = new Button(t.getString("ButtonBestätigen"));
 		
 		menuBar.getMenus().addAll(menuDatei, menuOptionen, menuHilfe);
 		
@@ -173,6 +185,14 @@ public class AnmeldefensterView {
 		RegistrierMeldung.setText(t.getString("RegistrierMeldung"));
 		PasswortZuKurz.setText(t.getString("PasswortZuKurz"));
 		regeln.setText(t.getString("Regeln"));
+		
+		//ab hier neu
+		LöschMeldung.setText(t.getString("LöschMeldung"));
+		ErfolgreichMeldung.setText(t.getString("ErfolgreichMeldung"));
+		PasswortFalschMeldung.setText(t.getString("PasswortFalschMeldung"));
+		BenutzerExistiertNichtMeldung.setText(t.getString("BenutzerExistiertNichtMeldung"));
+		bestätigen.setText(t.getString("ButtonBestätigen"));
+		
 	}
 
 	public void start() {
