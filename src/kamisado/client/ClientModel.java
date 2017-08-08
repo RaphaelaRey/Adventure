@@ -61,16 +61,34 @@ public class ClientModel {
 						while(amLaufen == true){
 							
 							TürmeEmpfangen();
-							KoordinatenEmpfangen();
-							Spielbrett.setAktiverTurmKoordinaten(neueKoordinaten);
+							
+							//möglicheFelderAnzeigen(neueKoordinaten);
 						}
 					}catch (Exception e){
 						logger.info(e.toString());
 					}
 				}
 			}; 
+			Runnable c = new Runnable() {
+				@Override
+				public void run() {
+					try{
+						while(amLaufen == true){
+							
+						
+							KoordinatenEmpfangen();
+							Spielbrett.setAktiverTurmKoordinaten(neueKoordinaten);
+							//möglicheFelderAnzeigen(neueKoordinaten);
+						}
+					}catch (Exception e){
+						logger.info(e.toString());
+					}
+				}
+			};
 			Thread b = new Thread(a);
+			Thread d = new Thread(c);
 			b.start();
+			d.start();
 			logger.info("Thread gestartet");
 			
 		} catch (Exception e){
