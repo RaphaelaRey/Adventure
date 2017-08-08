@@ -105,15 +105,16 @@ public class ClientModel {
 				    		}
 						}	
 						
-						spielbrett.getPane().add(türme[0], 2, 5);
-												
-//						for(int i = 0; i < türme.length; i++){
-//							int xKoords = türme[i].getKoordinaten()[0];
-//							int yKoords = türme[i].getKoordinaten()[1];
-//							spielbrett.getPane().add(türme[i], xKoords, yKoords);
-//							spielbrett.getFelder()[xKoords][yKoords].setFeldBesetzt(true);
-//							
-//						}
+						
+						for(int i = 0; i < türme.length; i++){
+							int xKoords = türme[i].getKoordinaten()[0];
+							int yKoords = türme[i].getKoordinaten()[1];
+							türme[i].setRadius(40);
+							spielbrett.getPane().add(türme[i], xKoords, yKoords);
+							türme[i].setFill(Color.valueOf(türme[i].getFüllFarbe()));
+							spielbrett.getFelder()[xKoords][yKoords].setFeldBesetzt(true);
+							
+						}
 						Spielbrett.setTürme(türme);
 					}
 		});
