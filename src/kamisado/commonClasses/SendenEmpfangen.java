@@ -32,14 +32,15 @@ public class SendenEmpfangen {
 	
 	public static Turm[] Empfangen(Socket clientSocket){
 		ObjectInputStream empfangen;
+		Turm[] in; 
 		try{
 			empfangen = new ObjectInputStream(clientSocket.getInputStream());
 			logger.info("InputStream erstellt");
 		
 			//neueKoordinaten von Client empfangen
-			Turm[] in = (Turm[]) empfangen.readObject();
+			 in = (Turm[]) empfangen.readObject();
 			logger.info("Neue Türme erhalten");
-						
+			setTürme(in);			
 		} catch (Exception e){
 			logger.info(e.toString());
 		}
