@@ -36,8 +36,7 @@ public class Client {
 			
 				while(true) {
 					Turm[] tmpTürme = SendenEmpfangen.Empfangen(clientSocket);
-					int[] tmpKoord = SendenEmpfangen.EmpfangenInt(clientSocket);
-					ArrayList<int[]> tmpMFelder = SendenEmpfangen.EmpfangenMF(clientSocket);
+					
 					logger.info("Daten Empfangen von Client ");
 							
 					for (Client c : clients) {

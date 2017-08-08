@@ -25,11 +25,9 @@ public class ClientModel {
 	private static String pw;
 	private static String ipAdresse;
 	private int port = 444;
-	private int[] neueKoordinaten;
 	private Turm t;
 	private Feld f;
 	private int turmInt;
-	private ArrayList<int[]> mFelder;
 	
 	private final Logger logger = Logger.getLogger("");
 
@@ -72,7 +70,7 @@ public class ClientModel {
 		Turm[] Türme = Spielbrett.getTürme();
 		Turm[] tmpTürme = SendenEmpfangen.Empfangen(clientSocket);
 		logger.info("Türme empfangen");
-		UpdateSpielfeld(tmpTürme, Türme);
+		UpdateSpielfeld(Türme, tmpTürme);
 		logger.info("Spielfeld aktualisiert");		
 	}	
 	
@@ -81,33 +79,36 @@ public class ClientModel {
 		logger.info("Daten gesendet");
 	}
 	
-	public void UpdateSpielfeld(Turm[] türme, Turm[]alteTürme){
+	public void UpdateSpielfeld(Turm[] alteTürme, Turm[]neueTürme){
 		Platform.runLater(new Runnable(){
 					@Override
 					public void run(){
-						if(türme!=null && alteTürme!=null &&  türme.length>0){
+						if(neueTürme!=null && alteTürme!=null &&  neueTürme.length>0){
+							
+							//alte Türme von der Gridpane löschen und Felder zurücksetzen
 							spielbrett.getPane().getChildren().removeAll(alteTürme);
-								for (int i = 0; i < spielbrett.getFelder().length; i++){
-						    		for (int j = 0; j < spielbrett.getFelder().length; j++){
+							for (int i = 0; i < spielbrett.getFelder().length; i++){
+								for (int j = 0; j < spielbrett.getFelder().length; j++){
 						    			spielbrett.getFelder()[i][j].setFeldBesetzt(false);
-						    		}
-								}						
-							for(int i = 0; i < türme.length; i++){
-								int xKoords = türme[i].getKoordinaten()[0];
-								int yKoords = türme[i].getKoordinaten()[1];
+						    	}
+							}						
+							
+							for(int i = 0; i < neueTürme.length; i++){
+								int xKoords = neueTürme[i].getKoordinaten()[0];
+								int yKoords = neueTürme[i].getKoordinaten()[1];
 								
 								// Turmdurchmesser und Turmbreite definieren
-								türme[i].setRadius(spielbrett.TURMDURCHMESSER);
-								türme[i].setStrokeWidth(spielbrett.STROKEWIDTHTÜRMESTANDARD);
+								neueTürme[i].setRadius(spielbrett.TURMDURCHMESSER);
+								neueTürme[i].setStrokeWidth(spielbrett.STROKEWIDTHTÜRMESTANDARD);
 								
 								// Türme bei den Koordinaten platzieren, Rand- und Füllfarbe definieren und Felder besetzen
-								spielbrett.getPane().add(türme[i], xKoords, yKoords);
-								türme[i].setFill(Color.valueOf(türme[i].getFüllFarbe()));
-								türme[i].setStroke(Color.valueOf(türme[i].getStrokeFarbe()));
+								spielbrett.getPane().add(neueTürme[i], xKoords, yKoords);
+								neueTürme[i].setFill(Color.valueOf(neueTürme[i].getFüllFarbe()));
+								neueTürme[i].setStroke(Color.valueOf(neueTürme[i].getStrokeFarbe()));
 								spielbrett.getFelder()[xKoords][yKoords].setFeldBesetzt(true);
 							}						
 						}
-						Spielbrett.setTürme(türme);
+						Spielbrett.setTürme(neueTürme);
 					}
 		});
 	}
