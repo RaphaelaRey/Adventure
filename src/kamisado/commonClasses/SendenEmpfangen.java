@@ -15,10 +15,8 @@ import javafx.scene.input.MouseEvent;
 public class SendenEmpfangen {
 	
 	private static final Logger logger = Logger.getLogger("");
-	private static Turm[] neueTürme;
 	private static String namePW;
 	private static int[] koordinaten;
-	private static ArrayList<int[]> möglicheFelder;
 	
 	public static void Senden(Socket clientSocket, Turm[] Türme){
 		ObjectOutputStream senden;
@@ -47,53 +45,6 @@ public class SendenEmpfangen {
 			senden.writeObject(namePW);
 			senden.flush();
 			logger.info("Anmeldedaten gesendet");
-		} catch (Exception e){
-			logger.info(e.toString());
-		}
-	}
-	
-	public static void Senden(Socket clientSocket, int[] Koord){
-		ObjectOutputStream senden;
-		try{
-			//Stream erstellen
-			senden = new ObjectOutputStream(clientSocket.getOutputStream());
-			logger.info("OutputStream erstellt");
-			
-			//neueKoordinaten an Client senden
-			senden.writeObject(Koord);
-			senden.flush();
-			logger.info("Neue Koordinaten gesendet");
-		} catch (Exception e){
-			logger.info(e.toString());
-		}
-	}
-	public static void Senden(Socket clientSocket, ArrayList<int[]> mFelder){
-		ObjectOutputStream senden;
-		try{
-			//Stream erstellen
-			senden = new ObjectOutputStream(clientSocket.getOutputStream());
-			logger.info("OutputStream erstellt");
-			
-			//neueKoordinaten an Client senden
-			senden.writeObject(mFelder);
-			senden.flush();
-			logger.info("Neue Koordinaten gesendet");
-		} catch (Exception e){
-			logger.info(e.toString());
-		}
-	}
-	
-	public static void Senden(Socket clientSocket, boolean schwarz){
-		ObjectOutputStream senden;
-		try{
-			//Stream erstellen
-			senden = new ObjectOutputStream(clientSocket.getOutputStream());
-			logger.info("OutputStream erstellt");
-			
-			//neueKoordinaten an Client senden
-			senden.writeObject(schwarz);
-			senden.flush();
-			logger.info("Schwarz ist " + schwarz + " gesendet");
 		} catch (Exception e){
 			logger.info(e.toString());
 		}
