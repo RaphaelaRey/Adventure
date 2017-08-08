@@ -14,7 +14,7 @@ import kamisado.commonClasses.Spielbrett;
 import kamisado.commonClasses.Translator;
 import kamisado.commonClasses.Turm;
 
-//TODO Wie wird definiert, wer die schwarzen Türme hat? Derjenige, der am wenigsten oft gespielt hat? Und wenn gleich dann zufällig?
+//TODO Team Wie wird definiert, wer die schwarzen Türme hat? Derjenige, der am wenigsten oft gespielt hat? Und wenn gleich dann zufällig?
 
 public class ClientController {
 	 	
@@ -70,16 +70,12 @@ public class ClientController {
 							if(spielbrett.getGewinner()==null && Spielbrett.isBlockiert()==true){
 								nächsterAktiverTurm=clientModel.setNächsterGegnerischerTurmBlockade(nächsterAktiverTurm);	 
 								if(Spielbrett.getBlockadenVerursacher()==Color.BLACK){
-									//TODO SYSO Anweisung löschen
-									System.out.println("Schwarz hat Blockade verursacht, schwarz ist wieder am Zug"); 
 									//Blockadenmeldung
 									Stage stage = new Stage();
 									InfofensterView iview = new InfofensterView(stage,view.BlockadeMeldungSchwarz);
 									InfofensterController icontroller = new InfofensterController(iview);
 									iview.start();
 								} else if (Spielbrett.getBlockadenVerursacher()==Color.WHITE){
-									//TODO SYSO Anweisung löschen
-									System.out.println("Weiss hat Blockade verursacht, weiss ist wieder am Zug");
 									//Blockadenmeldung
 									Stage stage = new Stage();
 									InfofensterView iview = new InfofensterView(stage,view.BlockadeMeldungWeiss);
@@ -87,11 +83,10 @@ public class ClientController {
 									iview.start();
 								}
 							} 			
-							// Völliger Stillstand				// TODO trifft nicht zu, wenn die Blockade zweimal von der gleichen Person kommt
+							// Völliger Stillstand TODO Raphaela kontrollieren
 							if(Spielbrett.getBlockadenCounter()==2){
 								if(Spielbrett.getBlockadenVerursacher()==Color.BLACK){
 									spielbrett.setGewinner(Color.WHITE);
-									//TODO SYSO Anweisung löschen
 									System.out.println("Schwarz hat totalen Stillstand verursacht, weiss gewinnt"); 
 									// Gewinnermeldung bei völligem Stillstand
 									Stage stage = new Stage();
@@ -100,7 +95,6 @@ public class ClientController {
 									iview.start();
 								} else{
 									spielbrett.setGewinner(Color.BLACK);
-									//TODO SYSO Anweisung löschen
 									System.out.println("Weiss hat totalen Stillstand verursacht, schwarz gewinnt");
 									//Gewinnermeldung bei völligem Stillstand
 									Stage stage = new Stage();
@@ -112,16 +106,13 @@ public class ClientController {
 							 
 							// Überprüfen, wer gewonnen hat und die entsprechende Meldung anzeigen
 							if(spielbrett.getGewinner() == Color.BLACK){
-								System.out.println("schwarz gewinnt"); 
 								//Gewinnermeldung inkl. Frage ob nochmals gespielt werden will (im Moment wird nur das Spielbrett zurückgesetzt)
 								Stage stage = new Stage();
 								InfofensterView iview = new InfofensterView(stage,view.GewinnerMeldungSchwarz);
 								InfofensterController icontroller = new InfofensterController(iview);
 								iview.start();
 							} else if(spielbrett.getGewinner() == Color.WHITE){
-								//TODO SYSO Anweisung löschen
-								System.out.println("Weiss gewinnt"); 
-								//Gewinnermeldung inkl. Frage ob nochmals gespielt werden will (im Moment wird nur das Spielbrett zurückgesetzt)
+								//Gewinnermeldung TODO Carmen Frage ob erneut gespielt werden will
 								Stage stage = new Stage();
 								InfofensterView iview = new InfofensterView(stage,view.GewinnerMeldungWeiss);
 								InfofensterController icontroller = new InfofensterController(iview);

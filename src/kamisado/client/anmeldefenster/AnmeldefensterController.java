@@ -30,7 +30,6 @@ public class AnmeldefensterController {
 	private static String ip;
 	
 	public AnmeldefensterController(AnmeldefensterView anmeldeView, ClientView clientView, ClientModel clientModel) {
-		//TODO wo muss das Textfile gespeichert werden, damit beide Clients auf das selbe File zugreifen bei der Anmeldung
 		this.anmeldeView = anmeldeView;
 		this.clientView= clientView;
 		this.clientModel=clientModel;

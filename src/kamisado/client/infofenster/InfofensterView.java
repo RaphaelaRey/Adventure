@@ -10,7 +10,7 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 
-//TODO Diese Fenster werden nicht übersetzt...
+//TODO Carmen Diese Fenster werden nicht übersetzt...
 
 /**
  * @author carmen walser
