@@ -32,19 +32,6 @@ public class ClientModel {
 	private ArrayList<int[]> mFelder;
 	
 	private final Logger logger = Logger.getLogger("");
-	
-//	public ClientModel() { 
-//		try{
-//			InetAddress ich = InetAddress.getLocalHost();
-//			this.name = AnmeldefensterController.getName();
-	//			this.pw = AnmeldefensterController.getPasswort();
-		//	ipAdresse = ich.getHostAddress();
-		//	ipAdresse = AnmeldefensterController.getIP();
-		//	Verbinden(ipAdresse, name, pw);
-	//	} catch (Exception e){
-	//		logger.info(e.toString());
-	//	}
-//	}
 
 	public void Verbinden(String ipAdresse, String name, String pw) {
 		 String namePW = name + ","+ pw;
@@ -65,21 +52,7 @@ public class ClientModel {
 						while(amLaufen == true){
 							
 							TürmeEmpfangen();
-							logger.info("Türme empfangen auf Client");
-//							KoordinatenEmpfangen();
-//							logger.info("Koordinaten empfangen auf Client");
-//							mFelderEmpfangen();
-//							logger.info("mFelder empfangen");
-//							Spielbrett.setMöglicheFelder(mFelder);
-//							Spielbrett.setAktiverTurmKoordinaten(neueKoordinaten);
-//							logger.info("Koordinaten ersetzt in Spielfeld");
-//							getTurm(neueKoordinaten);
-//							logger.info("Turm geholt");
-//							getFeld(neueKoordinaten);
-//							logger.info("Feld geholt");
-//							setNächsterGegnerischerTurm(turmInt, f, neueKoordinaten);
-//							logger.info("nächster gegnerischer Turm gesetzt");
-							
+							logger.info("Türme empfangen auf Client");							
 							
 						}
 					}catch (Exception e){
@@ -99,44 +72,16 @@ public class ClientModel {
 		Turm[] Türme = Spielbrett.getTürme();
 		Turm[] tmpTürme = SendenEmpfangen.Empfangen(clientSocket);
 		logger.info("Türme empfangen");
-		//Spielbrett.setTürme(tmpTürme);
-		//logger.info("Türme ersetzt auf Client");
 		UpdateSpielfeld(tmpTürme, Türme);
-		logger.info("Spielfeld aktualisiert");
-		
-	}
-	
-	public void mFelderEmpfangen(){
-		ArrayList<int[]>  tmpMFelder = SendenEmpfangen.EmpfangenMF(clientSocket);
-		logger.info("mFelder empfangen");
-		mFelder = tmpMFelder;
-	}
-	
-	public void KoordinatenEmpfangen(){
-		int[] tmpKoord = SendenEmpfangen.EmpfangenInt(clientSocket);
-		logger.info("Koordinaten empfangen");
-		neueKoordinaten = tmpKoord;
-		
-	}
+		logger.info("Spielfeld aktualisiert");		
+	}	
 	
 	public void TürmeSenden(){
 		SendenEmpfangen.Senden(clientSocket, Spielbrett.getTürme());
-		SendenEmpfangen.Senden(clientSocket, neueKoordinaten);
 		logger.info("Daten gesendet");
-	}
-	public void KoordinatenSenden(){
-		SendenEmpfangen.Senden(clientSocket, Spielbrett.getAktiverTurmKoordinaten());
-		logger.info("Daten gesendet");
-	}
-	
-	public void MFelderSenden(){
-		SendenEmpfangen.Senden(clientSocket, mFelder);
-		logger.info("Felder gesendet");
 	}
 	
 	public void UpdateSpielfeld(Turm[] türme, Turm[]alteTürme){
-	
-		
 		Platform.runLater(new Runnable(){
 					@Override
 					public void run(){
@@ -146,9 +91,7 @@ public class ClientModel {
 						    		for (int j = 0; j < spielbrett.getFelder().length; j++){
 						    			spielbrett.getFelder()[i][j].setFeldBesetzt(false);
 						    		}
-								}	
-						
-						
+								}						
 							for(int i = 0; i < türme.length; i++){
 								int xKoords = türme[i].getKoordinaten()[0];
 								int yKoords = türme[i].getKoordinaten()[1];
@@ -162,9 +105,7 @@ public class ClientModel {
 								türme[i].setFill(Color.valueOf(türme[i].getFüllFarbe()));
 								türme[i].setStroke(Color.valueOf(türme[i].getStrokeFarbe()));
 								spielbrett.getFelder()[xKoords][yKoords].setFeldBesetzt(true);
-							}
-						
-							
+							}						
 						}
 						Spielbrett.setTürme(türme);
 					}
@@ -181,8 +122,6 @@ public class ClientModel {
 				logger.info(e.toString());
 			}
 		}
-		
-		
 	}
 	
 	public void setName(String name){
@@ -204,7 +143,6 @@ public class ClientModel {
 					this.turmInt = i;
 				}
 		}
-		
 		return t;
 	}
 	
@@ -219,7 +157,6 @@ public class ClientModel {
 			}
 		}
 		return f;
-		
 	}
 	
 	/** Überprüfen, ob zwei int-Arrays gleich sind

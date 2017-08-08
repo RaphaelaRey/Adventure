@@ -128,8 +128,6 @@ public class ClientController {
 							
 						}
 						clientModel.TürmeSenden();
-//						clientModel.KoordinatenSenden();
-//						clientModel.MFelderSenden();
 					}					
 				});				
 			}
