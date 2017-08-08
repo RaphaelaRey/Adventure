@@ -42,13 +42,15 @@ public class ClientModel {
 //	}
 
 	public void Verbinden(String ipAdresse, String name, String pw) {
-		 String namePW = name + ",";
+		 String namePW = name + ","+ pw;
+		 this.name = AnmeldefensterController.getName();
+		 this.pw = AnmeldefensterController.getPasswort();
 		try{
 			//Verbindung mit Server herstellen
 			this.clientSocket = new Socket(ipAdresse, port);
 			logger.info(ipAdresse + " über Port " + port + " verbunden");
 			
-			
+			SendenEmpfangen.Senden(clientSocket, namePW);
 			
 			//Thread erstellen
 			Runnable a = new Runnable() {

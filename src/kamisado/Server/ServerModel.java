@@ -6,6 +6,7 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.logging.Logger;
 
+import kamisado.commonClasses.SendenEmpfangen;
 import kamisado.commonClasses.Turm;
 
 /**
@@ -17,6 +18,7 @@ public class ServerModel extends Thread{
 	private ServerSocket server;
 	private Client client;
 	private String name;
+	private String namePW;
 	private boolean amLaufen = true;
 	private final Logger logger = Logger.getLogger("");
 	
@@ -41,7 +43,8 @@ public class ServerModel extends Thread{
 				//Verbindung mit Client herstellen
 				Socket clientSocket = server.accept();
 				logger.info(clientSocket.getInetAddress().getHostName() + " verbunden");
-								
+				namePW = SendenEmpfangen.EmpfangenString(clientSocket);
+				logger.info("Anmeldedaten erhalten: " + namePW);
 				client = new Client(ServerModel.this, clientSocket, this.name);
 				
 				
