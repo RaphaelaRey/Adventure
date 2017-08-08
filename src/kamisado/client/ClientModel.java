@@ -26,6 +26,10 @@ public class ClientModel {
 	private static String ipAdresse;
 	private int port = 444;
 	private int[] neueKoordinaten;
+	private Turm t;
+	private Feld f;
+	private int turmInt;
+	private ArrayList<int[]> mFelder;
 	
 	private final Logger logger = Logger.getLogger("");
 	
@@ -61,34 +65,30 @@ public class ClientModel {
 						while(amLaufen == true){
 							
 							TürmeEmpfangen();
+							logger.info("Türme empfangen auf Client");
+							KoordinatenEmpfangen();
+							logger.info("Koordinaten empfangen auf Client");
+							mFelderEmpfangen();
+							logger.info("mFelder empfangen");
+							Spielbrett.setMöglicheFelder(mFelder);
+							Spielbrett.setAktiverTurmKoordinaten(neueKoordinaten);
+							logger.info("Koordinaten ersetzt in Spielfeld");
+							getTurm(neueKoordinaten);
+							logger.info("Turm geholt");
+							getFeld(neueKoordinaten);
+							logger.info("Feld geholt");
+							setNächsterGegnerischerTurm(turmInt, f, neueKoordinaten);
+							logger.info("nächster gegnerischer Turm gesetzt");
 							
-							//möglicheFelderAnzeigen(neueKoordinaten);
+							
 						}
 					}catch (Exception e){
 						logger.info(e.toString());
 					}
 				}
 			}; 
-			Runnable c = new Runnable() {
-				@Override
-				public void run() {
-					try{
-						while(amLaufen == true){
-							
-						
-							KoordinatenEmpfangen();
-							Spielbrett.setAktiverTurmKoordinaten(neueKoordinaten);
-							//möglicheFelderAnzeigen(neueKoordinaten);
-						}
-					}catch (Exception e){
-						logger.info(e.toString());
-					}
-				}
-			};
 			Thread b = new Thread(a);
-			Thread d = new Thread(c);
 			b.start();
-			d.start();
 			logger.info("Thread gestartet");
 			
 		} catch (Exception e){
@@ -103,9 +103,13 @@ public class ClientModel {
 		//logger.info("Türme ersetzt auf Client");
 		UpdateSpielfeld(tmpTürme, Türme);
 		logger.info("Spielfeld aktualisiert");
-				
 		
-		
+	}
+	
+	public void mFelderEmpfangen(){
+		ArrayList<int[]>  tmpMFelder = SendenEmpfangen.EmpfangenMF(clientSocket);
+		logger.info("mFelder empfangen");
+		mFelder = tmpMFelder;
 	}
 	
 	public void KoordinatenEmpfangen(){
@@ -119,6 +123,15 @@ public class ClientModel {
 		SendenEmpfangen.Senden(clientSocket, Spielbrett.getTürme());
 		SendenEmpfangen.Senden(clientSocket, neueKoordinaten);
 		logger.info("Daten gesendet");
+	}
+	public void KoordinatenSenden(){
+		SendenEmpfangen.Senden(clientSocket, Spielbrett.getAktiverTurmKoordinaten());
+		logger.info("Daten gesendet");
+	}
+	
+	public void MFelderSenden(){
+		SendenEmpfangen.Senden(clientSocket, mFelder);
+		logger.info("Felder gesendet");
 	}
 	
 	public void UpdateSpielfeld(Turm[] türme, Turm[]alteTürme){
@@ -179,6 +192,32 @@ public class ClientModel {
 	}
 	public void setIP(String ipAdresse){
 		this.ipAdresse = ipAdresse;
+	}
+	
+	public Turm getTurm(int[] turmKoordinaten){
+		Turm[] türme = Spielbrett.getTürme();
+		for(int i = 0; i < türme.length; i++){
+				if(türme[i].getKoordinaten() == turmKoordinaten){
+					this.t = türme[i];
+					this.turmInt = i;
+				}
+		}
+		
+		return t;
+	}
+	
+	public Feld getFeld(int[] feldKoordinaten){
+		
+		Feld[][] felder = Spielbrett.getFelder();
+		for(int i = 0; i < felder.length; i++){
+			for(int j = 0; j < felder.length; j++){
+				if(felder[i][j].getKoordinaten() == feldKoordinaten){
+					this.f = felder[i][j];
+				}
+			}
+		}
+		return f;
+		
 	}
 	
 	/** Überprüfen, ob zwei int-Arrays gleich sind
