@@ -86,7 +86,7 @@ public class ClientModel {
 	}
 	
 	public void TürmeSenden(){
-		SendenEmpfangen.Senden(clientSocket, spielbrett.getTürme());
+		SendenEmpfangen.Senden(clientSocket, Spielbrett.getTürme());
 		logger.info("Daten gesendet");
 	}
 	
@@ -103,14 +103,15 @@ public class ClientModel {
 				    		}
 						}	
 						
-						
-						for(int i = 0; i < türme.length; i++){
-							int xKoords = türme[i].getKoordinaten()[0];
-							int yKoords = türme[i].getKoordinaten()[1];
-							spielbrett.getPane().add(türme[i], xKoords, yKoords);
-							spielbrett.getFelder()[xKoords][yKoords].setFeldBesetzt(true);
-							
-						}
+						spielbrett.getPane().add(türme[0], 2, 5);
+												
+//						for(int i = 0; i < türme.length; i++){
+//							int xKoords = türme[i].getKoordinaten()[0];
+//							int yKoords = türme[i].getKoordinaten()[1];
+//							spielbrett.getPane().add(türme[i], xKoords, yKoords);
+//							spielbrett.getFelder()[xKoords][yKoords].setFeldBesetzt(true);
+//							
+//						}
 						Spielbrett.setTürme(türme);
 					}
 		});
