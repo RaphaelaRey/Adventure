@@ -30,8 +30,8 @@ public class ClientModel {
 	
 	private final Logger logger = Logger.getLogger("");
 
-	public void Verbinden(String ipAdresse, String name, String pw, String art) {
-		 String namePW = art + "," + name + ","+ pw;
+	public void Verbinden(String ipAdresse, String name, String pw) {
+		 String namePW = name + ","+ pw;
 		 
 		try{
 			//Verbindung mit Server herstellen
