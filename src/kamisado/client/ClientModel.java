@@ -1,6 +1,5 @@
 package kamisado.client;
 
-import java.net.InetAddress;
 import java.net.Socket;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -27,7 +26,6 @@ public class ClientModel {
 	private int port = 444;
 	private Turm t;
 	private Feld f;
-	private int turmInt;
 	
 	private final Logger logger = Logger.getLogger("");
 
@@ -48,10 +46,8 @@ public class ClientModel {
 				public void run() {
 					try{
 						while(amLaufen == true){
-							
 							TürmeEmpfangen();
 							logger.info("Türme empfangen auf Client");							
-							
 						}
 					}catch (Exception e){
 						logger.info(e.toString());
@@ -79,9 +75,7 @@ public class ClientModel {
 					Spielbrett.setAktiverTurmKoordinaten(tmpTürme[i].getKoordinaten());
 				}
 			}
-			
 		}
-		
 	}	
 	
 	public void TürmeSenden(){
@@ -235,7 +229,7 @@ public class ClientModel {
 		spielbrett.getPane().add(Spielbrett.getTürme()[k], xKoords, yKoords);
 		Spielbrett.getFelder()[xKoords][yKoords].setFeldBesetzt(true);
 		
-		spielbrett.setTurmBewegt(true);
+		Spielbrett.setTurmBewegt(true);
 	}
 
 	/** Zukünftiger gegnerischer Turm definieren
@@ -254,8 +248,8 @@ public class ClientModel {
 				
 				if (Spielbrett.getTürme()[i].getStroke()==Color.WHITE
 						&& Spielbrett.getTürme()[i].getFill()==ausgewähltesFeld.getFill()){
-					möglicheFelderAnzeigen(Spielbrett.getTürme()[i].getKoordinaten());
 					nächsterAktiverTurm = Spielbrett.getTürme()[i].getKoordinaten();
+//					möglicheFelderAnzeigen(nächsterAktiverTurm);
 					Spielbrett.getTürme()[i].setStrokeWidth(spielbrett.STROKEWIDTHAUSGEWÄHLTERTURM);
 					if(Spielbrett.getMöglicheFelder().size()==0){		
 						Spielbrett.setBlockiert(true);
@@ -270,18 +264,11 @@ public class ClientModel {
 			for (int i = 0; i < Spielbrett.getTürme().length; i++){
 				Spielbrett.getTürme()[i].setAktiverTurm(false);
 				Spielbrett.getTürme()[i].setStrokeWidth(spielbrett.STROKEWIDTHTÜRMESTANDARD);	//Formatierung aller Türme zurücksetzen
-				
-				logger.info("Rahmenfarbe i = "+i+" "+Spielbrett.getTürme()[i].getStroke().toString() +
-						"; Rahmenfarbe Color.black ="+Color.BLACK.toString()+
-						"; Turmfarbe i = "+i+" "+Spielbrett.getTürme()[i].getFill().toString()+
-						"; Ausgewähltes Feld Füllfarbe: "+ausgewähltesFeld.getFill().toString());
 			
 				if (Spielbrett.getTürme()[i].getStroke().equals(Color.BLACK) 
-						&& Spielbrett.getTürme()[i].getFill().equals(ausgewähltesFeld.getFill())){	
-					
-					logger.info("Turmfarbe und Feldfarbe stimmen überein");
+						&& Spielbrett.getTürme()[i].getFill().equals(ausgewähltesFeld.getFill())){		
 					nächsterAktiverTurm = Spielbrett.getTürme()[i].getKoordinaten();
-					möglicheFelderAnzeigen(nächsterAktiverTurm);
+//					möglicheFelderAnzeigen(nächsterAktiverTurm);
 					Spielbrett.getTürme()[i].setStrokeWidth(spielbrett.STROKEWIDTHAUSGEWÄHLTERTURM);
 					if(Spielbrett.getMöglicheFelder().size()==0){		
 						Spielbrett.setBlockiert(true);
@@ -290,7 +277,6 @@ public class ClientModel {
 						Spielbrett.setBlockadenVerursacher(null);
 					}
 				}
-				logger.info("Turmfarbe und Feldfarbe stimmen nicht überein");
 			}	
 		}
 		return nächsterAktiverTurm;
@@ -304,13 +290,13 @@ public class ClientModel {
 	public int[] setNächsterGegnerischerTurmBlockade(int[]nächsterAktiverTurm){
 		turmStrokeWidthZurücksetzen();
 		System.out.println("setnächstergegnerischerturmblockade ausgeführt");
-		if(getTurmFarbe(nächsterAktiverTurm) == Color.BLACK){
+		if(getTurmFarbe(nächsterAktiverTurm).equals(Color.BLACK)){
 			for (int m = 0; m < Spielbrett.getTürme().length; m++){
 				Feld aktivesFeld = Spielbrett.getFelder()[nächsterAktiverTurm[0]][nächsterAktiverTurm[1]];
-				if (Spielbrett.getTürme()[m].getStroke()==Color.WHITE
-						&& (Spielbrett.getTürme()[m].getFill()==aktivesFeld.getFill())){
+				if (Spielbrett.getTürme()[m].getStroke().equals(Color.WHITE)
+						&& (Spielbrett.getTürme()[m].getFill().equals(aktivesFeld.getFill()))){
 					nächsterAktiverTurm = Spielbrett.getTürme()[m].getKoordinaten(); 
-					möglicheFelderAnzeigen(Spielbrett.getTürme()[m].getKoordinaten());
+//					möglicheFelderAnzeigen(nächsterAktiverTurm);
 					Spielbrett.getTürme()[m].setStrokeWidth(spielbrett.STROKEWIDTHAUSGEWÄHLTERTURM);
 					
 					Spielbrett.setBlockiert(false);
@@ -323,18 +309,17 @@ public class ClientModel {
 				}
 			} 
 		} 
-		if(getTurmFarbe(nächsterAktiverTurm) == Color.WHITE
-				&& Spielbrett.isBlockiert()==true){
+		if(getTurmFarbe(nächsterAktiverTurm).equals(Color.WHITE) && Spielbrett.isBlockiert()==true){
 			for (int m = 0; m < Spielbrett.getTürme().length; m++){
 				Spielbrett.getTürme()[m].setStrokeWidth(spielbrett.STROKEWIDTHTÜRMESTANDARD);
-				if (Spielbrett.getTürme()[m].getStroke()==Color.BLACK
-						&& Spielbrett.getTürme()[m].getFill()==Spielbrett.getFelder()[nächsterAktiverTurm[0]][nächsterAktiverTurm[1]].getFill()){
+				if (Spielbrett.getTürme()[m].getStroke().equals(Color.BLACK)
+						&& Spielbrett.getTürme()[m].getFill().equals(Spielbrett.getFelder()[nächsterAktiverTurm[0]][nächsterAktiverTurm[1]].getFill())){
 					nächsterAktiverTurm = Spielbrett.getTürme()[m].getKoordinaten(); 
-					möglicheFelderAnzeigen(Spielbrett.getTürme()[m].getKoordinaten());
+//					möglicheFelderAnzeigen(nächsterAktiverTurm);
 					Spielbrett.getTürme()[m].setStrokeWidth(spielbrett.STROKEWIDTHAUSGEWÄHLTERTURM);
 					
 					Spielbrett.setBlockiert(false);
-					if(Spielbrett.getBlockadenVerursacher()==Color.BLACK){
+					if(Spielbrett.getBlockadenVerursacher().equals(Color.BLACK)){
 						Spielbrett.setBlockadenCounter(0);
 					}
 					Spielbrett.setBlockadenVerursacher(Color.BLACK);
@@ -369,9 +354,6 @@ public class ClientModel {
 	/** Ganzes Spielbrett zurücksetzen, nachdem jemand gewonnen hat, was folgendes beinhaltet:
 	 * - mögliche Felder leeren - Gewinner löschen - turmBesetzt zurücksetzen 
 	 * - alle Türme von der Gridpane entfernen und an den ursprünglichen Platz setzen
-	 * @param möglicheFelder
-	 * @param felder
-	 * @param türme
 	 */
 	public void spielZurücksetzen(){ 
 		möglicheFelderLeeren();
@@ -409,8 +391,6 @@ public class ClientModel {
 	}
 	
 	/** ArrayList mögliche Felder leeren
-	 * @param möglicheFelder
-	 * @param felder
 	 * @return geleerte ArrayList
 	 */
 	public ArrayList<int[]> möglicheFelderLeeren(){
@@ -433,7 +413,6 @@ public class ClientModel {
 	 * Dazu wird zuerst die bestehende liste gelöscht, damit nur keine alten möglichen Felder gespeichert sind. 
 	 * Dann werden die aktuellen möglichen Feder mit der Suppportmethode "möglicheFelderHinzufügen" hinzugefügt. 
 	 * @param turmKoordinaten
-	 * @return ArrayList der möglichen Felder
 	 */
 	public ArrayList<int[]> möglicheFelderAnzeigen(int[] turmKoordinaten){		
 		möglicheFelderLeeren();
@@ -443,16 +422,10 @@ public class ClientModel {
 	
 	/** Mögliche Felder der ArrayList hinzufügen (Supportmethode)
 	 * @param turmKoordinaten
-	 * @param türme
-	 * @param felder
-	 * @param möglicheFelder
 	 */
 	private void möglicheFelderHinzufügen(int[] turmKoordinaten){
 		int xKoords = turmKoordinaten[0];											
 		int yKoords = turmKoordinaten[1];	
-		logger.info("Turmfarbe: "+getTurmFarbe(turmKoordinaten).toString()+ "Schwarz: "+Color.BLACK.toString());
-		logger.info("Turmfarbe sollte schwarz "+Color.BLACK.toString()+" sein: "+getTurmFarbe(Spielbrett.getTürme()[0].getKoordinaten())+
-				"Turmfarbe sollte weiss "+Color.WHITE.toString()+" sein: "+getTurmFarbe(Spielbrett.getTürme()[15].getKoordinaten()));
 		
 		// Mögliche Felder falls der Turm schwarz ist				
 		if((getTurmFarbe(turmKoordinaten).equals(Color.BLACK))){
@@ -480,7 +453,7 @@ public class ClientModel {
 			// Mögliche Felder rechts diagonal
 			for(int i = 1; i < Spielbrett.getFelder()[0].length; i++){
 				try {
-					Feld möglichDiagRechts = spielbrett.getFelder()[xKoords+i][yKoords-i];
+					Feld möglichDiagRechts = Spielbrett.getFelder()[xKoords+i][yKoords-i];
 					if(möglichDiagRechts.istFeldBesetzt()==true){
 						bereitsEinFeldBesetzt = true;
 					}
