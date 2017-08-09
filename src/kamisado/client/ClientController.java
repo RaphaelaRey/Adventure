@@ -58,6 +58,7 @@ public class ClientController {
 						if (Spielbrett.getMöglicheFelder().contains(ausgewähltesFeld.getKoordinaten())){
 							int[] nächsterAktiverTurm = new int[2];
 							for (int k = 0; k < Spielbrett.getTürme().length; k++){
+								Spielbrett.getTürme()[k].setAktiverTurm(false);
 								if(clientModel.koordVergleich(Spielbrett.getTürme()[k].getKoordinaten(), Spielbrett.getAktiverTurmKoordinaten())){ //aktiver Turm herausfinden
 									clientModel.turmBewegen(ausgewähltesFeld, k);
 									// Überprüfen, ob es einen Gewinner gibt 
@@ -124,7 +125,8 @@ public class ClientController {
 							
 							// Spiel zurücksetzen nach Gewinn 
 							if(spielbrett.getGewinner()!=null){
-								clientModel.spielZurücksetzen();	
+								clientModel.spielZurücksetzen();
+								clientModel.TürmeSenden();
 							}
 							// Koordinaten des nächsten aktiven Turms ausserhalb der for-Schleife definieren
 							
@@ -132,8 +134,9 @@ public class ClientController {
 							
 							if (spielbrett.getGewinner()==null){
 								clientModel.getTurm(nächsterAktiverTurm).setAktiverTurm(true); // TODO Problem beim senden lösen
+								clientModel.TürmeSenden();
 							}
-							clientModel.TürmeSenden();
+							
 
 						}
 

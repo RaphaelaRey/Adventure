@@ -130,6 +130,11 @@ public class ClientModel {
 							möglicheFelderAnzeigen(Spielbrett.getAktiverTurmKoordinaten());
 						}
 						Spielbrett.setTürme(neueTürme);
+						
+						if(Spielbrett.getGewinner()!=null){
+							spielZurücksetzen();
+							// TODO Raphaela mögliche Felder zurücksetzen
+						}
 					}
 		});
 	}
@@ -257,7 +262,7 @@ public class ClientModel {
 		if(Spielbrett.getTürme()[k].getStroke().equals(Color.BLACK)){
 //		if(getTurmFarbe(Spielbrett.getAktiverTurmKoordinaten())==Color.BLACK){
 			for (int i = 0; i < Spielbrett.getTürme().length; i++){
-				Spielbrett.getTürme()[i].setAktiverTurm(false);
+//				Spielbrett.getTürme()[i].setAktiverTurm(false);
 				Spielbrett.getTürme()[i].setStrokeWidth(spielbrett.STROKEWIDTHTÜRMESTANDARD);	//Formatierung aller Türme zurücksetzen	
 				if (Spielbrett.getTürme()[i].getStroke().equals(Color.WHITE)
 						&& Spielbrett.getTürme()[i].getFill().equals(ausgewähltesFeld.getFill())){
@@ -274,7 +279,7 @@ public class ClientModel {
 		}else{		// Nächster gegnerischer Turm falls der vorherige Turm weiss war 
 //		if(getTurmFarbe(Spielbrett.getAktiverTurmKoordinaten()).equals(Color.WHITE)){	
 			for (int i = 0; i < Spielbrett.getTürme().length; i++){ 
-				Spielbrett.getTürme()[i].setAktiverTurm(false);
+//				Spielbrett.getTürme()[i].setAktiverTurm(false);
 				Spielbrett.getTürme()[i].setStrokeWidth(spielbrett.STROKEWIDTHTÜRMESTANDARD);	//Formatierung aller Türme zurücksetzen
 				if (Spielbrett.getTürme()[i].getStroke().equals(Color.BLACK) 
 						&& Spielbrett.getTürme()[i].getFill().equals(ausgewähltesFeld.getFill())){		
@@ -367,9 +372,9 @@ public class ClientModel {
 	 * - alle Türme von der Gridpane entfernen und an den ursprünglichen Platz setzen
 	 */
 	public void spielZurücksetzen(){ 
-		möglicheFelderLeeren();
+		möglicheFelderLeeren(); // TODO beim spielbrett updaten ausführen? 
 		// Gewinner löschen, alle Türme vom Spielbrett entfernen und die Felder freigeben
-		spielbrett.setGewinner(null);
+		spielbrett.setGewinner(null); // TODO Woher wissen das die clients? Betrifft alle Infos von hier
 		spielbrett.getPane().getChildren().removeAll(Spielbrett.getTürme());
 		for (int i = 0; i < Spielbrett.getFelder().length; i++){
     		for (int j = 0; j < Spielbrett.getFelder().length; j++){
@@ -381,7 +386,7 @@ public class ClientModel {
 		for(int p = 0; p < Spielbrett.getTürme().length; p++){
 			if(Spielbrett.getTürme()[p].getStroke().equals(Color.BLACK)){
 				for(int l = 0; l < Spielbrett.getFelder()[7].length; l++){
-					if(Spielbrett.getTürme()[p].getFill()==Spielbrett.getFelder()[l][7].getFill()){
+					if(Spielbrett.getTürme()[p].getFill().equals(Spielbrett.getFelder()[l][7].getFill())){
 						Spielbrett.getTürme()[p].setKoordinaten(Spielbrett.getFelder()[l][7].getKoordinaten());
 						Spielbrett.getTürme()[p].setStrokeWidth(spielbrett.STROKEWIDTHTÜRMESTANDARD);
 						spielbrett.getPane().add(Spielbrett.getTürme()[p], l, 7);	
@@ -390,7 +395,7 @@ public class ClientModel {
 				}
 			}else{
 				for(int l = 0; l < Spielbrett.getFelder()[0].length; l++){
-					if(Spielbrett.getTürme()[p].getFill()==Spielbrett.getFelder()[l][0].getFill()){
+					if(Spielbrett.getTürme()[p].getFill().equals(Spielbrett.getFelder()[l][0].getFill())){
 						Spielbrett.getTürme()[p].setKoordinaten(Spielbrett.getFelder()[l][0].getKoordinaten());
 						Spielbrett.getTürme()[p].setStrokeWidth(spielbrett.STROKEWIDTHTÜRMESTANDARD);
 						spielbrett.getPane().add(Spielbrett.getTürme()[p], l, 0);	
@@ -417,6 +422,7 @@ public class ClientModel {
 			toRemove.add(koords);
 		}
 		Spielbrett.getMöglicheFelder().removeAll(toRemove);
+		
 		return Spielbrett.getMöglicheFelder();		
 	}
 	

@@ -29,6 +29,7 @@ public class Spielbrett{
 	public final int SPIELBRETTBREITE = 826;
 	public final int STROKEWIDTHTÜRMESTANDARD = 3;
 	public final int STROKEWIDTHAUSGEWÄHLTERTURM = 8;
+	public final int STROKEWIDTHFELDERSTANDARD = 1;
 	public final int STROKEWIDTHMÖGLICHEFELDER = 5;
 	public final int FELDGRÖSSE = 100;
 	public final int TURMDURCHMESSER = 40;
@@ -195,12 +196,6 @@ public class Spielbrett{
 		Spielbrett.möglicheFelder = möglicheFelder;
 	}
 
-	public Color getGewinner() {
-		return gewinner;
-	}
-	public void setGewinner(Color gewinner) {
-		Spielbrett.gewinner = gewinner;
-	}
 
 	public static boolean isBlockiert() {
 		return blockade;
@@ -229,5 +224,13 @@ public class Spielbrett{
 
 	public static void setAktiverTurmKoordinaten(int [] aktiverTurmKoordinaten) {
 		Spielbrett.aktiverTurmKoordinaten = aktiverTurmKoordinaten;
+	}
+
+	public static Color getGewinner() {
+		return gewinner;
+	}
+
+	public static void setGewinner(Color gewinner) {
+		Spielbrett.gewinner = gewinner;
 	}
 }
