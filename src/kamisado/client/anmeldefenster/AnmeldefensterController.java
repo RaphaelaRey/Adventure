@@ -171,18 +171,6 @@ public class AnmeldefensterController {
 			
 		});
 		
-		anmeldeView.menuDateiLöschen.setOnAction(new EventHandler<ActionEvent>(){
-			public void handle(ActionEvent event) {
-				Stage stage = new Stage();
-				LöschenfensterView lview = new LöschenfensterView(stage);
-				LöschenfensterController lcontroller = new LöschenfensterController(lview, anmeldeView);
-				lview.start();
-				stage.setAlwaysOnTop(true);
-				
-			}
-			
-		});
-		
 	}
 	
 	public static String getName(){

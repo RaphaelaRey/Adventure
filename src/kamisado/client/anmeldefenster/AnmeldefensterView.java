@@ -30,14 +30,14 @@ public class AnmeldefensterView {
 	private ClientModel clientModel;
 	private ClientView clientView;
 	
+	//Menuelemente im Anmeldefenster
 	protected MenuBar menuBar;
-	protected Menu menuDatei;
-	public MenuItem menuDateiLöschen;
 	protected Menu menuOptionen;
 	protected Menu menuOptionenSprache;
 	protected Menu menuHilfe;
 	public MenuItem menuHilfeRegeln;
 	
+	//Elemente im Anmeldefenster
 	public Label einstellungSprache;
 	public Label login;
 	public TextField anmeldenNametxt;
@@ -49,6 +49,7 @@ public class AnmeldefensterView {
 	public TextField registrierenPwtxt;
 	public Button btnRegistrieren;
 	
+	//Label für die Meldungen, die angeziegt werden. Diese werden dem Infofenster mitgeben.
 	public Label regeln;
 	public Label startMeldung;
 	public Label PWfalschMeldung;
@@ -57,21 +58,12 @@ public class AnmeldefensterView {
 	public Label RegistrierMeldung;
 	public Label PasswortZuKurz;
 	
-	//Ab hier muss bei update Text hinzugefügt werden
-	public Label LöschMeldung;
-	public Label ErfolgreichMeldung;
-	public Label PasswortFalschMeldung;
-	public Label BenutzerExistiertNichtMeldung;
-	public Button bestätigen;
-	
-	
 	public AnmeldefensterView(Stage primaryStage, AnmeldefensterController anmeldeController, ClientModel clientModel, ClientView clientView) {
 		this.stage=primaryStage;
 		this.anmeldeController= anmeldeController;
 		this.clientModel=clientModel;
 		this.clientView=clientView;
 		ServiceLocator sl=ServiceLocator.getServiceLocator();
-		//sl.setTranslator(new Translator("de"));
 		Translator t = sl.getTranslator();
 		
 		//TODO Carmen Titel muss noch übersetzt werden
@@ -96,10 +88,6 @@ public class AnmeldefensterView {
 		menuHilfe=new Menu(t.getString("MenuHilfe"));
 		menuHilfeRegeln=new MenuItem(t.getString("MenuRegeln"));
 		menuHilfe.getItems().add(menuHilfeRegeln);
-		
-		menuDatei = new Menu(t.getString("MenuDatei"));
-		menuDateiLöschen = new MenuItem(t.getString("MenuLöschen"));
-		menuDatei.getItems().add(menuDateiLöschen);
 	
 		regeln = new Label(t.getString("Regeln"));
 		startMeldung = new Label(t.getString("StartMeldung"));
@@ -109,14 +97,7 @@ public class AnmeldefensterView {
 		RegistrierMeldung = new Label(t.getString("RegistrierMeldung"));
 		PasswortZuKurz = new Label(t.getString("PasswortZuKurz"));
 		
-		//ab Hier neu
-		LöschMeldung = new Label(t.getString("LöschMeldung"));
-		ErfolgreichMeldung = new Label(t.getString("ErfolgreichMeldung"));
-		PasswortFalschMeldung = new Label(t.getString("PasswortFalschMeldung"));
-		BenutzerExistiertNichtMeldung = new Label(t.getString("BenutzerExistiertNichtMeldung"));
-		bestätigen = new Button(t.getString("ButtonBestätigen"));
-		
-		menuBar.getMenus().addAll(menuDatei, menuOptionen, menuHilfe);
+		menuBar.getMenus().addAll(menuOptionen, menuHilfe);
 		
 		
 		einstellungSprache = new Label(t.getString("EinstellungSprache"));
@@ -170,9 +151,6 @@ public class AnmeldefensterView {
 		btnRegistrieren.setText(t.getString("ButtonRegistrieren"));
 		menuHilfe.setText(t.getString("MenuHilfe"));
 		menuHilfeRegeln.setText(t.getString("MenuRegeln"));
-		menuDatei.setText(t.getString("MenuDatei"));
-		//menuDateiAbmelden.setText(t.getString("MenuAbmelden"));
-		menuDateiLöschen.setText(t.getString("MenuLöschen"));
 		anmeldenIPtxt.setText(t.getString("IP"));
 		
 		startMeldung.setText(t.getString("StartMeldung"));
@@ -182,13 +160,6 @@ public class AnmeldefensterView {
 		RegistrierMeldung.setText(t.getString("RegistrierMeldung"));
 		PasswortZuKurz.setText(t.getString("PasswortZuKurz"));
 		regeln.setText(t.getString("Regeln"));
-		
-		//ab hier neu
-		LöschMeldung.setText(t.getString("LöschMeldung"));
-		ErfolgreichMeldung.setText(t.getString("ErfolgreichMeldung"));
-		PasswortFalschMeldung.setText(t.getString("PasswortFalschMeldung"));
-		BenutzerExistiertNichtMeldung.setText(t.getString("BenutzerExistiertNichtMeldung"));
-		bestätigen.setText(t.getString("ButtonBestätigen"));
 		
 	}
 

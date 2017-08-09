@@ -1,6 +1,6 @@
 package kamisado.client.löschenfenster;
 
-import java.io.BufferedReader;
+import java.io.BufferedReader; 
 import java.io.BufferedWriter;
 import java.io.FileReader;
 import java.io.FileWriter;
@@ -10,7 +10,7 @@ import javafx.event.EventHandler;
 import javafx.scene.control.Label;
 import javafx.stage.Stage;
 import kamisado.ServiceLocator;
-import kamisado.client.anmeldefenster.AnmeldefensterView;
+import kamisado.client.ClientView;
 import kamisado.client.infofenster.InfofensterController;
 import kamisado.client.infofenster.InfofensterView;
 import kamisado.commonClasses.Translator;
@@ -18,11 +18,11 @@ import kamisado.commonClasses.Translator;
 public class LöschenfensterController {
 	
 	final private LöschenfensterView löschenView;
-	private AnmeldefensterView anmeldeView;
+	private ClientView clientView;
 
-	public LöschenfensterController(LöschenfensterView löschenView, AnmeldefensterView anmeldeView) {
+	public LöschenfensterController(LöschenfensterView löschenView, ClientView clientView) {
 		this.löschenView = löschenView;
-		this.anmeldeView = anmeldeView;
+		this.clientView=clientView;
 		ServiceLocator sl = ServiceLocator.getServiceLocator();
 		Translator t = sl.getTranslator();
 		
@@ -79,7 +79,7 @@ public class LöschenfensterController {
 							}	
 							//Meldung, dass Account löschen erfolgreich war
 							Stage stage = new Stage();
-							InfofensterView iview = new InfofensterView(stage,anmeldeView.ErfolgreichMeldung);
+							InfofensterView iview = new InfofensterView(stage,clientView.erfolgreichMeldung);
 							InfofensterController icontroller = new InfofensterController(iview);
 							iview.start();
 							stage.setAlwaysOnTop(true);
@@ -88,7 +88,7 @@ public class LöschenfensterController {
 							benutzerExistiert = true;
 							//Meldung, dass Passwort falsch ist
 							Stage stage = new Stage();
-							InfofensterView iview = new InfofensterView(stage,anmeldeView.PasswortFalschMeldung);
+							InfofensterView iview = new InfofensterView(stage,clientView.passwortFalschMeldung);
 							InfofensterController icontroller = new InfofensterController(iview);
 							iview.start();
 							stage.setAlwaysOnTop(true);
@@ -97,7 +97,7 @@ public class LöschenfensterController {
 					if(benutzerExistiert==false){
 						//Meldung, dass Benutzer, welcher gelöscht werden soll, nicht im File gespeichert ist
 						Stage stage = new Stage();
-						InfofensterView iview = new InfofensterView(stage,anmeldeView.BenutzerExistiertNichtMeldung);
+						InfofensterView iview = new InfofensterView(stage,clientView.benutzerExistiertNichtMeldung);
 						InfofensterController icontroller = new InfofensterController(iview);
 						iview.start();
 						stage.setAlwaysOnTop(true);
