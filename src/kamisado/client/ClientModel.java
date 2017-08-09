@@ -251,9 +251,12 @@ public class ClientModel {
 	 */
 	public int[] setNächsterGegnerischerTurm(int k, Feld ausgewähltesFeld, int[]nächsterAktiverTurm){
 		// Nächster gegnerischer Turm falls der vorherige Turm schwarz war
-		if(Spielbrett.getTürme()[k].getStroke()==Color.BLACK){
+//		if(Spielbrett.getTürme()[k].getStroke()==Color.BLACK){
+		if(getTurmFarbe(Spielbrett.getAktiverTurmKoordinaten(), Spielbrett.getTürme())==Color.BLACK){
 			for (int i = 0; i < Spielbrett.getTürme().length; i++){
+				Spielbrett.getTürme()[i].setAktiverTurm(false);
 				Spielbrett.getTürme()[i].setStrokeWidth(spielbrett.STROKEWIDTHTÜRMESTANDARD);	//Formatierung aller Türme zurücksetzen
+				
 				if (Spielbrett.getTürme()[i].getStroke()==Color.WHITE
 						&& Spielbrett.getTürme()[i].getFill()==ausgewähltesFeld.getFill()){
 					möglicheFelderAnzeigen(Spielbrett.getTürme()[i].getKoordinaten());
@@ -267,11 +270,20 @@ public class ClientModel {
 					}
 				}
 			}	
-		}else{		// Nächster gegnerischer Turm falls der vorherige Turm weiss war
+		}//else{		// Nächster gegnerischer Turm falls der vorherige Turm weiss war
+		if(getTurmFarbe(Spielbrett.getAktiverTurmKoordinaten(), Spielbrett.getTürme())==Color.WHITE){	
 			for (int i = 0; i < Spielbrett.getTürme().length; i++){
+				Spielbrett.getTürme()[i].setAktiverTurm(false);
 				Spielbrett.getTürme()[i].setStrokeWidth(spielbrett.STROKEWIDTHTÜRMESTANDARD);	//Formatierung aller Türme zurücksetzen
-				if (Spielbrett.getTürme()[i].getStroke()==Color.BLACK
+				
+				logger.info("Rahmenfarbe i = "+i+" "+Spielbrett.getTürme()[i].getStroke().toString() +
+						"; Rahmenfarbe Color.black ="+Color.BLACK.toString()+
+						"; Turmfarbe i = "+i+" "+Spielbrett.getTürme()[i].getFill().toString()+
+						"; Ausgewähltes Feld Füllfarbe: "+ausgewähltesFeld.getFill().toString());
+				
+				if (Spielbrett.getTürme()[i].getStroke()==Color.BLACK 
 						&& Spielbrett.getTürme()[i].getFill()==ausgewähltesFeld.getFill()){
+					logger.info("Turmfarbe und Feldfarbe stimmen überein");
 					möglicheFelderAnzeigen(Spielbrett.getTürme()[i].getKoordinaten());
 					nächsterAktiverTurm = Spielbrett.getTürme()[i].getKoordinaten();
 					Spielbrett.getTürme()[i].setStrokeWidth(spielbrett.STROKEWIDTHAUSGEWÄHLTERTURM);
@@ -282,6 +294,7 @@ public class ClientModel {
 						Spielbrett.setBlockadenVerursacher(null);
 					}
 				}
+				logger.info("Turmfarbe und Feldfarbe stimmen nicht überein");
 			}	
 		}
 		return nächsterAktiverTurm;
@@ -294,6 +307,7 @@ public class ClientModel {
 	 */
 	public int[] setNächsterGegnerischerTurmBlockade(int[]nächsterAktiverTurm){
 		turmStrokeWidthZurücksetzen();
+		System.out.println("setnächstergegnerischerturmblockade ausgeführt");
 		if(getTurmFarbe(nächsterAktiverTurm, Spielbrett.getTürme()) == Color.BLACK){
 			for (int m = 0; m < Spielbrett.getTürme().length; m++){
 				Feld aktivesFeld = Spielbrett.getFelder()[nächsterAktiverTurm[0]][nächsterAktiverTurm[1]];

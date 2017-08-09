@@ -24,8 +24,6 @@ public class Spielbrett{
 	private static int [] aktiverTurmKoordinaten = new int [2];
 	private static Color gewinner;
 	
-	private static String [] benutzerFarben = {"Color.BLACK", "Color.WHITE"};
-
 	// Infos des Spielbretts, der Türme und Felder als Konstanten definieren
 	public final int SPIELBRETTHÖHE = 886;
 	public final int SPIELBRETTBREITE = 826;
@@ -145,11 +143,14 @@ public class Spielbrett{
  	// Getter und setter
  	
  	
-	public boolean istTurmBewegt() {
+	
+
+	public static boolean istTurmBewegt() {
 		return turmBewegt;
 	}
-	public void setTurmBewegt(boolean turmBewegt) {
-		this.turmBewegt = turmBewegt;
+
+	public static void setTurmBewegt(boolean turmBewegt) {
+		Spielbrett.turmBewegt = turmBewegt;
 	}
 
 	public static Turm [] getTürme() {
@@ -220,13 +221,6 @@ public class Spielbrett{
 	}
 	public static void setBlockadenVerursacher(Color blockadenVerursacher) {
 		Spielbrett.blockadenVerursacher = blockadenVerursacher;
-	}
-
-	public static String[] getBenutzerFarben() {
-		return benutzerFarben;
-	}
-	public static void setBenutzerFarben(String[] benutzerFarben) {
-		Spielbrett.benutzerFarben = benutzerFarben;
 	}
 
 	public static int [] getAktiverTurmKoordinaten() {

@@ -34,7 +34,7 @@ public class ClientController {
 			t.setOnMouseClicked(new EventHandler<MouseEvent>(){
 				@Override
 				public void handle(MouseEvent event){
-					if(spielbrett.istTurmBewegt()==false && t.getStroke()==Color.BLACK){	
+					if(Spielbrett.istTurmBewegt()==false && t.getStroke()==Color.BLACK){	
 						clientModel.turmStrokeWidthZurücksetzen();
 						t.setStrokeWidth(spielbrett.STROKEWIDTHAUSGEWÄHLTERTURM);
 						Spielbrett.setAktiverTurmKoordinaten(t.getKoordinaten());	// TODO Raphaela weiss das der andere Client?
@@ -52,7 +52,6 @@ public class ClientController {
 				ausgewähltesFeld.setOnMouseClicked(new EventHandler<MouseEvent>(){
 					@Override
 					public void handle(MouseEvent event){
-						Label label;
 						if (Spielbrett.getMöglicheFelder().contains(ausgewähltesFeld.getKoordinaten())){
 							int[] nächsterAktiverTurm = new int[2];
 							for (int k = 0; k < Spielbrett.getTürme().length; k++){
@@ -62,7 +61,8 @@ public class ClientController {
 									spielbrett.setGewinner(clientModel.gewinnerDefinieren(ausgewähltesFeld));
 									// Zukünftiger gegnerischer Turm definieren und mögliche Felder anzeigen (sofern das Spiel nicht schon beendet ist)
 									if(spielbrett.getGewinner()==null){
-										nächsterAktiverTurm=clientModel.setNächsterGegnerischerTurm(k, ausgewähltesFeld, nächsterAktiverTurm);							
+										nächsterAktiverTurm=clientModel.setNächsterGegnerischerTurm(k, ausgewähltesFeld, nächsterAktiverTurm);		
+										System.out.println("nächsterAktiverturm=clientmodel.setnächstergegnerischerturm ausgeführt");
 									}
 								}	 
 							}
