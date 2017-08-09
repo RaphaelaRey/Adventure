@@ -102,7 +102,6 @@ public class ClientModel {
 						    			Spielbrett.getFelder()[i][j].setFeldBesetzt(false);
 						    	}
 							}	
-							System.out.println("Spielbrett leer");
 					
 							for(int i = 0; i < neueTürme.length; i++){
 								int xKoords = neueTürme[i].getKoordinaten()[0];
@@ -117,15 +116,12 @@ public class ClientModel {
 								neueTürme[i].setFill(Color.valueOf(neueTürme[i].getFüllFarbe()));
 								neueTürme[i].setStroke(Color.valueOf(neueTürme[i].getStrokeFarbe()));
 								Spielbrett.getFelder()[xKoords][yKoords].setFeldBesetzt(true);
-								System.out.println("Neue Türme hinzugefügt");
 							}	
 							
 							// Mögliche Felder anzeigen
 							möglicheFelderAnzeigen(Spielbrett.getAktiverTurmKoordinaten());
-							System.out.println("Mögliche Felder angezeigt");
 						}
 						Spielbrett.setTürme(neueTürme);
-						System.out.println("Turm-Array-Länge: "+Spielbrett.getTürme().length);
 					}
 		});
 	}

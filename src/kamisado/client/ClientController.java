@@ -105,13 +105,13 @@ public class ClientController {
 							}
 							 
 							// Überprüfen, wer gewonnen hat und die entsprechende Meldung anzeigen
-							if(spielbrett.getGewinner().equals(Color.BLACK)){
+							if(spielbrett.getGewinner()==Color.BLACK){
 								//Gewinnermeldung inkl. Frage ob nochmals gespielt werden will (im Moment wird nur das Spielbrett zurückgesetzt)
 								Stage stage = new Stage();
 								InfofensterView iview = new InfofensterView(stage,view.GewinnerMeldungSchwarz);
 								InfofensterController icontroller = new InfofensterController(iview);
 								iview.start();
-							} else if(spielbrett.getGewinner().equals(Color.WHITE)){
+							} else if(spielbrett.getGewinner()==Color.WHITE){
 								//Gewinnermeldung 
 								Stage stage = new Stage();
 								InfofensterView iview = new InfofensterView(stage,view.GewinnerMeldungWeiss);
