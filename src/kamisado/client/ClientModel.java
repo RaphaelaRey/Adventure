@@ -92,7 +92,7 @@ public class ClientModel {
 						if(neueTürme!=null && alteTürme!=null &&  neueTürme.length>0){
 							
 							//alte Türme von der Gridpane löschen und Felder zurücksetzen
-							spielbrett.getPane().getChildren().removeAll(alteTürme);
+							spielbrett.getPane().getChildren().removeAll(Spielbrett.getTürme());
 							for (int i = 0; i < Spielbrett.getFelder().length; i++){
 								for (int j = 0; j < Spielbrett.getFelder().length; j++){
 						    			Spielbrett.getFelder()[i][j].setFeldBesetzt(false);
