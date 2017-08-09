@@ -2,16 +2,13 @@ package kamisado.client;
 
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
-import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
-import kamisado.ServiceLocator;
 import kamisado.client.infofenster.InfofensterController;
 import kamisado.client.infofenster.InfofensterView;
 import kamisado.commonClasses.Feld;
 import kamisado.commonClasses.Spielbrett;
-import kamisado.commonClasses.Translator;
 import kamisado.commonClasses.Turm;
 
 //TODO Team Wie wird definiert, wer die schwarzen Türme hat? Derjenige, der am wenigsten oft gespielt hat? Und wenn gleich dann zufällig?
@@ -26,7 +23,7 @@ public class ClientController {
 	public ClientController(ClientModel clientModel, ClientView view) {
 		this.clientModel = clientModel;
 		this.view = view;
-		spielbrett = view.spielbrett; 
+		spielbrett = view.spielbrett;  
 				
 		// Schwarze Türme für Spielbeginn aktivieren
 		for (int i = 0; i < Spielbrett.getTürme().length; i++){				
