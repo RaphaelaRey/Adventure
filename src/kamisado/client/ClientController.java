@@ -130,7 +130,9 @@ public class ClientController {
 							
 //							Spielbrett.setAktiverTurmKoordinaten(nächsterAktiverTurm);	
 							
-							clientModel.getTurm(nächsterAktiverTurm).setAktiverTurm(true);
+							if (spielbrett.getGewinner()==null){
+								clientModel.getTurm(nächsterAktiverTurm).setAktiverTurm(true); // TODO Problem beim senden lösen
+							}
 							clientModel.TürmeSenden();
 
 						}
