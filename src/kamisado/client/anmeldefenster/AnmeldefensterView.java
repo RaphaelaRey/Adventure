@@ -47,6 +47,7 @@ public class AnmeldefensterView {
 	public Label neuregistrierenLabel;
 	public TextField registrierenNametxt;
 	public TextField registrierenPwtxt;
+	public TextField registrierenIPtxt;
 	public Button btnRegistrieren;
 	
 	//Label für die Meldungen, die angeziegt werden. Diese werden dem Infofenster mitgeben.
@@ -117,7 +118,8 @@ public class AnmeldefensterView {
 		registrierenNametxt = new TextField(t.getString("Benutzername"));
 		registrierenPwtxt = new TextField(t.getString("PasswortLänge"));
 		btnRegistrieren =new Button(t.getString("ButtonRegistrieren"));
-		hbox2.getChildren().addAll(registrierenNametxt, registrierenPwtxt, btnRegistrieren);
+		registrierenIPtxt = new TextField(t.getString("IP"));
+		hbox2.getChildren().addAll(registrierenNametxt, registrierenPwtxt, registrierenIPtxt, btnRegistrieren);
 		
 		gpane.add(menuBar, 0, 0);
 		gpane.add(einstellungSprache, 0, 1);
@@ -148,6 +150,7 @@ public class AnmeldefensterView {
 		btnAnmelden.setText(t.getString("ButtonAnmelden"));
 		neuregistrierenLabel.setText(t.getString("Neuregistrieren"));
 		registrierenPwtxt.setText(t.getString("PasswortLänge"));
+		registrierenIPtxt.setText(t.getString("IP"));
 		btnRegistrieren.setText(t.getString("ButtonRegistrieren"));
 		menuHilfe.setText(t.getString("MenuHilfe"));
 		menuHilfeRegeln.setText(t.getString("MenuRegeln"));
