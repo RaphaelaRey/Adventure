@@ -203,7 +203,7 @@ public class ClientModel {
 	}
 	
 	public Spielbrett getSpielbrett (){
-		return this.spielbrett;
+		return this.spielbrett; 
 	}
 	
 	/** Turmfarbe (schwarz/weiss) basierend auf dessen Koordinaten herausfinden
