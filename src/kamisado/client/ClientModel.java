@@ -379,7 +379,7 @@ public class ClientModel {
 		Spielbrett.setTurmBewegt(false);
 		// Die Türme an ihren ursprünglichen Platz setzen
 		for(int p = 0; p < Spielbrett.getTürme().length; p++){
-			if(Spielbrett.getTürme()[p].getStroke()==Color.BLACK){
+			if(Spielbrett.getTürme()[p].getStroke().equals(Color.BLACK)){
 				for(int l = 0; l < Spielbrett.getFelder()[7].length; l++){
 					if(Spielbrett.getTürme()[p].getFill()==Spielbrett.getFelder()[l][7].getFill()){
 						Spielbrett.getTürme()[p].setKoordinaten(Spielbrett.getFelder()[l][7].getKoordinaten());
