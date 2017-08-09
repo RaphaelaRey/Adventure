@@ -268,7 +268,7 @@ public class ClientModel {
 			}	
 		}else{		// Nächster gegnerischer Turm falls der vorherige Turm weiss war 
 //		if(getTurmFarbe(Spielbrett.getAktiverTurmKoordinaten()).equals(Color.WHITE)){	
-			for (int i = 0; i < Spielbrett.getTürme().length; i++){
+			for (int i = 0; i < Spielbrett.getTürme().length; i++){ 
 				Spielbrett.getTürme()[i].setAktiverTurm(false);
 				Spielbrett.getTürme()[i].setStrokeWidth(spielbrett.STROKEWIDTHTÜRMESTANDARD);	//Formatierung aller Türme zurücksetzen
 				if (Spielbrett.getTürme()[i].getStroke().equals(Color.BLACK) 
