@@ -7,6 +7,7 @@ import kamisado.client.anmeldefenster.AnmeldefensterController;
 import kamisado.client.anmeldefenster.AnmeldefensterView;
 import kamisado.commonClasses.Translator;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
@@ -33,12 +34,20 @@ public class ClientView {
 	protected Menu menuHilfe;
 	public MenuItem menuHilfeRegeln;
 	
+	//Label für Meldungen, welche während dem Spiel angezeigt werden. Diese werden dem Infofenster mitgegeben. 
 	public Label BlockadeMeldungSchwarz;
 	public Label BlockadeMeldungWeiss;
 	public Label GewinnerMeldungStillstandWeiss;
 	public Label GewinnerMeldungStillstandSchwarz;
 	public Label GewinnerMeldungSchwarz;
 	public Label GewinnerMeldungWeiss;
+	
+	//Label für Meldungen, welche beim Löschen eines Accounts unter Datei, Löschen angezeigt werden. Diese werden dem Löschenfenster mitgegeben. 
+	public Label löschMeldung;
+	public Label erfolgreichMeldung;
+	public Label passwortFalschMeldung;
+	public Label benutzerExistiertNichtMeldung;
+	public Button btnbestätigen;	
 	
     // Konstruktor
 	public ClientView(Stage stage, ClientModel clientModel, AnmeldefensterView anmeldeView) {
@@ -88,6 +97,7 @@ public class ClientView {
 		menuBar.getMenus().addAll(menuDatei, menuOptionen, menuHilfe);
 		
 		borderPane.setTop(menuBar);
+		borderPane.setCenter(spielbrett.getPane());
 		
 		BlockadeMeldungSchwarz = new Label(t.getString("BlockadeMeldungSchwarz"));
 		BlockadeMeldungWeiss = new Label(t.getString("BlockadeMeldungWeiss"));
@@ -96,14 +106,18 @@ public class ClientView {
 		GewinnerMeldungSchwarz = new Label(t.getString("GewinnerMeldungSchwarz"));
 		GewinnerMeldungWeiss = new Label(t.getString("GewinnerMeldungWeiss"));
 		
-		borderPane.setCenter(spielbrett.getPane());
+		löschMeldung = new Label(t.getString("LöschMeldung"));
+		erfolgreichMeldung = new Label(t.getString("ErfolgreichMeldung"));
+		passwortFalschMeldung = new Label(t.getString("PasswortFalschMeldung"));
+		benutzerExistiertNichtMeldung = new Label(t.getString("BenutzerExistiertNichtMeldung"));
+		btnbestätigen = new Button(t.getString("ButtonBestätigen"));
 		
 		Scene scene = new Scene(borderPane);
         stage.setScene(scene);
                   
         Stage neueStage = new Stage();
         neueStage.setAlwaysOnTop(true);
-        AnmeldefensterView neueView = new AnmeldefensterView(neueStage, anmeldeController, clientModel, this);
+        AnmeldefensterView neueView = new AnmeldefensterView(neueStage, anmeldeController, this);
         AnmeldefensterController anmeldeController = new AnmeldefensterController(neueView, this, clientModel);
         neueView.start();
 	}
@@ -131,6 +145,11 @@ public class ClientView {
 		GewinnerMeldungStillstandSchwarz.setText(t.getString("GewinnerMeldungStillstandSchwarz"));
 		GewinnerMeldungSchwarz.setText(t.getString("GewinnerMeldungSchwarz"));
 		GewinnerMeldungWeiss.setText(t.getString("GewinnerMeldungWeiss"));
+		löschMeldung.setText(t.getString("LöschMeldung"));
+		erfolgreichMeldung.setText(t.getString("ErfolgreichMeldung"));
+		passwortFalschMeldung.setText(t.getString("PasswortFalschMeldung"));
+		benutzerExistiertNichtMeldung.setText(t.getString("BenutzerExistiertNichtMeldung"));
+		btnbestätigen.setText(t.getString("ButtonBestätigen"));
 		
 		}
 }

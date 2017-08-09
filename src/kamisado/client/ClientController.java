@@ -7,8 +7,12 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import kamisado.ServiceLocator;
+import kamisado.client.anmeldefenster.AnmeldefensterController;
+import kamisado.client.anmeldefenster.AnmeldefensterView;
 import kamisado.client.infofenster.InfofensterController;
 import kamisado.client.infofenster.InfofensterView;
+import kamisado.client.löschenfenster.LöschenfensterController;
+import kamisado.client.löschenfenster.LöschenfensterView;
 import kamisado.commonClasses.Feld;
 import kamisado.commonClasses.Spielbrett;
 import kamisado.commonClasses.Translator;
@@ -21,10 +25,12 @@ public class ClientController {
 	final private ClientModel clientModel;
 	final private ClientView view;
 	final private Spielbrett spielbrett;	
+	private AnmeldefensterController anmeldeController;
 	
 	// Konstruktor
-	public ClientController(ClientModel clientModel, ClientView view) {
+	public ClientController(ClientModel clientModel, ClientView view, AnmeldefensterController anmeldeController) {
 		this.clientModel = clientModel;
+		this.anmeldeController=anmeldeController;
 		this.view = view;
 		spielbrett = view.spielbrett; 
 				
@@ -135,14 +141,30 @@ public class ClientController {
 			}
 		}
 		
+		//Wenn sich der Benutzer abmeldet, erscheint wieder das Anmeldefenster
 		view.menuDateiAbmelden.setOnAction(new EventHandler<ActionEvent>(){
 			@Override
 			public void handle(ActionEvent event) {
-				//TODO Carmen hier soll das Anmeldefenster wieder gestartet werden
-//				Stage stage = new Stage();
-//				AnmeldefensterView anmeldeView = new AnmeldefensterView(stage,)
+				Stage stage = new Stage();
+				AnmeldefensterView anmeldeView = new AnmeldefensterView(stage,anmeldeController, view);
+				AnmeldefensterController anmeldeController = new AnmeldefensterController(anmeldeView, view, clientModel);
 				clientModel.clientAnhalten();
+				anmeldeView.start();
+				stage.setAlwaysOnTop(true);
 				
+			}
+			
+		});
+		
+		//Wenn der Benutzer auf löschen klickt, popt ein neues Fenster für die Eingaben zur Löschung eines Accoutns auf
+		view.menuDateiLöschen.setOnAction(new EventHandler<ActionEvent>(){
+			@Override
+			public void handle(ActionEvent event) {
+				Stage stage = new Stage();
+				LöschenfensterView lview = new LöschenfensterView(stage);
+				LöschenfensterController lcontroller = new LöschenfensterController(lview, view);
+				lview.start();
+				stage.setAlwaysOnTop(true);
 			}
 			
 		});
