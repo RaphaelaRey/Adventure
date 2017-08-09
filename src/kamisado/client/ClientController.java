@@ -22,7 +22,7 @@ public class ClientController {
 	// Konstruktor
 	public ClientController(ClientModel clientModel, ClientView view) {
 		this.clientModel = clientModel;
-		this.view = view;
+		this.view = view; 
 		spielbrett = view.spielbrett;  
 				
 		// Schwarze Türme für Spielbeginn aktivieren
