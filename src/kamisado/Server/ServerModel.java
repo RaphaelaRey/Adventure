@@ -51,6 +51,9 @@ public class ServerModel extends Thread{
 				logger.info(clientSocket.getInetAddress().getHostName() + " verbunden");
 				namePW = SendenEmpfangen.EmpfangenString(clientSocket);
 				logger.info("Anmeldedaten erhalten: " + namePW);
+				String meldung = AnmeldungPrüfen(namePW);
+				SendenEmpfangen.Senden(clientSocket, meldung);
+				
 				client = new Client(ServerModel.this, clientSocket, this.name);
 				
 				
@@ -64,6 +67,7 @@ public class ServerModel extends Thread{
 	public String AnmeldungPrüfen(String AnmeldeInfos){
 		String meldung = "";
 		String[] prüfen = AnmeldeInfos.split(",");
+		logger.info("Name: " + prüfen[0] + " PW: " + prüfen[1]);
 		try {
 			FileReader fr = new FileReader("src/kamisado/registrierungen.txt");
 			BufferedReader reader = new BufferedReader(fr);

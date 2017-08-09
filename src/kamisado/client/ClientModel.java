@@ -22,6 +22,7 @@ public class ClientModel {
 	private boolean amLaufen = true;
 	private static String name;
 	private static String pw;
+	private String meldung;
 	private static String ipAdresse;
 	private int port = 444;
 	private Turm t;
@@ -39,6 +40,8 @@ public class ClientModel {
 			logger.info(ipAdresse + " über Port " + port + " verbunden");
 			
 			SendenEmpfangen.Senden(clientSocket, namePW);
+			this.setMeldung(SendenEmpfangen.EmpfangenString(clientSocket));
+			logger.info(this.meldung);
 			
 			//Thread erstellen
 			Runnable a = new Runnable() {
@@ -101,9 +104,15 @@ public class ClientModel {
 								int xKoords = neueTürme[i].getKoordinaten()[0];
 								int yKoords = neueTürme[i].getKoordinaten()[1];
 								
-								// Turmdurchmesser und Turmbreite definieren
+								// Turmdurchmesser definieren
 								neueTürme[i].setRadius(spielbrett.TURMDURCHMESSER);
-								neueTürme[i].setStrokeWidth(spielbrett.STROKEWIDTHTÜRMESTANDARD);
+								
+								// Randbreite der Türme definieren (breit beim aktiven Turm, standard bei den anderen)
+								if(koordVergleich(neueTürme[i].getKoordinaten(), Spielbrett.getAktiverTurmKoordinaten())){
+									neueTürme[i].setStrokeWidth(spielbrett.STROKEWIDTHAUSGEWÄHLTERTURM);
+								} else{
+									neueTürme[i].setStrokeWidth(spielbrett.STROKEWIDTHTÜRMESTANDARD);
+								}
 								
 								// Türme bei den Koordinaten platzieren, Rand- und Füllfarbe definieren und Felder besetzen
 								spielbrett.getPane().add(neueTürme[i], xKoords, yKoords);
@@ -548,6 +557,12 @@ public class ClientModel {
 				}
 			}				
 		}
+	}
+	public String getMeldung() {
+		return meldung;
+	}
+	public void setMeldung(String meldung) {
+		this.meldung = meldung;
 	}
 
 }
