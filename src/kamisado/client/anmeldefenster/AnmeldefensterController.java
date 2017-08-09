@@ -44,49 +44,62 @@ public class AnmeldefensterController {
 				pw=anmeldeView.anmeldenPwtxt.getText();
 				ip=anmeldeView.anmeldenIPtxt.getText();
 				
-				try {
-					FileReader fr = new FileReader("src/kamisado/registrierungen.txt");
-					BufferedReader reader = new BufferedReader(fr);
-					String zeile;
-					Label label;
-					boolean benutzerExistiert = false;
-					while((zeile=reader.readLine())!=null){
-						String[] parts = zeile.split(",");
-							//Überprüfung der Bedingungen, dass Benutzer angemeldet ist
-							if(parts[0].equals(name)&&parts[1].equals(pw)){
-								benutzerExistiert = true;
-								clientView.menuDateiAbmelden.setDisable(false);
-								clientView.menuDateiLöschen.setDisable(false);
-								//Meldung zu Beginn des Spiels
-								Stage stage = new Stage();
-								InfofensterView iview = new InfofensterView(stage,anmeldeView.startMeldung);
-								InfofensterController icontroller = new InfofensterController(iview);
-								iview.start();
-								stage.setAlwaysOnTop(true);
-								clientModel.Verbinden(ip, name, pw);
-								anmeldeView.stop();
-							}else if(parts[0].equals(name)&&!parts[1].equals(pw)){
-								benutzerExistiert = true;
-								//Meldung, dass Passwort falsch ist
-								Stage stage = new Stage();
-								InfofensterView iview = new InfofensterView(stage,anmeldeView.PWfalschMeldung);
-								InfofensterController icontroller = new InfofensterController(iview);
-								iview.start();
-								stage.setAlwaysOnTop(true);
-							}													
-					}
-					if(benutzerExistiert==false){
-						//Meldung, dass Benutzer nicht exisitert
-						Stage stage = new Stage();
-						InfofensterView iview = new InfofensterView(stage,anmeldeView.BenutzerExistiertNicht);
-						InfofensterController icontroller = new InfofensterController(iview);
-						iview.start();
-						stage.setAlwaysOnTop(true);
-					}
-					reader.close();
-				} catch (IOException e1) {
-					e1.printStackTrace();
+				clientModel.Verbinden(ip, name, pw);
+				
+				String meldung = clientModel.getMeldung();
+				
+				if(meldung.equals("startMeldung")){
+					Stage stage = new Stage();
+					InfofensterView iview = new InfofensterView(stage,anmeldeView.startMeldung);
+					InfofensterController icontroller = new InfofensterController(iview);
+					iview.start();
+					stage.setAlwaysOnTop(true);
+					anmeldeView.stop();
 				}
+				
+//				try {
+//					FileReader fr = new FileReader("src/kamisado/registrierungen.txt");
+//					BufferedReader reader = new BufferedReader(fr);
+//					String zeile;
+//					Label label;
+//					boolean benutzerExistiert = false;
+//					while((zeile=reader.readLine())!=null){
+//						String[] parts = zeile.split(",");
+//							//Überprüfung der Bedingungen, dass Benutzer angemeldet ist
+//							if(parts[0].equals(name)&&parts[1].equals(pw)){
+//								benutzerExistiert = true;
+//								clientView.menuDateiAbmelden.setDisable(false);
+//								clientView.menuDateiLöschen.setDisable(false);
+//								//Meldung zu Beginn des Spiels
+//								Stage stage = new Stage();
+//								InfofensterView iview = new InfofensterView(stage,anmeldeView.startMeldung);
+//								InfofensterController icontroller = new InfofensterController(iview);
+//								iview.start();
+//								stage.setAlwaysOnTop(true);
+//								clientModel.Verbinden(ip, name, pw);
+//								anmeldeView.stop();
+//							}else if(parts[0].equals(name)&&!parts[1].equals(pw)){
+//								benutzerExistiert = true;
+//								//Meldung, dass Passwort falsch ist
+//								Stage stage = new Stage();
+//								InfofensterView iview = new InfofensterView(stage,anmeldeView.PWfalschMeldung);
+//								InfofensterController icontroller = new InfofensterController(iview);
+//								iview.start();
+//								stage.setAlwaysOnTop(true);
+//							}													
+//					}
+//					if(benutzerExistiert==false){
+//						//Meldung, dass Benutzer nicht exisitert
+//						Stage stage = new Stage();
+//						InfofensterView iview = new InfofensterView(stage,anmeldeView.BenutzerExistiertNicht);
+//						InfofensterController icontroller = new InfofensterController(iview);
+//						iview.start();
+//						stage.setAlwaysOnTop(true);
+//					}
+//					reader.close();
+//				} catch (IOException e1) {
+//					e1.printStackTrace();
+//				}
 			}
 			
 		});
