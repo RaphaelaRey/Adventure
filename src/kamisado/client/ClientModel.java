@@ -101,9 +101,15 @@ public class ClientModel {
 								int xKoords = neueTürme[i].getKoordinaten()[0];
 								int yKoords = neueTürme[i].getKoordinaten()[1];
 								
-								// Turmdurchmesser und Turmbreite definieren
+								// Turmdurchmesser definieren
 								neueTürme[i].setRadius(spielbrett.TURMDURCHMESSER);
-								neueTürme[i].setStrokeWidth(spielbrett.STROKEWIDTHTÜRMESTANDARD);
+								
+								// Randbreite der Türme definieren (breit beim aktiven Turm, standard bei den anderen)
+								if(koordVergleich(neueTürme[i].getKoordinaten(), Spielbrett.getAktiverTurmKoordinaten())){
+									neueTürme[i].setStrokeWidth(spielbrett.STROKEWIDTHAUSGEWÄHLTERTURM);
+								} else{
+									neueTürme[i].setStrokeWidth(spielbrett.STROKEWIDTHTÜRMESTANDARD);
+								}
 								
 								// Türme bei den Koordinaten platzieren, Rand- und Füllfarbe definieren und Felder besetzen
 								spielbrett.getPane().add(neueTürme[i], xKoords, yKoords);
