@@ -34,7 +34,7 @@ public class ClientController {
 			t.setOnMouseClicked(new EventHandler<MouseEvent>(){
 				@Override
 				public void handle(MouseEvent event){
-					if(Spielbrett.istTurmBewegt()==false && t.getStroke()==Color.BLACK){	
+					if(Spielbrett.istTurmBewegt()==false && t.getStroke().equals(Color.BLACK)){	
 						clientModel.turmStrokeWidthZurücksetzen();
 						t.setStrokeWidth(spielbrett.STROKEWIDTHAUSGEWÄHLTERTURM);
 						Spielbrett.setAktiverTurmKoordinaten(t.getKoordinaten());	// TODO Raphaela weiss das der andere Client?
@@ -69,13 +69,13 @@ public class ClientController {
 							// Zukünftiger gegnerischer Turm definieren im Fall einer Blockade 			
 							if(spielbrett.getGewinner()==null && Spielbrett.isBlockiert()==true){
 								nächsterAktiverTurm=clientModel.setNächsterGegnerischerTurmBlockade(nächsterAktiverTurm);	 
-								if(Spielbrett.getBlockadenVerursacher()==Color.BLACK){
+								if(Spielbrett.getBlockadenVerursacher().equals(Color.BLACK)){
 									//Blockadenmeldung
 									Stage stage = new Stage();
 									InfofensterView iview = new InfofensterView(stage,view.BlockadeMeldungSchwarz);
 									InfofensterController icontroller = new InfofensterController(iview);
 									iview.start();
-								} else if (Spielbrett.getBlockadenVerursacher()==Color.WHITE){
+								} else if (Spielbrett.getBlockadenVerursacher().equals(Color.WHITE)){
 									//Blockadenmeldung
 									Stage stage = new Stage();
 									InfofensterView iview = new InfofensterView(stage,view.BlockadeMeldungWeiss);
@@ -85,7 +85,7 @@ public class ClientController {
 							} 			
 							// Völliger Stillstand TODO Raphaela kontrollieren
 							if(Spielbrett.getBlockadenCounter()==2){
-								if(Spielbrett.getBlockadenVerursacher()==Color.BLACK){
+								if(Spielbrett.getBlockadenVerursacher().equals(Color.BLACK)){
 									spielbrett.setGewinner(Color.WHITE);
 									System.out.println("Schwarz hat totalen Stillstand verursacht, weiss gewinnt"); 
 									// Gewinnermeldung bei völligem Stillstand
@@ -105,13 +105,13 @@ public class ClientController {
 							}
 							 
 							// Überprüfen, wer gewonnen hat und die entsprechende Meldung anzeigen
-							if(spielbrett.getGewinner() == Color.BLACK){
+							if(spielbrett.getGewinner().equals(Color.BLACK)){
 								//Gewinnermeldung inkl. Frage ob nochmals gespielt werden will (im Moment wird nur das Spielbrett zurückgesetzt)
 								Stage stage = new Stage();
 								InfofensterView iview = new InfofensterView(stage,view.GewinnerMeldungSchwarz);
 								InfofensterController icontroller = new InfofensterController(iview);
 								iview.start();
-							} else if(spielbrett.getGewinner() == Color.WHITE){
+							} else if(spielbrett.getGewinner().equals(Color.WHITE)){
 								//Gewinnermeldung 
 								Stage stage = new Stage();
 								InfofensterView iview = new InfofensterView(stage,view.GewinnerMeldungWeiss);
@@ -121,16 +121,15 @@ public class ClientController {
 							
 							// Spiel zurücksetzen nach Gewinn 
 							if(spielbrett.getGewinner()!=null){
-								clientModel.spielZurücksetzen(Spielbrett.getMöglicheFelder(), Spielbrett.getFelder(), Spielbrett.getTürme());	
+								clientModel.spielZurücksetzen();	
 							}
 							// Koordinaten des nächsten aktiven Turms ausserhalb der for-Schleife definieren
 							
 //							Spielbrett.setAktiverTurmKoordinaten(nächsterAktiverTurm);	
 							
 							clientModel.getTurm(nächsterAktiverTurm).setAktiverTurm(true);
-							
+							clientModel.TürmeSenden();
 						}
-						clientModel.TürmeSenden();
 					}					
 				});				
 			}

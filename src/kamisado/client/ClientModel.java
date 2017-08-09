@@ -210,13 +210,12 @@ public class ClientModel {
 	
 	/** Turmfarbe (schwarz/weiss) basierend auf dessen Koordinaten herausfinden
 	 * @param turmKoordinaten
-	 * @param türme
 	 * @return Turmfarbe
 	 */
-	public Color getTurmFarbe(int[]turmKoordinaten, Turm[]türme){
-		for (int i = 0; i < türme.length; i++){
-			if(koordVergleich(türme[i].getKoordinaten(), turmKoordinaten)==true // ausgewählter Turm herausfinden
-					&& (türme[i].getStroke()==Color.BLACK)){				// herausfinden ob der Turm schwarz ist
+	public Color getTurmFarbe(int[]turmKoordinaten){
+		for (int i = 0; i < Spielbrett.getTürme().length; i++){
+			if(koordVergleich(Spielbrett.getTürme()[i].getKoordinaten(), turmKoordinaten)==true // ausgewählter Turm herausfinden
+					&& (Spielbrett.getTürme()[i].getStroke().equals(Color.BLACK))){				// herausfinden ob der Turm schwarz ist
 				return Color.BLACK;
 			}
 		}
@@ -252,7 +251,7 @@ public class ClientModel {
 	public int[] setNächsterGegnerischerTurm(int k, Feld ausgewähltesFeld, int[]nächsterAktiverTurm){
 		// Nächster gegnerischer Turm falls der vorherige Turm schwarz war
 //		if(Spielbrett.getTürme()[k].getStroke()==Color.BLACK){
-		if(getTurmFarbe(Spielbrett.getAktiverTurmKoordinaten(), Spielbrett.getTürme())==Color.BLACK){
+		if(getTurmFarbe(Spielbrett.getAktiverTurmKoordinaten())==Color.BLACK){
 			for (int i = 0; i < Spielbrett.getTürme().length; i++){
 				Spielbrett.getTürme()[i].setAktiverTurm(false);
 				Spielbrett.getTürme()[i].setStrokeWidth(spielbrett.STROKEWIDTHTÜRMESTANDARD);	//Formatierung aller Türme zurücksetzen
@@ -270,8 +269,8 @@ public class ClientModel {
 					}
 				}
 			}	
-		}//else{		// Nächster gegnerischer Turm falls der vorherige Turm weiss war
-		if(getTurmFarbe(Spielbrett.getAktiverTurmKoordinaten(), Spielbrett.getTürme())==Color.WHITE){	
+		}//else{		// Nächster gegnerischer Turm falls der vorherige Turm weiss war  TODO Raphaela auch bei schwarz korrigieren
+		if(getTurmFarbe(Spielbrett.getAktiverTurmKoordinaten())==Color.WHITE){	
 			for (int i = 0; i < Spielbrett.getTürme().length; i++){
 				Spielbrett.getTürme()[i].setAktiverTurm(false);
 				Spielbrett.getTürme()[i].setStrokeWidth(spielbrett.STROKEWIDTHTÜRMESTANDARD);	//Formatierung aller Türme zurücksetzen
@@ -280,12 +279,13 @@ public class ClientModel {
 						"; Rahmenfarbe Color.black ="+Color.BLACK.toString()+
 						"; Turmfarbe i = "+i+" "+Spielbrett.getTürme()[i].getFill().toString()+
 						"; Ausgewähltes Feld Füllfarbe: "+ausgewähltesFeld.getFill().toString());
-				
-				if (Spielbrett.getTürme()[i].getStroke()==Color.BLACK 
-						&& Spielbrett.getTürme()[i].getFill()==ausgewähltesFeld.getFill()){
+			
+				if (Spielbrett.getTürme()[i].getStroke().equals(Color.BLACK) 
+						&& Spielbrett.getTürme()[i].getFill().equals(ausgewähltesFeld.getFill())){	
+					
 					logger.info("Turmfarbe und Feldfarbe stimmen überein");
-					möglicheFelderAnzeigen(Spielbrett.getTürme()[i].getKoordinaten());
 					nächsterAktiverTurm = Spielbrett.getTürme()[i].getKoordinaten();
+					möglicheFelderAnzeigen(nächsterAktiverTurm);
 					Spielbrett.getTürme()[i].setStrokeWidth(spielbrett.STROKEWIDTHAUSGEWÄHLTERTURM);
 					if(Spielbrett.getMöglicheFelder().size()==0){		
 						Spielbrett.setBlockiert(true);
@@ -308,7 +308,7 @@ public class ClientModel {
 	public int[] setNächsterGegnerischerTurmBlockade(int[]nächsterAktiverTurm){
 		turmStrokeWidthZurücksetzen();
 		System.out.println("setnächstergegnerischerturmblockade ausgeführt");
-		if(getTurmFarbe(nächsterAktiverTurm, Spielbrett.getTürme()) == Color.BLACK){
+		if(getTurmFarbe(nächsterAktiverTurm) == Color.BLACK){
 			for (int m = 0; m < Spielbrett.getTürme().length; m++){
 				Feld aktivesFeld = Spielbrett.getFelder()[nächsterAktiverTurm[0]][nächsterAktiverTurm[1]];
 				if (Spielbrett.getTürme()[m].getStroke()==Color.WHITE
@@ -327,7 +327,7 @@ public class ClientModel {
 				}
 			} 
 		} 
-		if(getTurmFarbe(nächsterAktiverTurm, Spielbrett.getTürme()) == Color.WHITE
+		if(getTurmFarbe(nächsterAktiverTurm) == Color.WHITE
 				&& Spielbrett.isBlockiert()==true){
 			for (int m = 0; m < Spielbrett.getTürme().length; m++){
 				Spielbrett.getTürme()[m].setStrokeWidth(spielbrett.STROKEWIDTHTÜRMESTANDARD);
@@ -377,17 +377,17 @@ public class ClientModel {
 	 * @param felder
 	 * @param türme
 	 */
-	public void spielZurücksetzen(ArrayList<int[]> möglicheFelder, Feld[][]felder, Turm[] türme){ 
-		möglicheFelderLeeren(möglicheFelder, felder);
+	public void spielZurücksetzen(){ 
+		möglicheFelderLeeren();
 		// Gewinner löschen, alle Türme vom Spielbrett entfernen und die Felder freigeben
 		spielbrett.setGewinner(null);
-		spielbrett.getPane().getChildren().removeAll(türme);
+		spielbrett.getPane().getChildren().removeAll(Spielbrett.getTürme());
 		for (int i = 0; i < Spielbrett.getFelder().length; i++){
     		for (int j = 0; j < Spielbrett.getFelder().length; j++){
     			Spielbrett.getFelder()[i][j].setFeldBesetzt(false);
     		}
 		}	
-		spielbrett.setTurmBewegt(false);
+		Spielbrett.setTurmBewegt(false);
 		// Die Türme an ihren ursprünglichen Platz setzen
 		for(int p = 0; p < Spielbrett.getTürme().length; p++){
 			if(Spielbrett.getTürme()[p].getStroke()==Color.BLACK){
@@ -417,20 +417,20 @@ public class ClientModel {
 	 * @param felder
 	 * @return geleerte ArrayList
 	 */
-	public ArrayList<int[]> möglicheFelderLeeren(ArrayList<int[]> möglicheFelder, Feld[][]felder){
+	public ArrayList<int[]> möglicheFelderLeeren(){
 		ArrayList<int[]> toRemove = new ArrayList<>();
-		Iterator<int[]> iter = möglicheFelder.iterator();
+		Iterator<int[]> iter = Spielbrett.getMöglicheFelder().iterator();
 		while (iter.hasNext()){
 			int[]koords = iter.next();
 			int xKoord = koords[0];
 			int yKoord = koords[1];
-			felder[xKoord][yKoord].setStroke(Color.BLACK);
-			felder[xKoord][yKoord].setStrokeWidth(1);
-			felder[xKoord][yKoord].setStrokeType(StrokeType.CENTERED);	
+			Spielbrett.getFelder()[xKoord][yKoord].setStroke(Color.BLACK);
+			Spielbrett.getFelder()[xKoord][yKoord].setStrokeWidth(1);
+			Spielbrett.getFelder()[xKoord][yKoord].setStrokeType(StrokeType.CENTERED);	
 			toRemove.add(koords);
 		}
-		möglicheFelder.removeAll(toRemove);
-		return möglicheFelder;		
+		Spielbrett.getMöglicheFelder().removeAll(toRemove);
+		return Spielbrett.getMöglicheFelder();		
 	}
 	
 	/** Mögliche Felder (geradeaus, diagonal rechts und diagonal links) anzeigen
@@ -440,8 +440,8 @@ public class ClientModel {
 	 * @return ArrayList der möglichen Felder
 	 */
 	public ArrayList<int[]> möglicheFelderAnzeigen(int[] turmKoordinaten){		
-		möglicheFelderLeeren(Spielbrett.getMöglicheFelder(), Spielbrett.getFelder());
-		möglicheFelderHinzufügen(turmKoordinaten, Spielbrett.getTürme(), Spielbrett.getFelder(), Spielbrett.getMöglicheFelder());
+		möglicheFelderLeeren();
+		möglicheFelderHinzufügen(turmKoordinaten);
 		return Spielbrett.getMöglicheFelder();
 	}
 	
@@ -451,63 +451,27 @@ public class ClientModel {
 	 * @param felder
 	 * @param möglicheFelder
 	 */
-	private void möglicheFelderHinzufügen(int[] turmKoordinaten, 
-			Turm[]türme, Feld[][]felder, ArrayList<int[]> möglicheFelder){
+	private void möglicheFelderHinzufügen(int[] turmKoordinaten){
 		int xKoords = turmKoordinaten[0];											
 		int yKoords = turmKoordinaten[1];	
-		// TODO Raphaela Löschen wenn nicht funktioniert
-//		for(int i = 1; i < felder[0].length; i++){
-//			Feld möglichGeradeaus;
-//			Feld möglichDiagRechts;
-//			Feld möglichDiagLinks;
-//			try {
-//				möglichGeradeaus = felder[xKoords][yKoords-i];
-//			} catch (ArrayIndexOutOfBoundsException e) {
-//				break;
-//			}
-//			try {
-//				möglichDiagRechts = felder[xKoords+i][yKoords-i];
-//			} catch (ArrayIndexOutOfBoundsException e) {
-//				break;
-//			}
-//			try {
-//				möglichDiagLinks = felder[xKoords-i][yKoords-i];
-//			} catch (ArrayIndexOutOfBoundsException e) {
-//				break;
-//			}
-//			
-//			Feld[] möglich = {möglichGeradeaus, möglichDiagRechts, möglichDiagLinks};
-//			
-//			for(int j = 0; j < möglich.length; j++){
-//				if(möglich[j].istFeldBesetzt()==true){
-//					bereitsEinFeldBesetzt = true;
-//				}
-//			}
-//			for(int k = 0; k < möglich.length; k++){
-//				if(möglich[k].istFeldBesetzt()==false
-//					&& bereitsEinFeldBesetzt==false){
-//					möglicheFelder.add(möglich[k].getKoordinaten());
-//					möglich[k].setStrokeWidth(spielbrett.STROKEWIDTHMÖGLICHEFELDER);
-//					möglich[k].setStrokeType(StrokeType.INSIDE);
-//				}
-//			}	
-//		}
-		
+		logger.info("Turmfarbe: "+getTurmFarbe(turmKoordinaten).toString()+ "Schwarz: "+Color.BLACK.toString());
+		logger.info("Turmfarbe sollte schwarz "+Color.BLACK.toString()+" sein: "+getTurmFarbe(Spielbrett.getTürme()[0].getKoordinaten())+
+				"Turmfarbe sollte weiss "+Color.WHITE.toString()+" sein: "+getTurmFarbe(Spielbrett.getTürme()[15].getKoordinaten()));
 		
 		// Mögliche Felder falls der Turm schwarz ist				
-		if((getTurmFarbe(turmKoordinaten, türme)==Color.BLACK)){
+		if((getTurmFarbe(turmKoordinaten).equals(Color.BLACK))){
 			// Mögliche Felder geradeaus
 			boolean bereitsEinFeldBesetzt = false;
 
-			for(int i = 1; i < felder[0].length; i++){
+			for(int i = 1; i < Spielbrett.getFelder()[0].length; i++){
 				try {
-					Feld möglichGeradeaus = felder[xKoords][yKoords-i];
+					Feld möglichGeradeaus = Spielbrett.getFelder()[xKoords][yKoords-i];
 					if(möglichGeradeaus.istFeldBesetzt()==true){
 						bereitsEinFeldBesetzt = true;
 					}
 					if(möglichGeradeaus.istFeldBesetzt()==false
 							&& bereitsEinFeldBesetzt==false){
-						möglicheFelder.add(möglichGeradeaus.getKoordinaten());
+						Spielbrett.getMöglicheFelder().add(möglichGeradeaus.getKoordinaten());
 						möglichGeradeaus.setStrokeWidth(spielbrett.STROKEWIDTHMÖGLICHEFELDER);
 						möglichGeradeaus.setStrokeType(StrokeType.INSIDE);
 					}
@@ -518,15 +482,15 @@ public class ClientModel {
 			bereitsEinFeldBesetzt = false;
 			
 			// Mögliche Felder rechts diagonal
-			for(int i = 1; i < felder[0].length; i++){
+			for(int i = 1; i < Spielbrett.getFelder()[0].length; i++){
 				try {
-					Feld möglichDiagRechts = felder[xKoords+i][yKoords-i];
+					Feld möglichDiagRechts = spielbrett.getFelder()[xKoords+i][yKoords-i];
 					if(möglichDiagRechts.istFeldBesetzt()==true){
 						bereitsEinFeldBesetzt = true;
 					}
 					if(möglichDiagRechts.istFeldBesetzt()==false
 							&& bereitsEinFeldBesetzt==false){
-						möglicheFelder.add(möglichDiagRechts.getKoordinaten());
+						Spielbrett.getMöglicheFelder().add(möglichDiagRechts.getKoordinaten());
 						möglichDiagRechts.setStrokeWidth(spielbrett.STROKEWIDTHMÖGLICHEFELDER);
 						möglichDiagRechts.setStrokeType(StrokeType.INSIDE);
 					}
@@ -537,15 +501,15 @@ public class ClientModel {
 			bereitsEinFeldBesetzt = false;
 
 			// Mögliche Felder links diagonal 
-			for(int i = 1; i < felder[0].length; i++){
+			for(int i = 1; i < Spielbrett.getFelder()[0].length; i++){
 				try {
-					Feld möglichDiagLinks = felder[xKoords-i][yKoords-i];
+					Feld möglichDiagLinks = Spielbrett.getFelder()[xKoords-i][yKoords-i];
 					if(möglichDiagLinks.istFeldBesetzt()==true){
 						bereitsEinFeldBesetzt = true;
 					}
 					if(möglichDiagLinks.istFeldBesetzt()==false
 							&& bereitsEinFeldBesetzt==false){
-						möglicheFelder.add(möglichDiagLinks.getKoordinaten());
+						Spielbrett.getMöglicheFelder().add(möglichDiagLinks.getKoordinaten());
 						möglichDiagLinks.setStrokeWidth(spielbrett.STROKEWIDTHMÖGLICHEFELDER);
 						möglichDiagLinks.setStrokeType(StrokeType.INSIDE);
 					}
@@ -556,18 +520,18 @@ public class ClientModel {
 		}
 		
 		// Mögliche Felder falls der Turm weiss ist
-		if((getTurmFarbe(turmKoordinaten, türme)==Color.WHITE)){
+		if((getTurmFarbe(turmKoordinaten).equals(Color.WHITE))){
 			boolean bereitsEinFeldBesetzt = false;
 			// Mögliche Felder geradeaus
-			for(int i = 1; i < felder[0].length; i++){
+			for(int i = 1; i < Spielbrett.getFelder()[0].length; i++){
 				try {
-					Feld möglichGeradeaus = felder[xKoords][yKoords+i];
+					Feld möglichGeradeaus = Spielbrett.getFelder()[xKoords][yKoords+i];
 					if(möglichGeradeaus.istFeldBesetzt()==true){
 						bereitsEinFeldBesetzt = true;
 					}
 					if(möglichGeradeaus.istFeldBesetzt()==false
 							&& bereitsEinFeldBesetzt==false){
-						möglicheFelder.add(möglichGeradeaus.getKoordinaten());
+						Spielbrett.getMöglicheFelder().add(möglichGeradeaus.getKoordinaten());
 						möglichGeradeaus.setStrokeWidth(spielbrett.STROKEWIDTHMÖGLICHEFELDER);
 						möglichGeradeaus.setStroke(Color.WHITE);
 						möglichGeradeaus.setStrokeType(StrokeType.INSIDE);
@@ -578,15 +542,15 @@ public class ClientModel {
 			}
 			bereitsEinFeldBesetzt = false;
 			// Mögliche Felder rechts diagonal 
-			for(int i = 1; i < felder[0].length; i++){
+			for(int i = 1; i < Spielbrett.getFelder()[0].length; i++){
 				try {
-					Feld möglichDiagRechts = felder[xKoords+i][yKoords+i];
+					Feld möglichDiagRechts = Spielbrett.getFelder()[xKoords+i][yKoords+i];
 					if(möglichDiagRechts.istFeldBesetzt()==true){
 						bereitsEinFeldBesetzt = true;
 					}
 					if(möglichDiagRechts.istFeldBesetzt()==false
 							&& bereitsEinFeldBesetzt==false){
-						möglicheFelder.add(möglichDiagRechts.getKoordinaten());
+						Spielbrett.getMöglicheFelder().add(möglichDiagRechts.getKoordinaten());
 						möglichDiagRechts.setStrokeWidth(spielbrett.STROKEWIDTHMÖGLICHEFELDER);
 						möglichDiagRechts.setStroke(Color.WHITE);
 						möglichDiagRechts.setStrokeType(StrokeType.INSIDE);
@@ -597,15 +561,15 @@ public class ClientModel {
 			}
 			bereitsEinFeldBesetzt = false;
 			// Mögliche Felder links diagonal 
-			for(int i = 1; i < felder[0].length; i++){
+			for(int i = 1; i < Spielbrett.getFelder()[0].length; i++){
 				try {
-					Feld möglichDiagLinks = felder[xKoords-i][yKoords+i];
+					Feld möglichDiagLinks = Spielbrett.getFelder()[xKoords-i][yKoords+i];
 					if(möglichDiagLinks.istFeldBesetzt()==true){
 						bereitsEinFeldBesetzt = true;
 					}
 					if(möglichDiagLinks.istFeldBesetzt()==false
 							&& bereitsEinFeldBesetzt==false){
-						möglicheFelder.add(möglichDiagLinks.getKoordinaten());
+						Spielbrett.getMöglicheFelder().add(möglichDiagLinks.getKoordinaten());
 						möglichDiagLinks.setStrokeWidth(spielbrett.STROKEWIDTHMÖGLICHEFELDER);
 						möglichDiagLinks.setStroke(Color.WHITE);
 						möglichDiagLinks.setStrokeType(StrokeType.INSIDE);
