@@ -27,7 +27,8 @@ public class ServerModel extends Thread{
 	private String name;
 	private String namePW;
 	private boolean amLaufen = true;
-	private final Logger logger = Logger.getLogger("");
+	private static final Logger logger = Logger.getLogger("");
+	private String meldung;
 	
 	
 	public ServerModel (int port)  {
@@ -50,9 +51,22 @@ public class ServerModel extends Thread{
 				//Verbindung mit Client herstellen
 				Socket clientSocket = server.accept();
 				logger.info(clientSocket.getInetAddress().getHostName() + " verbunden");
-				namePW = SendenEmpfangen.EmpfangenString(clientSocket);
+				String eingang = SendenEmpfangen.EmpfangenString(clientSocket);
 				logger.info("Anmeldedaten erhalten: " + namePW);
-				String meldung = AnmeldungPrüfen(namePW);
+				String[] teile = eingang.split(",");
+				namePW = teile[1] +"," + teile[2];
+				
+				
+				if(teile[0].equals("anmelden") ){
+					meldung = AnmeldungPrüfen(namePW);
+				} else if (teile[0].equals("registrieren")) {
+					meldung = RegistrierungPrüfen(namePW);
+				} else if (teile[0].equals("löschen")){
+					meldung = LöschenPrüfen(namePW);
+				} else {
+					meldung = "Fehler";
+				}
+				
 				SendenEmpfangen.Senden(clientSocket, meldung);
 				
 				client = new Client(ServerModel.this, clientSocket, this.name);

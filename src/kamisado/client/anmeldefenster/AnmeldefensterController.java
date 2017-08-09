@@ -45,7 +45,7 @@ public class AnmeldefensterController {
 				ip=anmeldeView.anmeldenIPtxt.getText();
 				String art = "anmelden";
 				
-				clientModel.Verbinden(ip, name, pw);
+				clientModel.Verbinden(ip, name, pw, art);
 				
 				String meldung = clientModel.getMeldung();
 				
@@ -85,7 +85,7 @@ public class AnmeldefensterController {
 				 ip = anmeldeView.registrierenIPtxt.getText();
 				 String art = "registrieren";
 				 
-				 clientModel.Verbinden(ip, name, pw);
+				 clientModel.Verbinden(ip, name, pw, art);
 				 
 				 String meldung = clientModel.getMeldung();
 				 

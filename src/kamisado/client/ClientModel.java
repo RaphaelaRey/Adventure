@@ -22,6 +22,7 @@ public class ClientModel {
 	private boolean amLaufen = true;
 	private static String name;
 	private static String pw;
+	private static String ip;
 	private String meldung;
 	private static String ipAdresse;
 	private int port = 444;
@@ -29,9 +30,14 @@ public class ClientModel {
 	private Feld f;
 	
 	private final Logger logger = Logger.getLogger("");
+	
+//	public void Verbinden(String name, String pw, String art){
+//		Verbinden(ip, name, pw, art);
+//	}
 
-	public void Verbinden(String ipAdresse, String name, String pw) {
-		 String namePW = name + ","+ pw;
+	public void Verbinden(String ipAdresse, String name, String pw, String art) {
+		 String namePW = art + "," + name + ","+ pw;
+		 setIp(ipAdresse);
 		 
 		try{
 			//Verbindung mit Server herstellen
@@ -425,6 +431,14 @@ public class ClientModel {
 		return Spielbrett.getMöglicheFelder();
 	}
 	
+	public static String getIp() {
+		return ip;
+	}
+
+	public static void setIp(String ip) {
+		ClientModel.ip = ip;
+	}
+
 	/** Mögliche Felder der ArrayList hinzufügen (Supportmethode)
 	 * @param turmKoordinaten
 	 */
