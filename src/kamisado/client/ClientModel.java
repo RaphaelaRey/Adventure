@@ -30,10 +30,9 @@ public class ClientModel {
 	
 	private final Logger logger = Logger.getLogger("");
 
-	public void Verbinden(String ipAdresse, String name, String pw) {
-		 String namePW = name + ","+ pw;
-		 ClientModel.name = AnmeldefensterController.getName();
-		 ClientModel.pw = AnmeldefensterController.getPasswort();
+	public void Verbinden(String ipAdresse, String name, String pw, String art) {
+		 String namePW = art + "," + name + ","+ pw;
+		 
 		try{
 			//Verbindung mit Server herstellen
 			this.clientSocket = new Socket(ipAdresse, port);
