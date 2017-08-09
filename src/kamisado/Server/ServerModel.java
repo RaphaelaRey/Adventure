@@ -81,9 +81,11 @@ public class ServerModel extends Thread{
 					benutzerExistiert = true;
 					meldung = "startMeldung";
 				//Überprüfen, ob Name stimmt und Passwort falsch ist
-				}else if(parts[0].equals(prüfen[0])&&!parts[1].equals(prüfen[1]))
+				}else if(parts[0].equals(prüfen[0])&&!parts[1].equals(prüfen[1])){
 					benutzerExistiert=true;
-				meldung = "PasswortFalsch";
+					meldung = "PasswortFalsch";
+				}
+				
 			}
 			//Der Benutzer ist nicht gespeichert
 			if(benutzerExistiert==false){
