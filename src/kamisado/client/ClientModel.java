@@ -22,6 +22,7 @@ public class ClientModel {
 	private boolean amLaufen = true;
 	private static String name;
 	private static String pw;
+	private String meldung;
 	private static String ipAdresse;
 	private int port = 444;
 	private Turm t;
@@ -39,6 +40,8 @@ public class ClientModel {
 			logger.info(ipAdresse + " über Port " + port + " verbunden");
 			
 			SendenEmpfangen.Senden(clientSocket, namePW);
+			this.setMeldung(SendenEmpfangen.EmpfangenString(clientSocket));
+			logger.info(this.meldung);
 			
 			//Thread erstellen
 			Runnable a = new Runnable() {
@@ -548,6 +551,12 @@ public class ClientModel {
 				}
 			}				
 		}
+	}
+	public String getMeldung() {
+		return meldung;
+	}
+	public void setMeldung(String meldung) {
+		this.meldung = meldung;
 	}
 
 }
