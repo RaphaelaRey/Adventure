@@ -33,8 +33,8 @@ public class ClientModel {
 
 	public void Verbinden(String ipAdresse, String name, String pw) {
 		 String namePW = name + ","+ pw;
-		 this.name = AnmeldefensterController.getName();
-		 this.pw = AnmeldefensterController.getPasswort();
+		 ClientModel.name = AnmeldefensterController.getName();
+		 ClientModel.pw = AnmeldefensterController.getPasswort();
 		try{
 			//Verbindung mit Server herstellen
 			this.clientSocket = new Socket(ipAdresse, port);
@@ -97,12 +97,13 @@ public class ClientModel {
 							
 							//alte Türme von der Gridpane löschen und Felder zurücksetzen
 							spielbrett.getPane().getChildren().removeAll(alteTürme);
-							for (int i = 0; i < spielbrett.getFelder().length; i++){
-								for (int j = 0; j < spielbrett.getFelder().length; j++){
-						    			spielbrett.getFelder()[i][j].setFeldBesetzt(false);
+							for (int i = 0; i < Spielbrett.getFelder().length; i++){
+								for (int j = 0; j < Spielbrett.getFelder().length; j++){
+						    			Spielbrett.getFelder()[i][j].setFeldBesetzt(false);
 						    	}
-							}						
-							
+							}	
+							System.out.println("Spielbrett leer");
+					
 							for(int i = 0; i < neueTürme.length; i++){
 								int xKoords = neueTürme[i].getKoordinaten()[0];
 								int yKoords = neueTürme[i].getKoordinaten()[1];
@@ -115,10 +116,16 @@ public class ClientModel {
 								spielbrett.getPane().add(neueTürme[i], xKoords, yKoords);
 								neueTürme[i].setFill(Color.valueOf(neueTürme[i].getFüllFarbe()));
 								neueTürme[i].setStroke(Color.valueOf(neueTürme[i].getStrokeFarbe()));
-								spielbrett.getFelder()[xKoords][yKoords].setFeldBesetzt(true);
-							}						
+								Spielbrett.getFelder()[xKoords][yKoords].setFeldBesetzt(true);
+								System.out.println("Neue Türme hinzugefügt");
+							}	
+							
+							// Mögliche Felder anzeigen
+							möglicheFelderAnzeigen(Spielbrett.getAktiverTurmKoordinaten());
+							System.out.println("Mögliche Felder angezeigt");
 						}
 						Spielbrett.setTürme(neueTürme);
+						System.out.println("Turm-Array-Länge: "+Spielbrett.getTürme().length);
 					}
 		});
 	}
@@ -136,14 +143,14 @@ public class ClientModel {
 	}
 	
 	public void setName(String name){
-		this.name = name;
+		ClientModel.name = name;
 	}
 	
 	public String getIP(){
-		return this.ipAdresse;
+		return ClientModel.ipAdresse;
 	}
 	public void setIP(String ipAdresse){
-		this.ipAdresse = ipAdresse;
+		ClientModel.ipAdresse = ipAdresse;
 	}
 	
 	public Turm getTurm(int[] turmKoordinaten){
@@ -225,13 +232,13 @@ public class ClientModel {
 		int yKoords = ausgewähltesFeld.getKoordinaten()[1];
 		// den zu bewegenden Turm von der Gridpane entfernen und das Feld freigeben
 		spielbrett.getPane().getChildren().remove(Spielbrett.getTürme()[k]);
-		spielbrett.getFelder()[spielbrett.getAktiverTurmKoordinaten()[0]][spielbrett.getAktiverTurmKoordinaten()[1]].setFeldBesetzt(false);
+		Spielbrett.getFelder()[Spielbrett.getAktiverTurmKoordinaten()[0]][Spielbrett.getAktiverTurmKoordinaten()[1]].setFeldBesetzt(false);
 
 		// neue Koordinaten des Turms setzen, den Turm der Gridpane hinzufügen und das Feld besetzen
 		Spielbrett.getTürme()[k].setKoordinaten(ausgewähltesFeld.getKoordinaten());
-		spielbrett.setAktiverTurmKoordinaten(ausgewähltesFeld.getKoordinaten());
+		Spielbrett.setAktiverTurmKoordinaten(ausgewähltesFeld.getKoordinaten());
 		spielbrett.getPane().add(Spielbrett.getTürme()[k], xKoords, yKoords);
-		spielbrett.getFelder()[xKoords][yKoords].setFeldBesetzt(true);
+		Spielbrett.getFelder()[xKoords][yKoords].setFeldBesetzt(true);
 		
 		spielbrett.setTurmBewegt(true);
 	}
@@ -252,7 +259,7 @@ public class ClientModel {
 					möglicheFelderAnzeigen(Spielbrett.getTürme()[i].getKoordinaten());
 					nächsterAktiverTurm = Spielbrett.getTürme()[i].getKoordinaten();
 					Spielbrett.getTürme()[i].setStrokeWidth(spielbrett.STROKEWIDTHAUSGEWÄHLTERTURM);
-					if(spielbrett.getMöglicheFelder().size()==0){		
+					if(Spielbrett.getMöglicheFelder().size()==0){		
 						Spielbrett.setBlockiert(true);
 					} else{
 						Spielbrett.setBlockadenCounter(0);
@@ -268,7 +275,7 @@ public class ClientModel {
 					möglicheFelderAnzeigen(Spielbrett.getTürme()[i].getKoordinaten());
 					nächsterAktiverTurm = Spielbrett.getTürme()[i].getKoordinaten();
 					Spielbrett.getTürme()[i].setStrokeWidth(spielbrett.STROKEWIDTHAUSGEWÄHLTERTURM);
-					if(spielbrett.getMöglicheFelder().size()==0){		
+					if(Spielbrett.getMöglicheFelder().size()==0){		
 						Spielbrett.setBlockiert(true);
 					} else{
 						Spielbrett.setBlockadenCounter(0);
@@ -289,7 +296,7 @@ public class ClientModel {
 		turmStrokeWidthZurücksetzen();
 		if(getTurmFarbe(nächsterAktiverTurm, Spielbrett.getTürme()) == Color.BLACK){
 			for (int m = 0; m < Spielbrett.getTürme().length; m++){
-				Feld aktivesFeld = spielbrett.getFelder()[nächsterAktiverTurm[0]][nächsterAktiverTurm[1]];
+				Feld aktivesFeld = Spielbrett.getFelder()[nächsterAktiverTurm[0]][nächsterAktiverTurm[1]];
 				if (Spielbrett.getTürme()[m].getStroke()==Color.WHITE
 						&& (Spielbrett.getTürme()[m].getFill()==aktivesFeld.getFill())){
 					nächsterAktiverTurm = Spielbrett.getTürme()[m].getKoordinaten(); 
@@ -311,7 +318,7 @@ public class ClientModel {
 			for (int m = 0; m < Spielbrett.getTürme().length; m++){
 				Spielbrett.getTürme()[m].setStrokeWidth(spielbrett.STROKEWIDTHTÜRMESTANDARD);
 				if (Spielbrett.getTürme()[m].getStroke()==Color.BLACK
-						&& Spielbrett.getTürme()[m].getFill()==spielbrett.getFelder()[nächsterAktiverTurm[0]][nächsterAktiverTurm[1]].getFill()){
+						&& Spielbrett.getTürme()[m].getFill()==Spielbrett.getFelder()[nächsterAktiverTurm[0]][nächsterAktiverTurm[1]].getFill()){
 					nächsterAktiverTurm = Spielbrett.getTürme()[m].getKoordinaten(); 
 					möglicheFelderAnzeigen(Spielbrett.getTürme()[m].getKoordinaten());
 					Spielbrett.getTürme()[m].setStrokeWidth(spielbrett.STROKEWIDTHAUSGEWÄHLTERTURM);
@@ -361,30 +368,30 @@ public class ClientModel {
 		// Gewinner löschen, alle Türme vom Spielbrett entfernen und die Felder freigeben
 		spielbrett.setGewinner(null);
 		spielbrett.getPane().getChildren().removeAll(türme);
-		for (int i = 0; i < spielbrett.getFelder().length; i++){
-    		for (int j = 0; j < spielbrett.getFelder().length; j++){
-    			spielbrett.getFelder()[i][j].setFeldBesetzt(false);
+		for (int i = 0; i < Spielbrett.getFelder().length; i++){
+    		for (int j = 0; j < Spielbrett.getFelder().length; j++){
+    			Spielbrett.getFelder()[i][j].setFeldBesetzt(false);
     		}
 		}	
 		spielbrett.setTurmBewegt(false);
 		// Die Türme an ihren ursprünglichen Platz setzen
 		for(int p = 0; p < Spielbrett.getTürme().length; p++){
 			if(Spielbrett.getTürme()[p].getStroke()==Color.BLACK){
-				for(int l = 0; l < spielbrett.getFelder()[7].length; l++){
-					if(Spielbrett.getTürme()[p].getFill()==spielbrett.getFelder()[l][7].getFill()){
-						Spielbrett.getTürme()[p].setKoordinaten(spielbrett.getFelder()[l][7].getKoordinaten());
+				for(int l = 0; l < Spielbrett.getFelder()[7].length; l++){
+					if(Spielbrett.getTürme()[p].getFill()==Spielbrett.getFelder()[l][7].getFill()){
+						Spielbrett.getTürme()[p].setKoordinaten(Spielbrett.getFelder()[l][7].getKoordinaten());
 						Spielbrett.getTürme()[p].setStrokeWidth(spielbrett.STROKEWIDTHTÜRMESTANDARD);
 						spielbrett.getPane().add(Spielbrett.getTürme()[p], l, 7);	
-						spielbrett.getFelder()[l][7].setFeldBesetzt(true);
+						Spielbrett.getFelder()[l][7].setFeldBesetzt(true);
 					}
 				}
 			}else{
-				for(int l = 0; l < spielbrett.getFelder()[0].length; l++){
-					if(Spielbrett.getTürme()[p].getFill()==spielbrett.getFelder()[l][0].getFill()){
-						Spielbrett.getTürme()[p].setKoordinaten(spielbrett.getFelder()[l][0].getKoordinaten());
+				for(int l = 0; l < Spielbrett.getFelder()[0].length; l++){
+					if(Spielbrett.getTürme()[p].getFill()==Spielbrett.getFelder()[l][0].getFill()){
+						Spielbrett.getTürme()[p].setKoordinaten(Spielbrett.getFelder()[l][0].getKoordinaten());
 						Spielbrett.getTürme()[p].setStrokeWidth(spielbrett.STROKEWIDTHTÜRMESTANDARD);
 						spielbrett.getPane().add(Spielbrett.getTürme()[p], l, 0);	
-						spielbrett.getFelder()[l][0].setFeldBesetzt(true);
+						Spielbrett.getFelder()[l][0].setFeldBesetzt(true);
 					}
 				}
 			}
@@ -419,9 +426,9 @@ public class ClientModel {
 	 * @return ArrayList der möglichen Felder
 	 */
 	public ArrayList<int[]> möglicheFelderAnzeigen(int[] turmKoordinaten){		
-		möglicheFelderLeeren(spielbrett.getMöglicheFelder(), spielbrett.getFelder());
-		möglicheFelderHinzufügen(turmKoordinaten, Spielbrett.getTürme(), spielbrett.getFelder(), spielbrett.getMöglicheFelder());
-		return spielbrett.getMöglicheFelder();
+		möglicheFelderLeeren(Spielbrett.getMöglicheFelder(), Spielbrett.getFelder());
+		möglicheFelderHinzufügen(turmKoordinaten, Spielbrett.getTürme(), Spielbrett.getFelder(), Spielbrett.getMöglicheFelder());
+		return Spielbrett.getMöglicheFelder();
 	}
 	
 	/** Mögliche Felder der ArrayList hinzufügen (Supportmethode)
