@@ -56,6 +56,8 @@ public class AnmeldefensterController {
 					iview.start();
 					stage.setAlwaysOnTop(true);
 					anmeldeView.stop();
+					clientView.menuDateiAbmelden.setDisable(false);
+					clientView.menuDateiLöschen.setDisable(false);
 				}
 				if(meldung.equals("PasswortFalsch")){
 					Stage stage = new Stage();
@@ -101,6 +103,9 @@ public class AnmeldefensterController {
 						InfofensterController icontroller = new InfofensterController(iview);
 						iview.start();
 						stage.setAlwaysOnTop(true);
+						anmeldeView.stop();
+						clientView.menuDateiAbmelden.setDisable(false);
+						clientView.menuDateiLöschen.setDisable(false);
 				 }
 				 
 				 if(meldung.equals("PasswortZuKurz")){

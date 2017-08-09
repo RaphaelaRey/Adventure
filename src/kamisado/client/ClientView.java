@@ -91,6 +91,7 @@ public class ClientView {
 		menuDateiAbmelden = new MenuItem(t.getString("MenuAbmelden"));
 		menuDateiLöschen = new MenuItem(t.getString("MenuLöschen"));
 		menuDatei.getItems().addAll(menuDateiAbmelden, menuDateiLöschen);
+		//Abmelden und löschen sind erst nach der Anmeldung sichtbar
 		menuDateiAbmelden.setDisable(true);
 		menuDateiLöschen.setDisable(true);
 					
