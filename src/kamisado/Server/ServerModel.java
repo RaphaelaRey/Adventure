@@ -69,7 +69,7 @@ public class ServerModel extends Thread{
 				
 				SendenEmpfangen.Senden(clientSocket, meldung);
 				
-				client = new Client(ServerModel.this, clientSocket, this.name);
+				client = new Client(ServerModel.this, clientSocket);
 				
 				
 			} catch (Exception e){
