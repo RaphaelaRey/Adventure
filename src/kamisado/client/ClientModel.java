@@ -138,6 +138,11 @@ public class ClientModel {
 		SendenEmpfangen.Senden(clientSocket, namePW);
 	}
 	
+	/** Spielfeld updaten
+	 * @param alteTürme
+	 * @param neueTürme
+	 * @author Tobias Deprato (Kommunikation) und Raphaela Rey (Spiellogik)
+	 */
 	public static void UpdateSpielfeld(Turm[] alteTürme, Turm[]neueTürme){
 		Platform.runLater(new Runnable(){
 			@Override
@@ -251,7 +256,6 @@ public class ClientModel {
 			Spielbrett.getTürme()[i].setTurmBewegt(false);
 		}
 		return Spielbrett.getTürme();
-		
 	}
 	
 	/** Überprüfen, ob zwei int-Arrays gleich sind
