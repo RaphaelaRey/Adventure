@@ -115,11 +115,11 @@ public class ClientModel {
 								neueTürme[i].setRadius(spielbrett.TURMDURCHMESSER);
 								
 								// Randbreite der Türme definieren (breit beim aktiven Turm, standard bei den anderen)
-//								if(koordVergleich(neueTürme[i].getKoordinaten(), Spielbrett.getAktiverTurmKoordinaten())){
-//									neueTürme[i].setStrokeWidth(spielbrett.STROKEWIDTHAUSGEWÄHLTERTURM);
-//								} else{
+								if(koordVergleich(neueTürme[i].getKoordinaten(), Spielbrett.getAktiverTurmKoordinaten())){
+									neueTürme[i].setStrokeWidth(spielbrett.STROKEWIDTHAUSGEWÄHLTERTURM);
+								} else{
 									neueTürme[i].setStrokeWidth(spielbrett.STROKEWIDTHTÜRMESTANDARD);
-//								}
+								}
 								
 								// Türme bei den Koordinaten platzieren, Rand- und Füllfarbe definieren und Felder besetzen
 								spielbrett.getPane().add(neueTürme[i], xKoords, yKoords);
@@ -139,7 +139,6 @@ public class ClientModel {
 							// TODO Raphaela mögliche Felder zurücksetzen
 							for (int i = 0; i < Spielbrett.getFelder().length; i++){
 								for (int j = 0; j < Spielbrett.getFelder().length; j++){
-					    				Spielbrett.getFelder()[i][j].setFill(Color.ANTIQUEWHITE);;
 						    			Spielbrett.getFelder()[i][j].setStroke(Color.BLACK);
 						    			Spielbrett.getFelder()[i][j].setStrokeWidth(1);
 						    			Spielbrett.getFelder()[i][j].setStrokeType(StrokeType.CENTERED);	
