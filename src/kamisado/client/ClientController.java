@@ -16,7 +16,7 @@ import kamisado.commonClasses.Spielbrett;
 import kamisado.commonClasses.Turm;
 
 //TODO Team Wie wird definiert, wer die schwarzen Türme hat? Derjenige, der am wenigsten oft gespielt hat? Und wenn gleich dann zufällig?
-
+//TODO Team Spiel kann erst beginnen, wenn zwei Clients eingeloggt sind
 public class ClientController {
 	 	
 	final private ClientModel clientModel;
