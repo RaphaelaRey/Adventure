@@ -150,12 +150,19 @@ public class ClientController {
 			@Override
 			public void handle(ActionEvent event) {
 				Stage stage = new Stage();
-				AnmeldefensterView anmeldeView = new AnmeldefensterView(stage,anmeldeController, clientModel, view);
-				AnmeldefensterController anmeldeController = new AnmeldefensterController(anmeldeView, view, clientModel);
-				clientModel.clientAnhalten();
-				anmeldeView.start();
+				InfofensterView iview = new InfofensterView(stage, view.abmelden);
+				InfofensterController icontroller = new InfofensterController(iview);
+				iview.start();
 				stage.setAlwaysOnTop(true);
-				clientModel.clientAnhalten();
+				view.stop();
+				
+//				Stage stage = new Stage();
+//				AnmeldefensterView anmeldeView = new AnmeldefensterView(stage,anmeldeController, clientModel, view);
+//				AnmeldefensterController anmeldeController = new AnmeldefensterController(anmeldeView, view, clientModel);
+//				clientModel.clientAnhalten();
+//				anmeldeView.start();
+//				stage.setAlwaysOnTop(true);
+//				clientModel.clientAnhalten();
 				
 			}
 			
