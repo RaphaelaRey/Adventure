@@ -78,7 +78,6 @@ public class ServerModel extends Thread{
 		}
 	}
 	
-	//TODO Carmen clientController hierhin auslagern
 	public String AnmeldungPrüfen(String AnmeldeInfos){
 		String meldung = "";
 		String[] prüfen = AnmeldeInfos.split(",");
