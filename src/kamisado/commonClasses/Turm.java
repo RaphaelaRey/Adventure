@@ -17,6 +17,7 @@ public class Turm extends Circle implements Serializable {
 	private String füllFarbe;
 	private String strokeFarbe;
 	
+	private boolean turmBewegt;
 	private boolean aktiverTurm;
 	private boolean ersterBlockierenderTurm; 
 	private boolean zweiterBlockierenderTurm;
@@ -90,5 +91,13 @@ public class Turm extends Circle implements Serializable {
 
 	public void setGewinnerTurm(boolean gewinnerTurm) {
 		this.gewinnerTurm = gewinnerTurm;
+	}
+
+	public boolean isTurmBewegt() {
+		return turmBewegt;
+	}
+
+	public void setTurmBewegt(boolean turmBewegt) {
+		this.turmBewegt = turmBewegt;
 	}
 }
