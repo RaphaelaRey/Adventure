@@ -153,15 +153,5 @@ public class AnmeldefensterController {
 		
 	}
 	
-	public static String getName(){
-		return name;
-	}
 	
-	public static String getPasswort(){
-		return pw;
-	}
-	public static String getIP(){
-		return ip;
-	}
-
 }

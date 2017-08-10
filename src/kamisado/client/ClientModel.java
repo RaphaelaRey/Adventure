@@ -430,8 +430,12 @@ public class ClientModel {
 				if (Spielbrett.getTürme()[m].getStroke().equals(Color.WHITE)
 						&& (Spielbrett.getTürme()[m].getFill().equals(aktivesFeld.getFill()))){
 					nächsterAktiverTurm = Spielbrett.getTürme()[m].getKoordinaten(); 
-//					möglicheFelderAnzeigen(nächsterAktiverTurm);
+					möglicheFelderAnzeigen(nächsterAktiverTurm);
 					Spielbrett.getTürme()[m].setStrokeWidth(spielbrett.STROKEWIDTHAUSGEWÄHLTERTURM);
+					//TODO überprüfen
+					if(Spielbrett.getMöglicheFelder().size()==0) {
+						Spielbrett.getTürme()[m].setZweiterBlockierenderTurm(true);
+					}
 					break;
 				}
 			} 
@@ -442,8 +446,12 @@ public class ClientModel {
 				if (Spielbrett.getTürme()[m].getStroke().equals(Color.BLACK)
 						&& Spielbrett.getTürme()[m].getFill().equals(Spielbrett.getFelder()[nächsterAktiverTurm[0]][nächsterAktiverTurm[1]].getFill())){
 					nächsterAktiverTurm = Spielbrett.getTürme()[m].getKoordinaten(); 
-//					möglicheFelderAnzeigen(nächsterAktiverTurm);
+					möglicheFelderAnzeigen(nächsterAktiverTurm);
 					Spielbrett.getTürme()[m].setStrokeWidth(spielbrett.STROKEWIDTHAUSGEWÄHLTERTURM);
+					//TODO überprüfen
+					if(Spielbrett.getMöglicheFelder().size()==0) {
+						Spielbrett.getTürme()[m].setZweiterBlockierenderTurm(true);
+					}
 					break;
 				} 
 			}
@@ -518,12 +526,12 @@ public class ClientModel {
 			t.setOnMouseClicked(new EventHandler<MouseEvent>(){
 				@Override
 				public void handle(MouseEvent event){
-					if(bereitsEinTurmBewegt()==false && t.getStroke().equals(Color.BLACK)){	
+//					if(bereitsEinTurmBewegt()==false && t.getStroke().equals(Color.BLACK)){	
 						turmStrokeWidthZurücksetzen();
 						t.setStrokeWidth(spielbrett.STROKEWIDTHAUSGEWÄHLTERTURM);
 						Spielbrett.setAktiverTurmKoordinaten(t.getKoordinaten());	
 						möglicheFelderAnzeigen(Spielbrett.getAktiverTurmKoordinaten());						
-					}				
+//					}				
  				}
 			});
 		}
