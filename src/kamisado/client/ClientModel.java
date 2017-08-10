@@ -20,13 +20,10 @@ public class ClientModel {
 
 	protected Socket clientSocket;
 	private boolean amLaufen = true;
-	private static String name;
-	private static String pw;
 	private static String ip;
 	private String meldung;
 	private static String ipAdresse;
 	private int port = 444;
-	private Turm t;
 	private Feld f;
 	
 	private final Logger logger = Logger.getLogger("");
@@ -36,17 +33,14 @@ public class ClientModel {
 //	}
 
 	public void Verbinden(String ipAdresse, String name, String pw, String art) {
-		 String namePW = art + "," + name + ","+ pw;
-		 setIp(ipAdresse);
+		 
 		 
 		try{
 			//Verbindung mit Server herstellen
 			this.clientSocket = new Socket(ipAdresse, port);
 			logger.info(ipAdresse + " über Port " + port + " verbunden");
 			
-			SendenEmpfangen.Senden(clientSocket, namePW);
-			this.setMeldung(SendenEmpfangen.EmpfangenString(clientSocket));
-			logger.info(this.meldung);
+			AnmeldungSenden(art, name, pw);
 			
 			//Thread erstellen
 			Runnable a = new Runnable() {
@@ -89,6 +83,14 @@ public class ClientModel {
 	public void TürmeSenden(){
 		SendenEmpfangen.Senden(clientSocket, Spielbrett.getTürme());
 		logger.info("Daten gesendet");
+	}
+	
+	public void AnmeldungSenden(String art, String name, String pw){
+		String namePW = art + "," + name + ","+ pw;
+		 setIp(ipAdresse);
+		SendenEmpfangen.Senden(clientSocket, namePW);
+		this.setMeldung(SendenEmpfangen.EmpfangenString(clientSocket));
+		logger.info(this.meldung);
 	}
 	
 	public void UpdateSpielfeld(Turm[] alteTürme, Turm[]neueTürme){
@@ -152,7 +154,6 @@ public class ClientModel {
 	}
 	
 	public void setName(String name){
-		ClientModel.name = name;
 	}
 	
 	public String getIP(){
