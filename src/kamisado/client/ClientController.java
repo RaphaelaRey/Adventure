@@ -1,5 +1,7 @@
 package kamisado.client;
 
+import com.sun.media.jfxmedia.logging.Logger;
+
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.input.MouseEvent;
@@ -72,6 +74,7 @@ public class ClientController {
 							// Zukünftiger gegnerischer Turm definieren im Fall einer Blockade 	
 							if(clientModel.getGewinner()==null && clientModel.getErsterBlockierenderTurm()!=null
 									&& clientModel.getZweiterBlockierenderTurm()==null){
+								System.out.println("Blockade");
 								nächsterAktiverTurm=clientModel.setNächsterGegnerischerTurmBlockade(nächsterAktiverTurm);	 
 								if(clientModel.getErsterBlockierenderTurm().equals(Color.BLACK)){
 									//Blockadenmeldung
@@ -89,24 +92,25 @@ public class ClientController {
 							} 		
 
 							// Völliger Stillstand TODO Raphaela kontrollieren
-							if(clientModel.getZweiterBlockierenderTurm()!=null){
-								if(clientModel.getZweiterBlockierenderTurm().equals(Color.BLACK)){
-									System.out.println("Schwarz hat totalen Stillstand verursacht, weiss gewinnt"); 
-									// Gewinnermeldung bei völligem Stillstand
-									Stage stage = new Stage();
-									InfofensterView iview = new InfofensterView(stage,view.GewinnerMeldungStillstandWeiss);
-									InfofensterController icontroller = new InfofensterController(iview);
-									iview.start();
-								}else{
-									System.out.println("Weiss hat totalen Stillstand verursacht, schwarz gewinnt");
-									//Gewinnermeldung bei völligem Stillstand
-									Stage stage = new Stage();
-									InfofensterView iview = new InfofensterView(stage,view.GewinnerMeldungStillstandSchwarz);
-									InfofensterController icontroller = new InfofensterController(iview);
-									iview.start();
-								}
-								
-							}
+//							if(clientModel.getZweiterBlockierenderTurm()!=null){
+//								System.out.println("Völliger Stillstand");
+//								if(clientModel.getZweiterBlockierenderTurm().equals(Color.BLACK)){
+//									System.out.println("Schwarz hat totalen Stillstand verursacht, weiss gewinnt"); 
+//									// Gewinnermeldung bei völligem Stillstand
+//									Stage stage = new Stage();
+//									InfofensterView iview = new InfofensterView(stage,view.GewinnerMeldungStillstandWeiss);
+//									InfofensterController icontroller = new InfofensterController(iview);
+//									iview.start();
+//								}else{
+//									System.out.println("Weiss hat totalen Stillstand verursacht, schwarz gewinnt");
+//									//Gewinnermeldung bei völligem Stillstand
+//									Stage stage = new Stage();
+//									InfofensterView iview = new InfofensterView(stage,view.GewinnerMeldungStillstandSchwarz);
+//									InfofensterController icontroller = new InfofensterController(iview);
+//									iview.start();
+//								}
+//								
+//							}
 //							if(Spielbrett.getBlockadenCounter()==2){
 //								if(Spielbrett.getBlockadenVerursacher().equals(Color.BLACK)){
 //									Spielbrett.setGewinner(Color.WHITE);
