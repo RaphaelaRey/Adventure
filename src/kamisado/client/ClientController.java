@@ -71,58 +71,45 @@ public class ClientController {
 									}
 								}	 
 							}
+							// Boolean Variablen um später nur eine Meldung anzuzeigen, falls z.B. Gewinner und Stillstand beide zutreffen
+							boolean blockadeSchwarz = false;
+							boolean blockadeWeiss = false; 
+							boolean stillstandSchwarz = false; 
+							boolean stillstandWeiss = false;
 							// Zukünftiger gegnerischer Turm definieren im Fall einer Blockade 	
 							if(clientModel.getGewinner()==null && clientModel.getErsterBlockierenderTurm()!=null
 									&& clientModel.getZweiterBlockierenderTurm()==null){
 								System.out.println("Blockade");
 								nächsterAktiverTurm=clientModel.setNächsterGegnerischerTurmBlockade(nächsterAktiverTurm);	 
 								if(clientModel.getErsterBlockierenderTurm().equals(Color.BLACK)){
-									//Blockadenmeldung
-									Stage stage = new Stage();
-									InfofensterView iview = new InfofensterView(stage,view.BlockadeMeldungSchwarz);
-									InfofensterController icontroller = new InfofensterController(iview);
-									iview.start();
+									blockadeSchwarz = true;
 								} else if (clientModel.getErsterBlockierenderTurm().equals(Color.WHITE)){
-									//Blockadenmeldung
-									Stage stage = new Stage();
-									InfofensterView iview = new InfofensterView(stage,view.BlockadeMeldungWeiss);
-									InfofensterController icontroller = new InfofensterController(iview);
-									iview.start();
+									blockadeWeiss = true;
 								}
 							} 		
 
-							// Völliger Stillstand TODO Raphaela kontrollieren
+							// Völliger Stillstand
 							if(clientModel.getZweiterBlockierenderTurm()!=null){
 								System.out.println("Völliger Stillstand");
 								if(clientModel.getZweiterBlockierenderTurm().equals(Color.BLACK)){
 									System.out.println("Schwarz hat totalen Stillstand verursacht, weiss gewinnt"); 
-									// TODO gewinner setzen
 									Spielbrett.getTürme()[15].setGewinnerTurm(true);
-									// Gewinnermeldung bei völligem Stillstand
-									Stage stage = new Stage();
-									InfofensterView iview = new InfofensterView(stage,view.GewinnerMeldungStillstandWeiss);
-									InfofensterController icontroller = new InfofensterController(iview);
-									iview.start();
+									stillstandWeiss = true;
 								}else{
 									System.out.println("Weiss hat totalen Stillstand verursacht, schwarz gewinnt");
 									Spielbrett.getTürme()[0].setGewinnerTurm(true);
-									//Gewinnermeldung bei völligem Stillstand
-									Stage stage = new Stage();
-									InfofensterView iview = new InfofensterView(stage,view.GewinnerMeldungStillstandSchwarz);
-									InfofensterController icontroller = new InfofensterController(iview);
-									iview.start();
+									stillstandSchwarz = true;
 								}
-								
 							}
 							 
 							// Überprüfen, wer gewonnen hat und die entsprechende Meldung anzeigen
-							if(clientModel.getGewinner()==Color.BLACK){
+							if(clientModel.getGewinner()==Color.BLACK && stillstandSchwarz==false && stillstandWeiss==false){
 								//Gewinnermeldung inkl. Frage ob nochmals gespielt werden will (im Moment wird nur das Spielbrett zurückgesetzt)
 								Stage stage = new Stage();
 								InfofensterView iview = new InfofensterView(stage,view.GewinnerMeldungSchwarz);
 								InfofensterController icontroller = new InfofensterController(iview);
 								iview.start();
-							} else if(clientModel.getGewinner()==Color.WHITE){
+							} else if(clientModel.getGewinner()==Color.WHITE && stillstandSchwarz==false && stillstandWeiss==false){
 								//Gewinnermeldung 
 								Stage stage = new Stage();
 								InfofensterView iview = new InfofensterView(stage,view.GewinnerMeldungWeiss);
@@ -135,7 +122,6 @@ public class ClientController {
 								clientModel.TürmeSenden();
 								// String senden
 							}							
-//							Spielbrett.setAktiverTurmKoordinaten(nächsterAktiverTurm);	
 							
 							if (clientModel.getGewinner()==null){
 								clientModel.getTurm(nächsterAktiverTurm).setAktiverTurm(true); 
@@ -143,9 +129,36 @@ public class ClientController {
 							}
 							clientModel.TürmeSenden();
 							
-
+							// Blockadenmeldung schwarz
+							if(blockadeSchwarz==true && stillstandSchwarz==false && stillstandWeiss==false){
+								Stage stage = new Stage();
+								InfofensterView iview = new InfofensterView(stage,view.BlockadeMeldungSchwarz);
+								InfofensterController icontroller = new InfofensterController(iview);
+								iview.start();
+							}
+							// Blockadenmeldung weiss
+							if(blockadeWeiss==true && stillstandSchwarz==false && stillstandWeiss==false){
+								Stage stage = new Stage();
+								InfofensterView iview = new InfofensterView(stage,view.BlockadeMeldungWeiss);
+								InfofensterController icontroller = new InfofensterController(iview);
+								iview.start();
+							}
+							// Gewinnermeldung bei völligem Stillstand schwarz
+							if(stillstandSchwarz){
+								Stage stage = new Stage();
+								InfofensterView iview = new InfofensterView(stage,view.GewinnerMeldungStillstandSchwarz);
+								InfofensterController icontroller = new InfofensterController(iview);
+								iview.start();
+							}
+							
+							// Gewinnermeldung bei völligem Stillstand weiss
+							if(stillstandWeiss){
+								Stage stage = new Stage();
+								InfofensterView iview = new InfofensterView(stage,view.GewinnerMeldungStillstandWeiss);
+								InfofensterController icontroller = new InfofensterController(iview);
+								iview.start();
+							}
 						}
-
 					}					
 				});				
 			}
