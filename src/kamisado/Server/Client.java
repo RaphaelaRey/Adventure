@@ -36,23 +36,7 @@ public class Client {
 				try{
 			
 				while(true) {
-					//neu
 					EmpfangenServer();
-					
-					//alt
-//					Turm[] tmpTürme = SendenEmpfangen.Empfangen(clientSocket);
-//					
-//					logger.info("Daten Empfangen von Client ");
-					
-					// wenn clientsocket.inputstream.readobject instanceOf türme
-					//else instanceof String
-							
-//					for (Client c : clients) {
-//						SendenEmpfangen.Senden(c.clientSocket, tmpTürme);
-//						SendenEmpfangen.Senden(c.clientSocket, tmpKoord);
-//						SendenEmpfangen.Senden(c.clientSocket, tmpMFelder);
-//						logger.info("neue Daten gesendet an" + clientSocket.getInetAddress().getHostName());
-//					}
 				}
 				} catch (Exception e){
 					e.toString();
@@ -68,41 +52,80 @@ public class Client {
 public void EmpfangenServer (){
 	
 		
-		try{
-			ObjectInputStream empfangen = new ObjectInputStream(clientSocket.getInputStream());
-			logger.info("available is: " + empfangen.available());
-			
-//			Object neuEmpfangen = empfangen.readObject();
-			
-//		if( neuEmpfangen instanceof Turm[]){
-			Turm[] tmpTürme = (Turm[]) empfangen.readObject();
-			logger.info("Türme erhalten");
+	try{
+		ObjectInputStream empfangen = new ObjectInputStream(clientSocket.getInputStream());
+		
+		Object neuEmpfangen = (Object) empfangen.readObject();
+		
+	if( neuEmpfangen instanceof Turm[]){
+		Turm[] tmpTürme = (Turm[])neuEmpfangen;
+		logger.info("Türme erhalten");
+		
+		for (Client c : clients) {
+			SendenEmpfangen.Senden(c.clientSocket, tmpTürme);
+			logger.info("neue Türme gesendet an" + c.clientSocket.getInetAddress().getHostName());
+		}
+	} else if (neuEmpfangen instanceof String){
+		String tmpMeldung = (String)neuEmpfangen;
+		logger.info("String eerhalten");
+		
+		String[] teile = tmpMeldung.split(",");
+		String namePW = teile[1] +"," + teile[2];
+		String meldung;
+		logger.info(teile[0] + " wird erfolgen");
+		if(teile[0].equals("anmelden") ){
+			logger.info("Anmeldung");
+			meldung = model.AnmeldungPrüfen(namePW);
+			SendenEmpfangen.Senden(clientSocket, meldung);
+			logger.info(meldung);
+		} else if (teile[0].equals("registrieren")){
+		logger.info("Registrierung");
+			meldung = model.RegistrierungPrüfen(namePW);
+			SendenEmpfangen.Senden(clientSocket, meldung);
+		} else if (teile[0].equals("löschen")){
+			logger.info("Löschung");
+			meldung = model.LöschenPrüfen(namePW);
+			SendenEmpfangen.Senden(clientSocket, meldung);
+		} else if (teile[0].equals("gewinnerWeiss")){
+//			TODO Meldung anzeigen
 			
 			for (Client c : clients) {
-				SendenEmpfangen.Senden(c.clientSocket, tmpTürme);
-				logger.info("neue Türme gesendet an" + c.clientSocket.getInetAddress().getHostName());
+				SendenEmpfangen.Senden(c.clientSocket, tmpMeldung);
+				logger.info("neuer String " + tmpMeldung + " gesendet an " + c.clientSocket.getInetAddress().getHostName());
 			}
-//		} else if (neuEmpfangen instanceof String){
-//			String tmpMeldung = (String) empfangen.readObject();
-//			
-//			for (Client c : clients) {
-//				SendenEmpfangen.Senden(c.clientSocket, tmpMeldung);
-//				logger.info("neuer String " + tmpMeldung + " gesendet an " + c.clientSocket.getInetAddress().getHostName());
-//			}
-//		} else if (neuEmpfangen instanceof Boolean){
-//			boolean tmpBol = (boolean) empfangen.readObject();
-//			
-//			for (Client c : clients) {
-//				SendenEmpfangen.Senden(c.clientSocket, tmpBol);
-//				logger.info("neue boolean gesendet an" + c.clientSocket.getInetAddress().getHostName());						}
-//		} else{
-//			logger.info("hat nicht funktioniert so");
-//		}
-//		
-		logger.info("Daten Empfangen von Client ");
-		} catch (Exception e) {
-			logger.info(e.toString());
+		} else if (teile[0].equals("gewinnerSchwarz")){
+//			TODO Meldung anzeigen
+			
+			for (Client c : clients) {
+				SendenEmpfangen.Senden(c.clientSocket, tmpMeldung);
+				logger.info("neuer String " + tmpMeldung + " gesendet an " + c.clientSocket.getInetAddress().getHostName());
+			}
+		} else if (teile[0].equals("stillstand")){
+//			TODO Meldung anzeigen
+			
+			for (Client c : clients) {
+				SendenEmpfangen.Senden(c.clientSocket, tmpMeldung);
+				logger.info("neuer String " + tmpMeldung + " gesendet an " + c.clientSocket.getInetAddress().getHostName());
+			}
 		}
+		
+		
+		
+	} else if (neuEmpfangen instanceof Boolean){
+		boolean tmpBol = (boolean)neuEmpfangen;
+		 
+		for (Client c : clients) {
+			SendenEmpfangen.Senden(c.clientSocket, tmpBol);
+			logger.info("neue boolean gesendet an" + c.clientSocket.getInetAddress().getHostName());						}
+	} else{
+		logger.info("Objecttype: " + empfangen.getClass());
+	}
+	
+	logger.info("Daten Empfangen von Client ");
+	} catch (Exception e) {
+		e.printStackTrace();
+		
+	}
 		
 	
 	}

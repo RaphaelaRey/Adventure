@@ -1,5 +1,6 @@
 package kamisado.client;
 
+import java.io.ObjectInputStream;
 import java.net.Socket;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -17,21 +18,18 @@ import kamisado.commonClasses.Turm;
 
 public class ClientModel {
 	
-	protected Spielbrett spielbrett;
+	protected static Spielbrett spielbrett;
 
 	protected Socket clientSocket;
 	private boolean amLaufen = true;
 	private static String ip;
-	private String meldung;
+	private static String meldung;
 	private static String ipAdresse;
 	private int port = 444;
 	private Feld f;
+	private static boolean amZug;
 	
-	private final Logger logger = Logger.getLogger("");
-	
-//	public void Verbinden(String name, String pw, String art){
-//		Verbinden(ip, name, pw, art);
-//	}
+	private final static Logger logger = Logger.getLogger("");
 
 	public void Verbinden(String ipAdresse, String name, String pw, String art) {
 		 
@@ -49,8 +47,8 @@ public class ClientModel {
 				public void run() {
 					try{
 						while(amLaufen == true){
-							TürmeEmpfangen();
-							logger.info("Türme empfangen auf Client");							
+							EmpfangenClient(clientSocket);
+							logger.info("Daten empfangen auf Client");						
 						}
 					}catch (Exception e){
 						logger.info(e.toString());
@@ -65,9 +63,58 @@ public class ClientModel {
 			logger.info(e.toString());
 		}
 	}	
-	public void TürmeEmpfangen(){
+	
+	public static void EmpfangenClient(Socket clientSocket){
+		try{
+			ObjectInputStream empfangen = new ObjectInputStream(clientSocket.getInputStream());
+			logger.info("available is: " + empfangen.available());
+			
+			Object neuEmpfangen = (Object) empfangen.readObject();
+			
+			//Turm Empfangen
+		if( neuEmpfangen instanceof Turm[]){
+			Turm[] tmpTürme = (Turm[]) neuEmpfangen;
+			logger.info("Türme erhalten");
+			TürmeEmpfangen(tmpTürme);
+			
+			// String Empfangen
+			} else if (neuEmpfangen instanceof String){
+			String tmpMeldung = (String) neuEmpfangen;
+			
+			String[] teile = tmpMeldung.split(",");
+			String meldung = teile[1];
+			
+			
+			if(teile[0].equals("anmelden") ){
+				setMeldung(meldung);
+				logger.info("Meldung auf anmelden gesetzt: " + meldung);
+			} else if (teile[0].equals("registrieren")) {
+				setMeldung(meldung);
+				logger.info("Meldung auf registrieren gesetzt: " + meldung);
+			} else if (teile[0].equals("löschen")){
+				setMeldung(meldung);
+				logger.info("Meldung auf löschen gesetzt: " + meldung);
+			} else {
+				meldung = "Fehler";
+			}
+			
+			} else if (neuEmpfangen instanceof Boolean){
+			boolean tmpBol = (boolean) neuEmpfangen;
+			if(tmpBol == true){
+				setAmZug(true);
+			}
+			} else{
+			logger.info("hat nicht funktioniert so");
+			}	
+		
+		logger.info("Daten Empfangen von Client ");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public static void TürmeEmpfangen(Turm[] tmpTürme){
 		Turm[] Türme = Spielbrett.getTürme();
-		Turm[] tmpTürme = SendenEmpfangen.Empfangen(clientSocket);
 		if(tmpTürme != null && tmpTürme[0] != null) {
 			logger.info("Türme empfangen");
 			UpdateSpielfeld(Türme, tmpTürme);
@@ -88,13 +135,10 @@ public class ClientModel {
 	
 	public void AnmeldungSenden(String art, String name, String pw){
 		String namePW = art + "," + name + ","+ pw;
-		 setIp(ipAdresse);
 		SendenEmpfangen.Senden(clientSocket, namePW);
-		this.setMeldung(SendenEmpfangen.EmpfangenString(clientSocket));
-		logger.info(this.meldung);
 	}
 	
-	public void UpdateSpielfeld(Turm[] alteTürme, Turm[]neueTürme){
+	public static void UpdateSpielfeld(Turm[] alteTürme, Turm[]neueTürme){
 		Platform.runLater(new Runnable(){
 			@Override
 			public void run(){
@@ -189,7 +233,7 @@ public class ClientModel {
 	 * @return true falls ein Turm bewegt wurde
 	 * @author Raphaela Rey
 	 */
-	public boolean bereitsEinTurmBewegt(){
+	public static boolean bereitsEinTurmBewegt(){
 		for(int i = 0; i < Spielbrett.getTürme().length; i++){
 			if(Spielbrett.getTürme()[i].isTurmBewegt()){
 				return true;
@@ -202,7 +246,7 @@ public class ClientModel {
 	 * @return zurückgesetztes Turm-Array
 	 * @author Raphaela Rey
 	 */
-	public Turm[] bereitsEinTurmBewegtZurücksetzen(){
+	public static Turm[] bereitsEinTurmBewegtZurücksetzen(){
 		for(int i = 0; i < Spielbrett.getTürme().length; i++){
 			Spielbrett.getTürme()[i].setTurmBewegt(false);
 		}
@@ -216,7 +260,7 @@ public class ClientModel {
 	 * @return true oder false
 	 * @author Raphaela Rey
 	 */
-	public boolean koordVergleich(int[] koord1, int[] koord2){
+	public static boolean koordVergleich(int[] koord1, int[] koord2){
 		if(koord1[0]==koord2[0] && koord1[1]==koord2[1]){
 			return true;
 		}
@@ -225,7 +269,7 @@ public class ClientModel {
 	/** Randbreite aller Türme zurücksetzen
 	 * @author Raphaela Rey
 	 */
-	public void turmStrokeWidthZurücksetzen(){
+	public static void turmStrokeWidthZurücksetzen(){
 		for (int i = 0; i < Spielbrett.getTürme().length; i++){
 			Spielbrett.getTürme()[i].setStrokeWidth(spielbrett.STROKEWIDTHTÜRMESTANDARD);
 		}	
@@ -235,7 +279,7 @@ public class ClientModel {
 	 * @return Turmfarbe
 	 * @author Raphaela Rey
 	 */
-	public Color getTurmFarbe(int[]turmKoordinaten){
+	public static Color getTurmFarbe(int[]turmKoordinaten){
 		for (int i = 0; i < Spielbrett.getTürme().length; i++){
 			if(koordVergleich(Spielbrett.getTürme()[i].getKoordinaten(), turmKoordinaten)==true // ausgewählter Turm herausfinden
 					&& (Spielbrett.getTürme()[i].getStroke().equals(Color.BLACK))){				// herausfinden ob der Turm schwarz ist
@@ -262,7 +306,7 @@ public class ClientModel {
 	 * @return Gewinnerfarbe oder null, falls niemand gewonnen hat
 	 * @author Raphaela Rey
 	 */
-	public Color getGewinner(){
+	public static Color getGewinner(){
 		for (int i = 0; i < Spielbrett.getTürme().length; i++){
 			if(Spielbrett.getTürme()[i].isGewinnerTurm() && Spielbrett.getTürme()[i].getStroke().equals(Color.BLACK)){
 				return Color.BLACK;
@@ -278,7 +322,7 @@ public class ClientModel {
 	 * @return Turm-Array
 	 * @author Raphaela Rey
 	 */
-	public Turm[] gewinnerZurücksetzen(){
+	public static Turm[] gewinnerZurücksetzen(){
 		for (int i = 0; i < Spielbrett.getTürme().length; i++){
 			Spielbrett.getTürme()[i].setGewinnerTurm(false);
 		}
@@ -475,7 +519,7 @@ public class ClientModel {
 	 * - alle Türme von der Gridpane entfernen und an den ursprünglichen Platz setzen
 	 * @author Raphaela Rey
 	 */
-	public void spielZurücksetzen(){ 
+	public static void spielZurücksetzen(){ 
 		möglicheFelderLeeren(); 
 		// Gewinner löschen, alle Türme vom Spielbrett entfernen und die Felder freigeben
 		gewinnerZurücksetzen();
@@ -529,7 +573,7 @@ public class ClientModel {
 	 * @return geleerte ArrayList
 	 * @author Raphaela Rey
 	 */
-	public ArrayList<int[]> möglicheFelderLeeren(){
+	public static ArrayList<int[]> möglicheFelderLeeren(){
 		ArrayList<int[]> toRemove = new ArrayList<>();
 		Iterator<int[]> iter = Spielbrett.getMöglicheFelder().iterator();
 		while (iter.hasNext()){
@@ -552,7 +596,7 @@ public class ClientModel {
 	 * @param turmKoordinaten
 	 * @author Raphaela Rey
 	 */
-	public ArrayList<int[]> möglicheFelderAnzeigen(int[] turmKoordinaten){		
+	public static ArrayList<int[]> möglicheFelderAnzeigen(int[] turmKoordinaten){		
 		möglicheFelderLeeren();
 		möglicheFelderHinzufügen(turmKoordinaten);
 		return Spielbrett.getMöglicheFelder();
@@ -570,7 +614,7 @@ public class ClientModel {
 	 * @param turmKoordinaten
 	 * @author Raphaela Rey
 	 */
-	private void möglicheFelderHinzufügen(int[] turmKoordinaten){
+	private static void möglicheFelderHinzufügen(int[] turmKoordinaten){
 		int xKoords = turmKoordinaten[0];											
 		int yKoords = turmKoordinaten[1];	
 		
@@ -701,8 +745,16 @@ public class ClientModel {
 	public String getMeldung() {
 		return meldung;
 	}
-	public void setMeldung(String meldung) {
-		this.meldung = meldung;
+	public static void setMeldung(String neueMeldung) {
+		meldung = neueMeldung;
+	}
+
+	public static boolean isAmZug() {
+		return amZug;
+	}
+
+	public static void setAmZug(boolean amZug) {
+		ClientModel.amZug = amZug;
 	}
 
 }

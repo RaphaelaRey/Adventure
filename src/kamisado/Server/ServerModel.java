@@ -43,40 +43,30 @@ public class ServerModel extends Thread{
 		} catch(Exception e){
 			logger.info(e.toString());
 		}
-	}
 	
-	public void run() {
-		while(amLaufen == true){
-			try{
-				//Verbindung mit Client herstellen
-				Socket clientSocket = server.accept();
-				logger.info(clientSocket.getInetAddress().getHostName() + " verbunden");
-				String eingang = SendenEmpfangen.EmpfangenString(clientSocket);
-				logger.info("Anmeldedaten erhalten: " + namePW);
-				String[] teile = eingang.split(",");
-				namePW = teile[1] +"," + teile[2];
-				
-				
-				if(teile[0].equals("anmelden") ){
-					meldung = AnmeldungPrüfen(namePW);
-				} else if (teile[0].equals("registrieren")) {
-					meldung = RegistrierungPrüfen(namePW);
-				} else if (teile[0].equals("löschen")){
-					meldung = LöschenPrüfen(namePW);
-				} else {
-					meldung = "Fehler";
+	
+	Runnable a = new Runnable() {
+		public void run() {
+			while(amLaufen == true){
+				try{
+					//Verbindung mit Client herstellen
+					Socket clientSocket = server.accept();
+					logger.info(clientSocket.getInetAddress().getHostName() + " verbunden");
+					
+					
+					client = new Client(ServerModel.this, clientSocket);
+					
+					
+				} catch (Exception e){
+					logger.info(e.toString());
 				}
-				
-				SendenEmpfangen.Senden(clientSocket, meldung);
-				
-				client = new Client(ServerModel.this, clientSocket);
-				
-				
-			} catch (Exception e){
-				logger.info(e.toString());
 			}
 		}
-	}
+		}; 
+		Thread b = new Thread(a);
+		b.start();
+		logger.info("Thread gestartet");
+}
 	
 	public String AnmeldungPrüfen(String AnmeldeInfos){
 		String meldung = "";
@@ -92,17 +82,17 @@ public class ServerModel extends Thread{
 				//Überprüfung, ob Name und Passwort übereinstimmen
 				if(parts[0].equals(prüfen[0])&&parts[1].equals(prüfen[1])){
 					benutzerExistiert = true;
-					meldung = "startMeldung";
+					meldung = "anmelden,startMeldung";
 				//Überprüfen, ob Name stimmt und Passwort falsch ist
 				}else if(parts[0].equals(prüfen[0])&&!parts[1].equals(prüfen[1])){
 					benutzerExistiert=true;
-					meldung = "PasswortFalsch";
+					meldung = "anmelden,PasswortFalsch";
 				}
 				
 			}
 			//Der Benutzer ist nicht gespeichert
 			if(benutzerExistiert==false){
-				meldung = "BenutzerExistiertNicht";
+				meldung = "anmelden,BenutzerExistiertNicht";
 			}
 			
 		} catch (IOException e) {
@@ -123,7 +113,7 @@ public class ServerModel extends Thread{
 				String[] parts = zeile.split(",");
 				if(parts[0].equals(prüfen[0])){
 					benutzerVergeben = true;
-					meldung = "BenutzernameVergeben";
+					meldung = "registrieren,BenutzernameVergeben";
 				}
 			}
 			
@@ -134,9 +124,9 @@ public class ServerModel extends Thread{
 					fw.write(prüfen[1]);
 					fw.write("\n");
 					fw.close();
-					meldung="RegistrierMeldung";
+					meldung="registrieren,RegistrierMeldung";
 				}else{
-					meldung ="PasswortZuKurz";
+					meldung ="registrieren,PasswortZuKurz";
 				}
 			}
 		} catch (IOException e) {
@@ -197,17 +187,25 @@ public class ServerModel extends Thread{
 					break;
 				}else if(parts[0].equals(prüfen[0])&&!parts[1].equals(prüfen[1])){
 					benutzerExistiert=true;
-					meldung = "PasswortFalschMeldung";
+					meldung = "löschen,PasswortFalschMeldung";
 				}
 			}
 			if(benutzerExistiert==false){
-				meldung="BenutzerExistiertNichtMeldung";
+				meldung="löschen,BenutzerExistiertNichtMeldung";
 			}
 			reader.close();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 		return meldung;
+	}
+	
+	public String getMeldung() {
+		return meldung;
+	}
+
+	public void setMeldung(String meldung) {
+		this.meldung = meldung;
 	}
 	
 	

@@ -50,39 +50,21 @@ public class SendenEmpfangen {
 		}
 	}
 	
-	public static Turm[] Empfangen(Socket clientSocket){
-		ObjectInputStream empfangen;
-		Turm[] in = new Turm[16];
+	public static void Senden(Socket clientSocket, boolean tmpBol){
+		ObjectOutputStream senden;
 		try{
-			empfangen = new ObjectInputStream(clientSocket.getInputStream());
-			logger.info("InputStream erstellt");
-		
-			//neueKoordinaten von Client empfangen
-			 in = (Turm[]) empfangen.readObject();
-			logger.info("Neue Türme erhalten");
+			//Stream erstellen
+			senden = new ObjectOutputStream(clientSocket.getOutputStream());
+			logger.info("OutputStream erstellt");
+			
+			//neueKoordinaten an Client senden
+			senden.writeObject(tmpBol);
+			senden.flush();
+			logger.info("Anmeldedaten gesendet");
 		} catch (Exception e){
 			logger.info(e.toString());
 		}
-		return in;
-	}	
-	
-	
-	public static String EmpfangenString(Socket clientSocket){
-		ObjectInputStream empfangen;
-		String in; 
-		try{
-			empfangen = new ObjectInputStream(clientSocket.getInputStream());
-			logger.info("InputStream erstellt");
-		
-			//neueKoordinaten von Client empfangen
-			 in = (String) empfangen.readObject();
-			logger.info("Name und PW erhalten");
-			setString(in);		
-		} catch (Exception e){
-			logger.info(e.toString());
-		}
-		return namePW;
-	}	
+	}
 	
 	public static void setString(String s){
 		namePW = s;

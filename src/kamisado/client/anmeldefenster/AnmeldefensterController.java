@@ -46,7 +46,11 @@ public class AnmeldefensterController {
 				String art = "anmelden";
 				
 				clientModel.Verbinden(ip, name, pw, art);
-				
+				try {
+					Thread.sleep(300);
+				} catch (InterruptedException e1) {
+					e1.printStackTrace();
+				}
 				String meldung = clientModel.getMeldung();
 				
 				if(meldung.equals("startMeldung")){
