@@ -382,10 +382,10 @@ public class ClientModel {
 						blockierendeTürmeZurücksetzen();
 					}
 					// Überprüfen ob völliger Stillstand
-					if(Spielbrett.getMöglicheFelder().size()==0 
-							&& getErsterBlockierenderTurm()!=null){
-						Spielbrett.getTürme()[k].setZweiterBlockierenderTurm(true);
-					}
+//					if(Spielbrett.getMöglicheFelder().size()==0 
+//							&& getErsterBlockierenderTurm()!=null){
+//						Spielbrett.getTürme()[k].setZweiterBlockierenderTurm(true);
+//					}
 				}
 			}	
 		}else{		// Nächster gegnerischer Turm falls der vorherige Turm weiss war 
@@ -404,11 +404,11 @@ public class ClientModel {
 					} else{
 						blockierendeTürmeZurücksetzen();
 					}
-					// Überprüfen ob völliger Stillstand
-					if(Spielbrett.getMöglicheFelder().size()==0 
-							&& getErsterBlockierenderTurm()!=null){
-						Spielbrett.getTürme()[k].setZweiterBlockierenderTurm(true);
-					}
+//					// Überprüfen ob völliger Stillstand
+//					if(Spielbrett.getMöglicheFelder().size()==0 
+//							&& getErsterBlockierenderTurm()!=null){
+//						Spielbrett.getTürme()[k].setZweiterBlockierenderTurm(true);
+//					}
 				}
 			}	
 		}
