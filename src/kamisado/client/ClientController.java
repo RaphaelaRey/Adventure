@@ -40,7 +40,7 @@ public class ClientController {
 					if(Spielbrett.istTurmBewegt()==false && t.getStroke().equals(Color.BLACK)){	
 						clientModel.turmStrokeWidthZurücksetzen();
 						t.setStrokeWidth(spielbrett.STROKEWIDTHAUSGEWÄHLTERTURM);
-						Spielbrett.setAktiverTurmKoordinaten(t.getKoordinaten());	// TODO Raphaela weiss das der andere Client?
+						Spielbrett.setAktiverTurmKoordinaten(t.getKoordinaten());	
 						clientModel.möglicheFelderAnzeigen(Spielbrett.getAktiverTurmKoordinaten());
 						
 					}				

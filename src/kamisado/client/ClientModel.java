@@ -136,16 +136,16 @@ public class ClientModel {
 						
 						if(getGewinner()!=null){
 							spielZurücksetzen();
-							// TODO Raphaela mögliche Felder zurücksetzen
+							// Felder-Formatierung zurücksetzen
 							for (int i = 0; i < Spielbrett.getFelder().length; i++){
 								for (int j = 0; j < Spielbrett.getFelder().length; j++){
 						    			Spielbrett.getFelder()[i][j].setStroke(Color.BLACK);
-						    			Spielbrett.getFelder()[i][j].setStrokeWidth(1);
+						    			Spielbrett.getFelder()[i][j].setStrokeWidth(spielbrett.STROKEWIDTHFELDERSTANDARD);
 						    			Spielbrett.getFelder()[i][j].setStrokeType(StrokeType.CENTERED);	
 						    	}
 							}
+							// TODO Raphaela zurücksetzen, damit wieder mit schwarzen Türmen gefahren werden kann
 						}
-						// TODO wenn blockade dann
 					}
 		});
 	}
@@ -475,7 +475,7 @@ public class ClientModel {
 			int xKoord = koords[0];
 			int yKoord = koords[1];
 			Spielbrett.getFelder()[xKoord][yKoord].setStroke(Color.BLACK);
-			Spielbrett.getFelder()[xKoord][yKoord].setStrokeWidth(1);
+			Spielbrett.getFelder()[xKoord][yKoord].setStrokeWidth(spielbrett.STROKEWIDTHFELDERSTANDARD);
 			Spielbrett.getFelder()[xKoord][yKoord].setStrokeType(StrokeType.CENTERED);	
 			toRemove.add(koords);
 		}
