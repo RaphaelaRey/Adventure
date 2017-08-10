@@ -115,16 +115,12 @@ public class ClientController {
 								iview.start();
 							}
 							
-							// Spiel zurücksetzen nach Gewinn 
-							if(clientModel.getGewinner()!=null){
-								clientModel.TürmeSenden();
-								// TODO String senden (Input von Lukas)
-							}							
-							
+							// nächster Aktiver Turm setzen falls das Spiel noch nicht beendet wurde
 							if (clientModel.getGewinner()==null){
 								clientModel.getTurm(nächsterAktiverTurm).setAktiverTurm(true); 
-								clientModel.TürmeSenden();
 							}
+							
+							// aktuelle Türme dem Server senden
 							clientModel.TürmeSenden();
 							
 							// Blockadenmeldung schwarz
