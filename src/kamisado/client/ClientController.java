@@ -127,6 +127,7 @@ public class ClientController {
 							// Spiel zurücksetzen nach Gewinn 
 							if(clientModel.getGewinner()!=null){
 								clientModel.TürmeSenden();
+								// String senden
 							}							
 //							Spielbrett.setAktiverTurmKoordinaten(nächsterAktiverTurm);	
 							

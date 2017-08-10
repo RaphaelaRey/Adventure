@@ -38,6 +38,9 @@ public class Client {
 					Turm[] tmpTürme = SendenEmpfangen.Empfangen(clientSocket);
 					
 					logger.info("Daten Empfangen von Client ");
+					
+					// wenn clientsocket.inputstream.readobject instanceOf türme
+					//else instanceof String
 							
 					for (Client c : clients) {
 						SendenEmpfangen.Senden(c.clientSocket, tmpTürme);
