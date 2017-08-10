@@ -37,13 +37,12 @@ public class ClientController {
 			t.setOnMouseClicked(new EventHandler<MouseEvent>(){
 				@Override
 				public void handle(MouseEvent event){
-					if(Spielbrett.istTurmBewegt()==false && t.getStroke().equals(Color.BLACK)){	
+//					if(clientModel.bereitsEinTurmBewegt()==false && t.getStroke().equals(Color.BLACK)){	
 						clientModel.turmStrokeWidthZurücksetzen();
 						t.setStrokeWidth(spielbrett.STROKEWIDTHAUSGEWÄHLTERTURM);
 						Spielbrett.setAktiverTurmKoordinaten(t.getKoordinaten());	
-						clientModel.möglicheFelderAnzeigen(Spielbrett.getAktiverTurmKoordinaten());
-						
-					}				
+						clientModel.möglicheFelderAnzeigen(Spielbrett.getAktiverTurmKoordinaten());						
+//					}				
   				}
 			});
 		}
@@ -89,6 +88,24 @@ public class ClientController {
 							} 		
 
 							// Völliger Stillstand TODO Raphaela kontrollieren
+							if(clientModel.getZweiterBlockierenderTurm()!=null){
+								if(clientModel.getZweiterBlockierenderTurm().equals(Color.BLACK)){
+									System.out.println("Schwarz hat totalen Stillstand verursacht, weiss gewinnt"); 
+									// Gewinnermeldung bei völligem Stillstand
+									Stage stage = new Stage();
+									InfofensterView iview = new InfofensterView(stage,view.GewinnerMeldungStillstandWeiss);
+									InfofensterController icontroller = new InfofensterController(iview);
+									iview.start();
+								}else{
+									System.out.println("Weiss hat totalen Stillstand verursacht, schwarz gewinnt");
+									//Gewinnermeldung bei völligem Stillstand
+									Stage stage = new Stage();
+									InfofensterView iview = new InfofensterView(stage,view.GewinnerMeldungStillstandSchwarz);
+									InfofensterController icontroller = new InfofensterController(iview);
+									iview.start();
+								}
+								
+							}
 //							if(Spielbrett.getBlockadenCounter()==2){
 //								if(Spielbrett.getBlockadenVerursacher().equals(Color.BLACK)){
 //									Spielbrett.setGewinner(Color.WHITE);

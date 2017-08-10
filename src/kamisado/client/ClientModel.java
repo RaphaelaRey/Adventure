@@ -6,6 +6,8 @@ import java.util.Iterator;
 import java.util.logging.Logger;
 
 import javafx.application.Platform;
+import javafx.event.EventHandler;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.StrokeType;
 import kamisado.client.anmeldefenster.AnmeldefensterController;
@@ -95,58 +97,49 @@ public class ClientModel {
 	
 	public void UpdateSpielfeld(Turm[] alteTürme, Turm[]neueTürme){
 		Platform.runLater(new Runnable(){
-					@Override
-					public void run(){
-						if(neueTürme!=null && alteTürme!=null &&  neueTürme.length>0){
-							
-							//alte Türme von der Gridpane löschen und Felder zurücksetzen
-							spielbrett.getPane().getChildren().removeAll(Spielbrett.getTürme());
-							for (int i = 0; i < Spielbrett.getFelder().length; i++){
-								for (int j = 0; j < Spielbrett.getFelder().length; j++){
-						    			Spielbrett.getFelder()[i][j].setFeldBesetzt(false);
-						    	}
-							}	
+			@Override
+			public void run(){
+				if(neueTürme!=null && alteTürme!=null &&  neueTürme.length>0){
 					
-							for(int i = 0; i < neueTürme.length; i++){
-								int xKoords = neueTürme[i].getKoordinaten()[0];
-								int yKoords = neueTürme[i].getKoordinaten()[1];
-								
-								// Turmdurchmesser definieren
-								neueTürme[i].setRadius(spielbrett.TURMDURCHMESSER);
-								
-								// Randbreite der Türme definieren (breit beim aktiven Turm, standard bei den anderen)
-								if(koordVergleich(neueTürme[i].getKoordinaten(), Spielbrett.getAktiverTurmKoordinaten())){
-									neueTürme[i].setStrokeWidth(spielbrett.STROKEWIDTHAUSGEWÄHLTERTURM);
-								} else{
-									neueTürme[i].setStrokeWidth(spielbrett.STROKEWIDTHTÜRMESTANDARD);
-								}
-								
-								// Türme bei den Koordinaten platzieren, Rand- und Füllfarbe definieren und Felder besetzen
-								spielbrett.getPane().add(neueTürme[i], xKoords, yKoords);
-								neueTürme[i].setFill(Color.valueOf(neueTürme[i].getFüllFarbe()));
-								neueTürme[i].setStroke(Color.valueOf(neueTürme[i].getStrokeFarbe()));
-								
-								Spielbrett.getFelder()[xKoords][yKoords].setFeldBesetzt(true);
-							}	
-							
-							// Mögliche Felder anzeigen
-							möglicheFelderAnzeigen(Spielbrett.getAktiverTurmKoordinaten());
-						}
-						Spielbrett.setTürme(neueTürme);
+					//alte Türme von der Gridpane löschen und Felder zurücksetzen
+					spielbrett.getPane().getChildren().removeAll(Spielbrett.getTürme());
+					for (int i = 0; i < Spielbrett.getFelder().length; i++){
+						for (int j = 0; j < Spielbrett.getFelder().length; j++){
+				    			Spielbrett.getFelder()[i][j].setFeldBesetzt(false);
+				    	}
+					}	
+			
+					for(int i = 0; i < neueTürme.length; i++){
+						int xKoords = neueTürme[i].getKoordinaten()[0];
+						int yKoords = neueTürme[i].getKoordinaten()[1];
 						
-						if(getGewinner()!=null){
-							spielZurücksetzen();
-							// Felder-Formatierung zurücksetzen
-							for (int i = 0; i < Spielbrett.getFelder().length; i++){
-								for (int j = 0; j < Spielbrett.getFelder().length; j++){
-						    			Spielbrett.getFelder()[i][j].setStroke(Color.BLACK);
-						    			Spielbrett.getFelder()[i][j].setStrokeWidth(spielbrett.STROKEWIDTHFELDERSTANDARD);
-						    			Spielbrett.getFelder()[i][j].setStrokeType(StrokeType.CENTERED);	
-						    	}
-							}
-							// TODO Raphaela zurücksetzen, damit wieder mit schwarzen Türmen gefahren werden kann
+						// Turmdurchmesser definieren
+						neueTürme[i].setRadius(spielbrett.TURMDURCHMESSER);
+						
+						// Randbreite der Türme definieren (breit beim aktiven Turm, standard bei den anderen)
+						if(koordVergleich(neueTürme[i].getKoordinaten(), Spielbrett.getAktiverTurmKoordinaten())){
+							neueTürme[i].setStrokeWidth(spielbrett.STROKEWIDTHAUSGEWÄHLTERTURM);
+						} else{
+							neueTürme[i].setStrokeWidth(spielbrett.STROKEWIDTHTÜRMESTANDARD);
 						}
-					}
+						
+						// Türme bei den Koordinaten platzieren, Rand- und Füllfarbe definieren und Felder besetzen
+						spielbrett.getPane().add(neueTürme[i], xKoords, yKoords);
+						neueTürme[i].setFill(Color.valueOf(neueTürme[i].getFüllFarbe()));
+						neueTürme[i].setStroke(Color.valueOf(neueTürme[i].getStrokeFarbe()));
+						
+						Spielbrett.getFelder()[xKoords][yKoords].setFeldBesetzt(true);
+					}	
+					
+					// Mögliche Felder anzeigen
+					möglicheFelderAnzeigen(Spielbrett.getAktiverTurmKoordinaten());
+				}
+				Spielbrett.setTürme(neueTürme);
+				
+				if(getGewinner()!=null){
+					spielZurücksetzen();
+				}
+			}
 		});
 	}
 					
@@ -172,16 +165,6 @@ public class ClientModel {
 		ClientModel.ipAdresse = ipAdresse;
 	}
 	
-	public Turm getTurm(int[] turmKoordinaten){
-		Turm[] türme = Spielbrett.getTürme();
-		for(int i = 0; i < türme.length; i++){
-				if(koordVergleich(türme[i].getKoordinaten(), turmKoordinaten)){
-					return türme[i];
-				}
-		}
-		return null;
-	}
-	
 	public Feld getFeld(int[] feldKoordinaten){
 		
 		Feld[][] felder = Spielbrett.getFelder();
@@ -195,15 +178,37 @@ public class ClientModel {
 		return f;
 	}
 	
-	/** Spielbrett initialisieren
-	 * @param spielbrett
-	 */
 	public void setSpielbrett(Spielbrett Spielbrett){
 		this.spielbrett = Spielbrett;
 	}
 	
 	public Spielbrett getSpielbrett (){
 		return this.spielbrett; 
+	}
+	
+	/** Überprüft, ob bereits ein Turm bewegt wurde (also ob es sich um den ersten Spielzug handelt oder nicht
+	 * @return true falls ein Turm bewegt wurde
+	 * @author Raphaela Rey
+	 */
+	public boolean bereitsEinTurmBewegt(){
+		for(int i = 0; i < Spielbrett.getTürme().length; i++){
+			if(Spielbrett.getTürme()[i].isTurmBewegt()){
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	/** Setzt die boolean-Variable turmbewegt zurück, damit wieder ein Turm ausgewählt werden kann
+	 * @return zurückgesetztes Turm-Array
+	 * @author Raphaela Rey
+	 */
+	public Turm[] bereitsEinTurmBewegtZurücksetzen(){
+		for(int i = 0; i < Spielbrett.getTürme().length; i++){
+			Spielbrett.getTürme()[i].setTurmBewegt(false);
+		}
+		return Spielbrett.getTürme();
+		
 	}
 	
 	/** Überprüfen, ob zwei int-Arrays gleich sind
@@ -241,6 +246,19 @@ public class ClientModel {
 		return Color.WHITE;
 	}
 	
+	/** Turm aufgrund von Koordinaten herausfinden
+	 * @param Koordinaten
+	 * @return Turm oder null, falls kein Turm auffindbar ist
+	 * @author Raphaela Rey
+	 */
+	public Turm getTurm(int[] turmKoordinaten){
+		for(int i = 0; i < Spielbrett.getTürme().length; i++){
+				if(koordVergleich(Spielbrett.getTürme()[i].getKoordinaten(), turmKoordinaten)){
+					return Spielbrett.getTürme()[i];
+				}
+		}
+		return null;
+	}
 	/** Gewinner herausfinden (überprüfen, ob ein Turm als Gewinnerturm definiert ist)
 	 * @return Gewinnerfarbe oder null, falls niemand gewonnen hat
 	 * @author Raphaela Rey
@@ -257,6 +275,10 @@ public class ClientModel {
 		return null;
 	}
 	
+	/** Gewinnervarible in den Türmen zurücksetzen
+	 * @return Turm-Array
+	 * @author Raphaela Rey
+	 */
 	public Turm[] gewinnerZurücksetzen(){
 		for (int i = 0; i < Spielbrett.getTürme().length; i++){
 			Spielbrett.getTürme()[i].setGewinnerTurm(false);
@@ -280,6 +302,25 @@ public class ClientModel {
 			}
 		}
 		logger.info("Kein blockierender Turm");
+		return null;
+	}
+	
+	/** Zweiter blockierender Turm herausfinden (überprüfen, ob ein totaler Stillstand besteht)
+	 * @return Farbe des blockierenden Turms oder null, wenn kein zweiter Turm blockiert
+	 * @author Raphaela Rey
+	 */
+	public Color getZweiterBlockierenderTurm(){
+		for (int i = 0; i < Spielbrett.getTürme().length; i++){
+			if(Spielbrett.getTürme()[i].isZweiterBlockierenderTurm() && Spielbrett.getTürme()[i].getStroke().equals(Color.BLACK)){
+				logger.info("Schwarz ist zweiter blockierender Turm");
+				return Color.BLACK;
+			}
+			if(Spielbrett.getTürme()[i].isZweiterBlockierenderTurm() && Spielbrett.getTürme()[i].getStroke().equals(Color.WHITE)){
+				logger.info("Weiss ist zweiter blockierender Turm");
+				return Color.WHITE;
+			}
+		}
+		logger.info("Kein totaler Stillstand");
 		return null;
 	}
 	
@@ -313,7 +354,7 @@ public class ClientModel {
 		spielbrett.getPane().add(Spielbrett.getTürme()[k], xKoords, yKoords);
 		Spielbrett.getFelder()[xKoords][yKoords].setFeldBesetzt(true);
 		
-		Spielbrett.setTurmBewegt(true);
+		Spielbrett.getTürme()[k].setTurmBewegt(true);
 	}
 
 	/** Zukünftiger gegnerischer Turm definieren
@@ -334,12 +375,17 @@ public class ClientModel {
 					nächsterAktiverTurm = Spielbrett.getTürme()[i].getKoordinaten();
 					Spielbrett.getTürme()[i].setStrokeWidth(spielbrett.STROKEWIDTHAUSGEWÄHLTERTURM);
 					möglicheFelderAnzeigen(nächsterAktiverTurm);
+					// Überprüfen ob Blockade
 					if(Spielbrett.getMöglicheFelder().size()==0){	
 						Spielbrett.getTürme()[k].setErsterBlockierenderTurm(true);
 					} else{
 						blockierendeTürmeZurücksetzen();
 					}
-					getErsterBlockierenderTurm();
+					// Überprüfen ob völliger Stillstand
+					if(Spielbrett.getMöglicheFelder().size()==0 
+							&& getErsterBlockierenderTurm()!=null){
+						Spielbrett.getTürme()[k].setZweiterBlockierenderTurm(true);
+					}
 				}
 			}	
 		}else{		// Nächster gegnerischer Turm falls der vorherige Turm weiss war 
@@ -352,12 +398,17 @@ public class ClientModel {
 					nächsterAktiverTurm = Spielbrett.getTürme()[i].getKoordinaten();
 					möglicheFelderAnzeigen(nächsterAktiverTurm);
 					Spielbrett.getTürme()[i].setStrokeWidth(spielbrett.STROKEWIDTHAUSGEWÄHLTERTURM);
+					// Überprüfen ob Blockade
 					if(Spielbrett.getMöglicheFelder().size()==0){	
 						Spielbrett.getTürme()[k].setErsterBlockierenderTurm(true);
 					} else{
 						blockierendeTürmeZurücksetzen();
 					}
-					getErsterBlockierenderTurm();
+					// Überprüfen ob völliger Stillstand
+					if(Spielbrett.getMöglicheFelder().size()==0 
+							&& getErsterBlockierenderTurm()!=null){
+						Spielbrett.getTürme()[k].setZweiterBlockierenderTurm(true);
+					}
 				}
 			}	
 		}
@@ -438,7 +489,7 @@ public class ClientModel {
     			Spielbrett.getFelder()[i][j].setFeldBesetzt(false);
     		}
 		}	
-		Spielbrett.setTurmBewegt(false);
+		bereitsEinTurmBewegtZurücksetzen();
 		// Die Türme an ihren ursprünglichen Platz setzen
 		for(int p = 0; p < Spielbrett.getTürme().length; p++){
 			if(Spielbrett.getTürme()[p].getStroke().equals(Color.BLACK)){
@@ -460,7 +511,23 @@ public class ClientModel {
 					}
 				}
 			}
-		}	
+		}
+		// Türme aktivieren TODO schöner?
+		for (int i = 0; i < Spielbrett.getTürme().length; i++){				
+			Turm t = Spielbrett.getTürme()[i];				
+			t.setOnMouseClicked(new EventHandler<MouseEvent>(){
+				@Override
+				public void handle(MouseEvent event){
+					if(bereitsEinTurmBewegt()==false && t.getStroke().equals(Color.BLACK)){	
+						turmStrokeWidthZurücksetzen();
+						t.setStrokeWidth(spielbrett.STROKEWIDTHAUSGEWÄHLTERTURM);
+						Spielbrett.setAktiverTurmKoordinaten(t.getKoordinaten());	
+						möglicheFelderAnzeigen(Spielbrett.getAktiverTurmKoordinaten());						
+					}				
+ 				}
+			});
+		}
+		
 	}
 	
 	/** ArrayList mögliche Felder leeren

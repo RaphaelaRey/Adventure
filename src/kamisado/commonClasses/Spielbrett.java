@@ -16,8 +16,8 @@ import kamisado.client.ClientModel;
 public class Spielbrett{
 	
 	private ClientModel clientModel;
-		
-	private static boolean turmBewegt = false; // wenn diese Variable true ist, wurde bereits ein Turm bewegt -> nicht mehr der erste Spielzug
+
+	//	private static boolean turmBewegt = false; // wenn diese Variable true ist, wurde bereits ein Turm bewegt -> nicht mehr der erste Spielzug
 	private static int [] aktiverTurmKoordinaten = new int [2];
 	
 	// Infos des Spielbretts, der Türme und Felder als Konstanten definieren
@@ -138,18 +138,6 @@ public class Spielbrett{
     }
  	
  	// Getter und setter
- 	
- 	
-	
-
-	public static boolean istTurmBewegt() {
-		return turmBewegt;
-	}
-
-	public static void setTurmBewegt(boolean turmBewegt) {
-		Spielbrett.turmBewegt = turmBewegt;
-	}
-
 	public static Turm [] getTürme() {
 		return türme;
 	}

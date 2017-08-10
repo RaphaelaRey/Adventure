@@ -19,7 +19,7 @@ import kamisado.commonClasses.Spielbrett;
 
 public class ClientView {
 	
-	private ClientModel clientModel;
+	private ClientModel clientModel; //TODO model löschen
 	private Stage stage;
 	protected Spielbrett spielbrett;
 	private AnmeldefensterView anmeldeView;
