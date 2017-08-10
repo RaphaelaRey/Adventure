@@ -19,7 +19,6 @@ public class Spielbrett{
 		
 	private static boolean turmBewegt = false; // wenn diese Variable true ist, wurde bereits ein Turm bewegt -> nicht mehr der erste Spielzug
 	private static int [] aktiverTurmKoordinaten = new int [2];
-	private static Color gewinner;
 	
 	// Infos des Spielbretts, der Türme und Felder als Konstanten definieren
 	public final int SPIELBRETTHÖHE = 886;
@@ -199,13 +198,5 @@ public class Spielbrett{
 
 	public static void setAktiverTurmKoordinaten(int [] aktiverTurmKoordinaten) {
 		Spielbrett.aktiverTurmKoordinaten = aktiverTurmKoordinaten;
-	}
-
-	public static Color getGewinner() {
-		return gewinner;
-	}
-
-	public static void setGewinner(Color gewinner) {
-		Spielbrett.gewinner = gewinner;
 	}
 }

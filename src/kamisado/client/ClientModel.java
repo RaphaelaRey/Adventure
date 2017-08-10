@@ -134,7 +134,7 @@ public class ClientModel {
 						}
 						Spielbrett.setTürme(neueTürme);
 						
-						if(Spielbrett.getGewinner()!=null){
+						if(getGewinner()!=null){
 							spielZurücksetzen();
 							// TODO Raphaela mögliche Felder zurücksetzen
 							for (int i = 0; i < Spielbrett.getFelder().length; i++){
@@ -247,14 +247,21 @@ public class ClientModel {
 	 */
 	public Color getGewinner(){
 		for (int i = 0; i < Spielbrett.getTürme().length; i++){
-			if(Spielbrett.getTürme()[i].isGewinnerTurm() && Spielbrett.getTürme()[i].getFill().equals(Color.BLACK)){
+			if(Spielbrett.getTürme()[i].isGewinnerTurm() && Spielbrett.getTürme()[i].getStroke().equals(Color.BLACK)){
 				return Color.BLACK;
 			}
-			if(Spielbrett.getTürme()[i].isGewinnerTurm() && Spielbrett.getTürme()[i].getFill().equals(Color.WHITE)){
+			if(Spielbrett.getTürme()[i].isGewinnerTurm() && Spielbrett.getTürme()[i].getStroke().equals(Color.WHITE)){
 				return Color.WHITE;
 			}
 		}
 		return null;
+	}
+	
+	public Turm[] gewinnerZurücksetzen(){
+		for (int i = 0; i < Spielbrett.getTürme().length; i++){
+			Spielbrett.getTürme()[i].setGewinnerTurm(false);
+		}
+		return Spielbrett.getTürme();
 	}
 	
 	/** Erster blockierender Turm herausfinden (überprüfen, ob ein Turm als erster blockierender Turm definiert ist)
@@ -402,12 +409,14 @@ public class ClientModel {
 		for(int l = 0; l < Spielbrett.GEWINNERFELDERSCHWARZ.length; l++){
 			int [] koordGewinnerFeld = {Spielbrett.GEWINNERFELDERSCHWARZ[l][0], Spielbrett.GEWINNERFELDERSCHWARZ[l][1]};
 			if(koordVergleich(ausgewähltesFeld.getKoordinaten(), koordGewinnerFeld)){
+				getTurm(Spielbrett.getAktiverTurmKoordinaten()).setGewinnerTurm(true);
 				return Color.BLACK;
 			}
 		}	
 		for(int m = 0; m < Spielbrett.GEWINNERFELDERWEISS.length; m++){
 			int [] koordGewinnerFeld = {Spielbrett.GEWINNERFELDERWEISS[m][0], Spielbrett.GEWINNERFELDERWEISS[m][1]};
 			if(koordVergleich(ausgewähltesFeld.getKoordinaten(), koordGewinnerFeld)){
+				getTurm(Spielbrett.getAktiverTurmKoordinaten()).setGewinnerTurm(true);
 				return Color.WHITE;
 			}
 		}
@@ -422,7 +431,7 @@ public class ClientModel {
 	public void spielZurücksetzen(){ 
 		möglicheFelderLeeren(); 
 		// Gewinner löschen, alle Türme vom Spielbrett entfernen und die Felder freigeben
-		Spielbrett.setGewinner(null); // TODO Woher wissen das die clients? Betrifft alle Infos von hier
+		gewinnerZurücksetzen();
 		spielbrett.getPane().getChildren().removeAll(Spielbrett.getTürme());
 		for (int i = 0; i < Spielbrett.getFelder().length; i++){
     		for (int j = 0; j < Spielbrett.getFelder().length; j++){

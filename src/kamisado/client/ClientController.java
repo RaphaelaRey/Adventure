@@ -62,9 +62,9 @@ public class ClientController {
 								if(clientModel.koordVergleich(Spielbrett.getTürme()[k].getKoordinaten(), Spielbrett.getAktiverTurmKoordinaten())){ //aktiver Turm herausfinden
 									clientModel.turmBewegen(ausgewähltesFeld, k);
 									// Überprüfen, ob es einen Gewinner gibt 
-									Spielbrett.setGewinner(clientModel.gewinnerDefinieren(ausgewähltesFeld));
+									clientModel.gewinnerDefinieren(ausgewähltesFeld);
 									// Zukünftiger gegnerischer Turm definieren und mögliche Felder anzeigen (sofern das Spiel nicht schon beendet ist)
-									if(Spielbrett.getGewinner()==null){
+									if(clientModel.getGewinner()==null){
 										nächsterAktiverTurm=clientModel.setNächsterGegnerischerTurm(k, ausgewähltesFeld, nächsterAktiverTurm);		
 										System.out.println("nächsterAktiverturm=clientmodel.setnächstergegnerischerturm ausgeführt");
 									}
@@ -110,13 +110,13 @@ public class ClientController {
 //							}
 							 
 							// Überprüfen, wer gewonnen hat und die entsprechende Meldung anzeigen
-							if(Spielbrett.getGewinner()==Color.BLACK){
+							if(clientModel.getGewinner()==Color.BLACK){
 								//Gewinnermeldung inkl. Frage ob nochmals gespielt werden will (im Moment wird nur das Spielbrett zurückgesetzt)
 								Stage stage = new Stage();
 								InfofensterView iview = new InfofensterView(stage,view.GewinnerMeldungSchwarz);
 								InfofensterController icontroller = new InfofensterController(iview);
 								iview.start();
-							} else if(Spielbrett.getGewinner()==Color.WHITE){
+							} else if(clientModel.getGewinner()==Color.WHITE){
 								//Gewinnermeldung 
 								Stage stage = new Stage();
 								InfofensterView iview = new InfofensterView(stage,view.GewinnerMeldungWeiss);
@@ -125,12 +125,12 @@ public class ClientController {
 							}
 							
 							// Spiel zurücksetzen nach Gewinn 
-							if(Spielbrett.getGewinner()!=null){
+							if(clientModel.getGewinner()!=null){
 								clientModel.TürmeSenden();
 							}							
 //							Spielbrett.setAktiverTurmKoordinaten(nächsterAktiverTurm);	
 							
-							if (Spielbrett.getGewinner()==null){
+							if (clientModel.getGewinner()==null){
 								clientModel.getTurm(nächsterAktiverTurm).setAktiverTurm(true); 
 								clientModel.TürmeSenden();
 							}
