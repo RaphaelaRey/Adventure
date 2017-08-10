@@ -87,42 +87,27 @@ public class ClientController {
 									iview.start();
 								}
 							} 		
-//							if(Spielbrett.getGewinner()==null && Spielbrett.isBlockiert()==true){
-//								nächsterAktiverTurm=clientModel.setNächsterGegnerischerTurmBlockade(nächsterAktiverTurm);	 
+
+							// Völliger Stillstand TODO Raphaela kontrollieren
+//							if(Spielbrett.getBlockadenCounter()==2){
 //								if(Spielbrett.getBlockadenVerursacher().equals(Color.BLACK)){
-//									//Blockadenmeldung
+//									Spielbrett.setGewinner(Color.WHITE);
+//									System.out.println("Schwarz hat totalen Stillstand verursacht, weiss gewinnt"); 
+//									// Gewinnermeldung bei völligem Stillstand
 //									Stage stage = new Stage();
-//									InfofensterView iview = new InfofensterView(stage,view.BlockadeMeldungSchwarz);
+//									InfofensterView iview = new InfofensterView(stage,view.GewinnerMeldungStillstandWeiss);
 //									InfofensterController icontroller = new InfofensterController(iview);
 //									iview.start();
-//								} else if (Spielbrett.getBlockadenVerursacher().equals(Color.WHITE)){
-//									//Blockadenmeldung
+//								} else{
+//									Spielbrett.setGewinner(Color.BLACK);
+//									System.out.println("Weiss hat totalen Stillstand verursacht, schwarz gewinnt");
+//									//Gewinnermeldung bei völligem Stillstand
 //									Stage stage = new Stage();
-//									InfofensterView iview = new InfofensterView(stage,view.BlockadeMeldungWeiss);
+//									InfofensterView iview = new InfofensterView(stage,view.GewinnerMeldungStillstandSchwarz);
 //									InfofensterController icontroller = new InfofensterController(iview);
 //									iview.start();
 //								}
-//							} 			
-							// Völliger Stillstand TODO Raphaela kontrollieren
-							if(Spielbrett.getBlockadenCounter()==2){
-								if(Spielbrett.getBlockadenVerursacher().equals(Color.BLACK)){
-									Spielbrett.setGewinner(Color.WHITE);
-									System.out.println("Schwarz hat totalen Stillstand verursacht, weiss gewinnt"); 
-									// Gewinnermeldung bei völligem Stillstand
-									Stage stage = new Stage();
-									InfofensterView iview = new InfofensterView(stage,view.GewinnerMeldungStillstandWeiss);
-									InfofensterController icontroller = new InfofensterController(iview);
-									iview.start();
-								} else{
-									Spielbrett.setGewinner(Color.BLACK);
-									System.out.println("Weiss hat totalen Stillstand verursacht, schwarz gewinnt");
-									//Gewinnermeldung bei völligem Stillstand
-									Stage stage = new Stage();
-									InfofensterView iview = new InfofensterView(stage,view.GewinnerMeldungStillstandSchwarz);
-									InfofensterController icontroller = new InfofensterController(iview);
-									iview.start();
-								}
-							}
+//							}
 							 
 							// Überprüfen, wer gewonnen hat und die entsprechende Meldung anzeigen
 							if(Spielbrett.getGewinner()==Color.BLACK){

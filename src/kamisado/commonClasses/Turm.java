@@ -18,7 +18,7 @@ public class Turm extends Circle implements Serializable {
 	private String strokeFarbe;
 	
 	private boolean aktiverTurm;
-	private boolean ersterBlockierenderTurm; // TODO dumme Idee?
+	private boolean ersterBlockierenderTurm; 
 	private boolean zweiterBlockierenderTurm;
 	private boolean gewinnerTurm;
 

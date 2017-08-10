@@ -18,9 +18,6 @@ public class Spielbrett{
 	private ClientModel clientModel;
 		
 	private static boolean turmBewegt = false; // wenn diese Variable true ist, wurde bereits ein Turm bewegt -> nicht mehr der erste Spielzug
-	private static boolean blockade = false;
-	private static int blockadenCounter = 0;
-	private static Color blockadenVerursacher = null;
 	private static int [] aktiverTurmKoordinaten = new int [2];
 	private static Color gewinner;
 	
@@ -194,28 +191,6 @@ public class Spielbrett{
 	}
 	public static void setMöglicheFelder(ArrayList<int[]> möglicheFelder) {
 		Spielbrett.möglicheFelder = möglicheFelder;
-	}
-
-
-	public static boolean isBlockiert() {
-		return blockade;
-	}
-	public static void setBlockiert(boolean blockiert) {
-		Spielbrett.blockade = blockiert;
-	}
-
-	public static int getBlockadenCounter() {
-		return blockadenCounter;
-	}
-	public static void setBlockadenCounter(int blockadenCounter) {
-		Spielbrett.blockadenCounter = blockadenCounter;
-	}
-
-	public static Color getBlockadenVerursacher() {
-		return blockadenVerursacher;
-	}
-	public static void setBlockadenVerursacher(Color blockadenVerursacher) {
-		Spielbrett.blockadenVerursacher = blockadenVerursacher;
 	}
 
 	public static int [] getAktiverTurmKoordinaten() {

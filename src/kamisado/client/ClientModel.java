@@ -378,7 +378,7 @@ public class ClientModel {
 				}
 			} 
 		} 
-		if(getTurmFarbe(nächsterAktiverTurm).equals(Color.WHITE) && Spielbrett.isBlockiert()==true){
+		if(getTurmFarbe(nächsterAktiverTurm).equals(Color.WHITE) && getErsterBlockierenderTurm().equals(Color.BLACK)){// && Spielbrett.isBlockiert()==true){
 			for (int m = 0; m < Spielbrett.getTürme().length; m++){
 				Spielbrett.getTürme()[m].setStrokeWidth(spielbrett.STROKEWIDTHTÜRMESTANDARD);
 				if (Spielbrett.getTürme()[m].getStroke().equals(Color.BLACK)
