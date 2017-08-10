@@ -85,6 +85,14 @@ public class AnmeldefensterController {
 				 ip = anmeldeView.registrierenIPtxt.getText();
 				 String art = "registrieren";
 				 
+				 if(name.length()<5){
+					 Stage stage = new Stage();
+					InfofensterView iview = new InfofensterView(stage,anmeldeView.NameZuKurz);
+					InfofensterController icontroller = new InfofensterController(iview);
+					iview.start();
+					stage.setAlwaysOnTop(true); 
+				 }else{
+				 
 				 clientModel.Verbinden(ip, name, pw, art);
 				 
 				 String meldung = clientModel.getMeldung();
@@ -114,7 +122,8 @@ public class AnmeldefensterController {
 						InfofensterController icontroller = new InfofensterController(iview);
 						iview.start();
 						stage.setAlwaysOnTop(true);
-				 }				 
+				 }
+				 }
 			}
 		});
 		

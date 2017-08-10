@@ -58,6 +58,7 @@ public class AnmeldefensterView {
 	public Label BenutzernameVergeben;
 	public Label RegistrierMeldung;
 	public Label PasswortZuKurz;
+	public Label NameZuKurz;
 	
 	public AnmeldefensterView(Stage primaryStage, AnmeldefensterController anmeldeController, ClientModel clientModel, ClientView clientView) {
 		this.stage=primaryStage;
@@ -94,6 +95,7 @@ public class AnmeldefensterView {
 		BenutzernameVergeben = new Label(t.getString("BenutzernameVergeben"));
 		RegistrierMeldung = new Label(t.getString("RegistrierMeldung"));
 		PasswortZuKurz = new Label(t.getString("PasswortZuKurz"));
+		NameZuKurz = new Label(t.getString("NameZuKurz"));
 		
 		menuBar.getMenus().addAll(menuOptionen, menuHilfe);
 		
@@ -112,10 +114,11 @@ public class AnmeldefensterView {
 		neuregistrierenLabel = new Label(t.getString("Neuregistrieren"));
 		
 		HBox hbox2 = new HBox();
-		registrierenNametxt = new TextField(t.getString("Benutzername"));
+		registrierenNametxt = new TextField(t.getString("NamenLänge"));
 		registrierenPwtxt = new TextField(t.getString("PasswortLänge"));
 		btnRegistrieren =new Button(t.getString("ButtonRegistrieren"));
 		registrierenIPtxt = new TextField(t.getString("IP"));
+		registrierenNametxt.setMinWidth(200);
 		hbox2.getChildren().addAll(registrierenNametxt, registrierenPwtxt, registrierenIPtxt, btnRegistrieren);
 		
 		gpane.add(menuBar, 0, 0);
@@ -148,6 +151,7 @@ public class AnmeldefensterView {
 		neuregistrierenLabel.setText(t.getString("Neuregistrieren"));
 		registrierenPwtxt.setText(t.getString("PasswortLänge"));
 		registrierenIPtxt.setText(t.getString("IP"));
+		registrierenNametxt.setText(t.getString("NamenLänge"));
 		btnRegistrieren.setText(t.getString("ButtonRegistrieren"));
 		menuHilfe.setText(t.getString("MenuHilfe"));
 		menuHilfeRegeln.setText(t.getString("MenuRegeln"));
@@ -159,6 +163,7 @@ public class AnmeldefensterView {
 		BenutzernameVergeben.setText(t.getString("BenutzernameVergeben"));
 		RegistrierMeldung.setText(t.getString("RegistrierMeldung"));
 		PasswortZuKurz.setText(t.getString("PasswortZuKurz"));
+		NameZuKurz.setText(t.getString("NameZuKurz"));
 		regeln.setText(t.getString("Regeln"));
 		
 	}
