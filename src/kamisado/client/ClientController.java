@@ -97,7 +97,7 @@ public class ClientController {
 								if(clientModel.getZweiterBlockierenderTurm().equals(Color.BLACK)){
 									System.out.println("Schwarz hat totalen Stillstand verursacht, weiss gewinnt"); 
 									// TODO gewinner setzen
-//									clientModel.getErsterBlockierenderTurm()
+									Spielbrett.getTürme()[15].setGewinnerTurm(true);
 									// Gewinnermeldung bei völligem Stillstand
 									Stage stage = new Stage();
 									InfofensterView iview = new InfofensterView(stage,view.GewinnerMeldungStillstandWeiss);
@@ -105,6 +105,7 @@ public class ClientController {
 									iview.start();
 								}else{
 									System.out.println("Weiss hat totalen Stillstand verursacht, schwarz gewinnt");
+									Spielbrett.getTürme()[0].setGewinnerTurm(true);
 									//Gewinnermeldung bei völligem Stillstand
 									Stage stage = new Stage();
 									InfofensterView iview = new InfofensterView(stage,view.GewinnerMeldungStillstandSchwarz);
