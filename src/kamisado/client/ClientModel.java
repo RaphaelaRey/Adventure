@@ -10,7 +10,6 @@ import javafx.event.EventHandler;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.StrokeType;
-import kamisado.client.anmeldefenster.AnmeldefensterController;
 import kamisado.commonClasses.Spielbrett;
 import kamisado.commonClasses.Feld;
 import kamisado.commonClasses.SendenEmpfangen;
@@ -378,20 +377,14 @@ public class ClientModel {
 					// Überprüfen ob Blockade
 					if(Spielbrett.getMöglicheFelder().size()==0){	
 						Spielbrett.getTürme()[k].setErsterBlockierenderTurm(true);
-					} else{		//TODO verursachender turm überprüfen
+					} else{		
 						blockierendeTürmeZurücksetzen();
 					}
-					// Überprüfen ob völliger Stillstand
-//					if(Spielbrett.getMöglicheFelder().size()==0 
-//							&& getErsterBlockierenderTurm()!=null){
-//						Spielbrett.getTürme()[k].setZweiterBlockierenderTurm(true);
-//					}
 				}
 			}	
 		}else{		// Nächster gegnerischer Turm falls der vorherige Turm weiss war 
 //		if(getTurmFarbe(Spielbrett.getAktiverTurmKoordinaten()).equals(Color.WHITE)){	
 			for (int i = 0; i < Spielbrett.getTürme().length; i++){ 
-//				Spielbrett.getTürme()[i].setAktiverTurm(false);
 				Spielbrett.getTürme()[i].setStrokeWidth(spielbrett.STROKEWIDTHTÜRMESTANDARD);	//Formatierung aller Türme zurücksetzen
 				if (Spielbrett.getTürme()[i].getStroke().equals(Color.BLACK) 
 						&& Spielbrett.getTürme()[i].getFill().equals(ausgewähltesFeld.getFill())){		
@@ -404,11 +397,6 @@ public class ClientModel {
 					} else{
 						blockierendeTürmeZurücksetzen();
 					}
-//					// Überprüfen ob völliger Stillstand
-//					if(Spielbrett.getMöglicheFelder().size()==0 
-//							&& getErsterBlockierenderTurm()!=null){
-//						Spielbrett.getTürme()[k].setZweiterBlockierenderTurm(true);
-//					}
 				}
 			}	
 		}
@@ -432,7 +420,7 @@ public class ClientModel {
 					nächsterAktiverTurm = Spielbrett.getTürme()[m].getKoordinaten(); 
 					möglicheFelderAnzeigen(nächsterAktiverTurm);
 					Spielbrett.getTürme()[m].setStrokeWidth(spielbrett.STROKEWIDTHAUSGEWÄHLTERTURM);
-					//TODO überprüfen
+					// Überprüfen ob es einen völligen Stillstand gibt
 					if(Spielbrett.getMöglicheFelder().size()==0) {
 						Spielbrett.getTürme()[m].setZweiterBlockierenderTurm(true);
 					}
@@ -448,7 +436,7 @@ public class ClientModel {
 					nächsterAktiverTurm = Spielbrett.getTürme()[m].getKoordinaten(); 
 					möglicheFelderAnzeigen(nächsterAktiverTurm);
 					Spielbrett.getTürme()[m].setStrokeWidth(spielbrett.STROKEWIDTHAUSGEWÄHLTERTURM);
-					//TODO überprüfen
+					// Überprüfen ob es einen völligen Stillstand gibt
 					if(Spielbrett.getMöglicheFelder().size()==0) {
 						Spielbrett.getTürme()[m].setZweiterBlockierenderTurm(true);
 					}
@@ -526,16 +514,15 @@ public class ClientModel {
 			t.setOnMouseClicked(new EventHandler<MouseEvent>(){
 				@Override
 				public void handle(MouseEvent event){
-//					if(bereitsEinTurmBewegt()==false && t.getStroke().equals(Color.BLACK)){	
+					if(bereitsEinTurmBewegt()==false && t.getStroke().equals(Color.BLACK)){	
 						turmStrokeWidthZurücksetzen();
 						t.setStrokeWidth(spielbrett.STROKEWIDTHAUSGEWÄHLTERTURM);
 						Spielbrett.setAktiverTurmKoordinaten(t.getKoordinaten());	
 						möglicheFelderAnzeigen(Spielbrett.getAktiverTurmKoordinaten());						
-//					}				
+					}				
  				}
 			});
 		}
-		
 	}
 	
 	/** ArrayList mögliche Felder leeren
@@ -709,6 +696,8 @@ public class ClientModel {
 			}				
 		}
 	}
+	
+	
 	public String getMeldung() {
 		return meldung;
 	}

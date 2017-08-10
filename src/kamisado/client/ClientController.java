@@ -8,7 +8,6 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import kamisado.client.anmeldefenster.AnmeldefensterController;
-import kamisado.client.anmeldefenster.AnmeldefensterView;
 import kamisado.client.infofenster.InfofensterController;
 import kamisado.client.infofenster.InfofensterView;
 import kamisado.client.löschenfenster.LöschenfensterController;
@@ -17,8 +16,6 @@ import kamisado.commonClasses.Feld;
 import kamisado.commonClasses.Spielbrett;
 import kamisado.commonClasses.Turm;
 
-//TODO Team Wie wird definiert, wer die schwarzen Türme hat? Derjenige, der am wenigsten oft gespielt hat? Und wenn gleich dann zufällig?
-//TODO Team Spiel kann erst beginnen, wenn zwei Clients eingeloggt sind
 public class ClientController {
 	 	
 	final private ClientModel clientModel;
@@ -39,12 +36,12 @@ public class ClientController {
 			t.setOnMouseClicked(new EventHandler<MouseEvent>(){
 				@Override
 				public void handle(MouseEvent event){
-//					if(clientModel.bereitsEinTurmBewegt()==false && t.getStroke().equals(Color.BLACK)){	
+					if(clientModel.bereitsEinTurmBewegt()==false && t.getStroke().equals(Color.BLACK)){	
 						clientModel.turmStrokeWidthZurücksetzen();
 						t.setStrokeWidth(spielbrett.STROKEWIDTHAUSGEWÄHLTERTURM);
 						Spielbrett.setAktiverTurmKoordinaten(t.getKoordinaten());	
 						clientModel.möglicheFelderAnzeigen(Spielbrett.getAktiverTurmKoordinaten());						
-//					}				
+					}				
   				}
 			});
 		}
@@ -120,7 +117,7 @@ public class ClientController {
 							// Spiel zurücksetzen nach Gewinn 
 							if(clientModel.getGewinner()!=null){
 								clientModel.TürmeSenden();
-								// String senden
+								// TODO String senden (Input von Lukas)
 							}							
 							
 							if (clientModel.getGewinner()==null){
