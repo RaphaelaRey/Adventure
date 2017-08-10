@@ -14,13 +14,13 @@ public class Turm extends Circle implements Serializable {
 		
 	private int[] koordinaten = new int[2];
 	private int turmRadius;
-	private String füllFarbe;
-	private String strokeFarbe;
+	private String füllFarbe; // Farbe des Turms
+	private String strokeFarbe; // Randfarbe des Turms
 	
-	private boolean turmBewegt;
+	private boolean turmBewegt; // wenn turmBewegt true ist, wurde bereits ein Zug durchgeführt
 	private boolean aktiverTurm;
-	private boolean ersterBlockierenderTurm; 
-	private boolean zweiterBlockierenderTurm;
+	private boolean ersterBlockierenderTurm; // dieser Turm hat die Blockade provoziert
+	private boolean zweiterBlockierenderTurm; // dieser Turm hat die zweite Blockade, die zum völligen Stillstand führt provoziert
 	private boolean gewinnerTurm;
 
 	// Konstruktor: Der Radius und die Koordinaten des Kreises (x- und y-Koordinate in Array) werden mitgegeben
@@ -29,7 +29,7 @@ public class Turm extends Circle implements Serializable {
 		setKoordinaten(koord);
 	}
 	
-	// Getter und setter für die Turmkoordinaten
+	// Getter und setter
 	public int[] getKoordinaten() {
 		return koordinaten;
 	}
@@ -37,10 +37,16 @@ public class Turm extends Circle implements Serializable {
 		this.koordinaten = koordinaten;
 	}
 
+	public int getTurmRadius() {
+		return turmRadius;
+	}
+	public void setTurmRadius(int turmRadius) {
+		this.turmRadius = turmRadius;
+	}
+
 	public String getFüllFarbe() {
 		return füllFarbe;
 	}
-
 	public void setFüllFarbe(String füllFarbe) {
 		this.füllFarbe = füllFarbe;
 	}
@@ -48,23 +54,20 @@ public class Turm extends Circle implements Serializable {
 	public String getStrokeFarbe() {
 		return strokeFarbe;
 	}
-
 	public void setStrokeFarbe(String strokeFarbe) {
 		this.strokeFarbe = strokeFarbe;
 	}
 
-	public int getTurmRadius() {
-		return turmRadius;
+	public boolean isTurmBewegt() {
+		return turmBewegt;
 	}
-
-	public void setTurmRadius(int turmRadius) {
-		this.turmRadius = turmRadius;
+	public void setTurmBewegt(boolean turmBewegt) {
+		this.turmBewegt = turmBewegt;
 	}
 
 	public boolean isAktiverTurm() {
 		return aktiverTurm;
 	}
-
 	public void setAktiverTurm(boolean aktiverTurm) {
 		this.aktiverTurm = aktiverTurm;
 	}
@@ -72,7 +75,6 @@ public class Turm extends Circle implements Serializable {
 	public boolean isErsterBlockierenderTurm() {
 		return ersterBlockierenderTurm;
 	}
-
 	public void setErsterBlockierenderTurm(boolean ersterBlockierenderTurm) {
 		this.ersterBlockierenderTurm = ersterBlockierenderTurm;
 	}
@@ -80,7 +82,6 @@ public class Turm extends Circle implements Serializable {
 	public boolean isZweiterBlockierenderTurm() {
 		return zweiterBlockierenderTurm;
 	}
-
 	public void setZweiterBlockierenderTurm(boolean zweiterBlockierenderTurm) {
 		this.zweiterBlockierenderTurm = zweiterBlockierenderTurm;
 	}
@@ -88,16 +89,7 @@ public class Turm extends Circle implements Serializable {
 	public boolean isGewinnerTurm() {
 		return gewinnerTurm;
 	}
-
 	public void setGewinnerTurm(boolean gewinnerTurm) {
 		this.gewinnerTurm = gewinnerTurm;
-	}
-
-	public boolean isTurmBewegt() {
-		return turmBewegt;
-	}
-
-	public void setTurmBewegt(boolean turmBewegt) {
-		this.turmBewegt = turmBewegt;
 	}
 }

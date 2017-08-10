@@ -17,7 +17,6 @@ public class Spielbrett{
 	
 	private ClientModel clientModel;
 
-	//	private static boolean turmBewegt = false; // wenn diese Variable true ist, wurde bereits ein Turm bewegt -> nicht mehr der erste Spielzug
 	private static int [] aktiverTurmKoordinaten = new int [2];
 	
 	// Infos des Spielbretts, der Türme und Felder als Konstanten definieren
@@ -134,7 +133,6 @@ public class Spielbrett{
     		constraints[i].setHalignment(HPos.CENTER);
     	}
     	gridpane.getColumnConstraints().addAll(constraints);
-    	
     }
  	
  	// Getter und setter
@@ -170,7 +168,7 @@ public class Spielbrett{
 		return felder;
 	}
 	public void setFelder(Feld[][] felder) {
-		this.felder = felder;
+		Spielbrett.felder = felder;
 	}
 
 	public static ArrayList<int[]> getMöglicheFelder() {
@@ -183,7 +181,6 @@ public class Spielbrett{
 	public static int [] getAktiverTurmKoordinaten() {
 		return aktiverTurmKoordinaten;
 	}
-
 	public static void setAktiverTurmKoordinaten(int [] aktiverTurmKoordinaten) {
 		Spielbrett.aktiverTurmKoordinaten = aktiverTurmKoordinaten;
 	}

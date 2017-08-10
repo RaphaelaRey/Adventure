@@ -508,7 +508,7 @@ public class ClientModel {
 				}
 			}
 		}
-		// Türme aktivieren TODO schöner?
+		// Türme wieder aktivieren TODO schöner?
 		for (int i = 0; i < Spielbrett.getTürme().length; i++){				
 			Turm t = Spielbrett.getTürme()[i];				
 			t.setOnMouseClicked(new EventHandler<MouseEvent>(){

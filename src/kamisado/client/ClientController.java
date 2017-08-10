@@ -1,7 +1,5 @@
 package kamisado.client;
 
-import com.sun.media.jfxmedia.logging.Logger;
-
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.input.MouseEvent;
@@ -24,6 +22,9 @@ public class ClientController {
 	private AnmeldefensterController anmeldeController;
 	
 	// Konstruktor
+	/** Konstruktor mit Handle-Methoden
+	 * @author Carmen Walser (Meldungen und Benutzerverwaltung) und Raphaela Rey (Spiellogik)
+	 */
 	public ClientController(ClientModel clientModel, ClientView view, AnmeldefensterController anmeldeController) {
 		this.clientModel = clientModel;
 		this.view = view;
