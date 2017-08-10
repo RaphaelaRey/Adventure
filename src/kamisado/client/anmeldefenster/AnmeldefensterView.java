@@ -67,9 +67,6 @@ public class AnmeldefensterView {
 		ServiceLocator sl=ServiceLocator.getServiceLocator();
 		Translator t = sl.getTranslator();
 		
-		//TODO Carmen Titel muss noch übersetzt werden
-		primaryStage.setTitle(t.getString("Anmeldung"));
-		
 		GridPane gpane=new GridPane();
 		
 		menuBar = new MenuBar();
