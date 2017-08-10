@@ -62,35 +62,51 @@ public class ClientController {
 								if(clientModel.koordVergleich(Spielbrett.getTürme()[k].getKoordinaten(), Spielbrett.getAktiverTurmKoordinaten())){ //aktiver Turm herausfinden
 									clientModel.turmBewegen(ausgewähltesFeld, k);
 									// Überprüfen, ob es einen Gewinner gibt 
-									spielbrett.setGewinner(clientModel.gewinnerDefinieren(ausgewähltesFeld));
+									Spielbrett.setGewinner(clientModel.gewinnerDefinieren(ausgewähltesFeld));
 									// Zukünftiger gegnerischer Turm definieren und mögliche Felder anzeigen (sofern das Spiel nicht schon beendet ist)
-									if(spielbrett.getGewinner()==null){
+									if(Spielbrett.getGewinner()==null){
 										nächsterAktiverTurm=clientModel.setNächsterGegnerischerTurm(k, ausgewähltesFeld, nächsterAktiverTurm);		
 										System.out.println("nächsterAktiverturm=clientmodel.setnächstergegnerischerturm ausgeführt");
 									}
 								}	 
 							}
-							// Zukünftiger gegnerischer Turm definieren im Fall einer Blockade 			
-							if(spielbrett.getGewinner()==null && Spielbrett.isBlockiert()==true){
+							// Zukünftiger gegnerischer Turm definieren im Fall einer Blockade 	
+							if(clientModel.getGewinner()==null && clientModel.getErsterBlockierenderTurm()!=null){
 								nächsterAktiverTurm=clientModel.setNächsterGegnerischerTurmBlockade(nächsterAktiverTurm);	 
-								if(Spielbrett.getBlockadenVerursacher().equals(Color.BLACK)){
+								if(clientModel.getErsterBlockierenderTurm().equals(Color.BLACK)){
 									//Blockadenmeldung
 									Stage stage = new Stage();
 									InfofensterView iview = new InfofensterView(stage,view.BlockadeMeldungSchwarz);
 									InfofensterController icontroller = new InfofensterController(iview);
 									iview.start();
-								} else if (Spielbrett.getBlockadenVerursacher().equals(Color.WHITE)){
+								} else if (clientModel.getErsterBlockierenderTurm().equals(Color.WHITE)){
 									//Blockadenmeldung
 									Stage stage = new Stage();
 									InfofensterView iview = new InfofensterView(stage,view.BlockadeMeldungWeiss);
 									InfofensterController icontroller = new InfofensterController(iview);
 									iview.start();
 								}
-							} 			
+							} 		
+//							if(Spielbrett.getGewinner()==null && Spielbrett.isBlockiert()==true){
+//								nächsterAktiverTurm=clientModel.setNächsterGegnerischerTurmBlockade(nächsterAktiverTurm);	 
+//								if(Spielbrett.getBlockadenVerursacher().equals(Color.BLACK)){
+//									//Blockadenmeldung
+//									Stage stage = new Stage();
+//									InfofensterView iview = new InfofensterView(stage,view.BlockadeMeldungSchwarz);
+//									InfofensterController icontroller = new InfofensterController(iview);
+//									iview.start();
+//								} else if (Spielbrett.getBlockadenVerursacher().equals(Color.WHITE)){
+//									//Blockadenmeldung
+//									Stage stage = new Stage();
+//									InfofensterView iview = new InfofensterView(stage,view.BlockadeMeldungWeiss);
+//									InfofensterController icontroller = new InfofensterController(iview);
+//									iview.start();
+//								}
+//							} 			
 							// Völliger Stillstand TODO Raphaela kontrollieren
 							if(Spielbrett.getBlockadenCounter()==2){
 								if(Spielbrett.getBlockadenVerursacher().equals(Color.BLACK)){
-									spielbrett.setGewinner(Color.WHITE);
+									Spielbrett.setGewinner(Color.WHITE);
 									System.out.println("Schwarz hat totalen Stillstand verursacht, weiss gewinnt"); 
 									// Gewinnermeldung bei völligem Stillstand
 									Stage stage = new Stage();
@@ -98,7 +114,7 @@ public class ClientController {
 									InfofensterController icontroller = new InfofensterController(iview);
 									iview.start();
 								} else{
-									spielbrett.setGewinner(Color.BLACK);
+									Spielbrett.setGewinner(Color.BLACK);
 									System.out.println("Weiss hat totalen Stillstand verursacht, schwarz gewinnt");
 									//Gewinnermeldung bei völligem Stillstand
 									Stage stage = new Stage();
@@ -109,13 +125,13 @@ public class ClientController {
 							}
 							 
 							// Überprüfen, wer gewonnen hat und die entsprechende Meldung anzeigen
-							if(spielbrett.getGewinner()==Color.BLACK){
+							if(Spielbrett.getGewinner()==Color.BLACK){
 								//Gewinnermeldung inkl. Frage ob nochmals gespielt werden will (im Moment wird nur das Spielbrett zurückgesetzt)
 								Stage stage = new Stage();
 								InfofensterView iview = new InfofensterView(stage,view.GewinnerMeldungSchwarz);
 								InfofensterController icontroller = new InfofensterController(iview);
 								iview.start();
-							} else if(spielbrett.getGewinner()==Color.WHITE){
+							} else if(Spielbrett.getGewinner()==Color.WHITE){
 								//Gewinnermeldung 
 								Stage stage = new Stage();
 								InfofensterView iview = new InfofensterView(stage,view.GewinnerMeldungWeiss);
@@ -124,18 +140,16 @@ public class ClientController {
 							}
 							
 							// Spiel zurücksetzen nach Gewinn 
-							if(spielbrett.getGewinner()!=null){
-								clientModel.spielZurücksetzen();
+							if(Spielbrett.getGewinner()!=null){
 								clientModel.TürmeSenden();
-							}
-							// Koordinaten des nächsten aktiven Turms ausserhalb der for-Schleife definieren
-							
+							}							
 //							Spielbrett.setAktiverTurmKoordinaten(nächsterAktiverTurm);	
 							
-							if (spielbrett.getGewinner()==null){
-								clientModel.getTurm(nächsterAktiverTurm).setAktiverTurm(true); // TODO Problem beim senden lösen
+							if (Spielbrett.getGewinner()==null){
+								clientModel.getTurm(nächsterAktiverTurm).setAktiverTurm(true); 
 								clientModel.TürmeSenden();
 							}
+							clientModel.TürmeSenden();
 							
 
 						}
