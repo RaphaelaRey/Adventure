@@ -378,7 +378,7 @@ public class ClientModel {
 					// Überprüfen ob Blockade
 					if(Spielbrett.getMöglicheFelder().size()==0){	
 						Spielbrett.getTürme()[k].setErsterBlockierenderTurm(true);
-					} else{
+					} else{		//TODO verursachender turm überprüfen
 						blockierendeTürmeZurücksetzen();
 					}
 					// Überprüfen ob völliger Stillstand

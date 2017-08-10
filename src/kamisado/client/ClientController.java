@@ -70,7 +70,8 @@ public class ClientController {
 								}	 
 							}
 							// Zukünftiger gegnerischer Turm definieren im Fall einer Blockade 	
-							if(clientModel.getGewinner()==null && clientModel.getErsterBlockierenderTurm()!=null){
+							if(clientModel.getGewinner()==null && clientModel.getErsterBlockierenderTurm()!=null
+									&& clientModel.getZweiterBlockierenderTurm()==null){
 								nächsterAktiverTurm=clientModel.setNächsterGegnerischerTurmBlockade(nächsterAktiverTurm);	 
 								if(clientModel.getErsterBlockierenderTurm().equals(Color.BLACK)){
 									//Blockadenmeldung
