@@ -424,9 +424,8 @@ public class ClientModel {
 	public int[] setNächsterGegnerischerTurm(int k, Feld ausgewähltesFeld, int[]nächsterAktiverTurm){
 		// Nächster gegnerischer Turm falls der vorherige Turm schwarz war
 		if(Spielbrett.getTürme()[k].getStroke().equals(Color.BLACK)){
-//		if(getTurmFarbe(Spielbrett.getAktiverTurmKoordinaten())==Color.BLACK){
 			for (int i = 0; i < Spielbrett.getTürme().length; i++){
-				Spielbrett.getTürme()[i].setStrokeWidth(spielbrett.STROKEWIDTHTÜRMESTANDARD);	//Formatierung aller Türme zurücksetzen	
+				Spielbrett.getTürme()[i].setStrokeWidth(spielbrett.STROKEWIDTHTÜRMESTANDARD);	
 				if (Spielbrett.getTürme()[i].getStroke().equals(Color.WHITE)
 						&& Spielbrett.getTürme()[i].getFill().equals(ausgewähltesFeld.getFill())){
 					nächsterAktiverTurm = Spielbrett.getTürme()[i].getKoordinaten();
@@ -441,9 +440,8 @@ public class ClientModel {
 				}
 			}	
 		}else{		// Nächster gegnerischer Turm falls der vorherige Turm weiss war 
-//		if(getTurmFarbe(Spielbrett.getAktiverTurmKoordinaten()).equals(Color.WHITE)){	
 			for (int i = 0; i < Spielbrett.getTürme().length; i++){ 
-				Spielbrett.getTürme()[i].setStrokeWidth(spielbrett.STROKEWIDTHTÜRMESTANDARD);	//Formatierung aller Türme zurücksetzen
+				Spielbrett.getTürme()[i].setStrokeWidth(spielbrett.STROKEWIDTHTÜRMESTANDARD);
 				if (Spielbrett.getTürme()[i].getStroke().equals(Color.BLACK) 
 						&& Spielbrett.getTürme()[i].getFill().equals(ausgewähltesFeld.getFill())){		
 					nächsterAktiverTurm = Spielbrett.getTürme()[i].getKoordinaten();
@@ -566,7 +564,7 @@ public class ClientModel {
 				}
 			}
 		}
-		// Türme wieder aktivieren TODO schöner?
+		// Türme wieder aktivieren (Notlösung, da die Türme nach dem Zurücksetzen nicht mehr bewegt werden können)
 		for (int i = 0; i < Spielbrett.getTürme().length; i++){				
 			Turm t = Spielbrett.getTürme()[i];				
 			t.setOnMouseClicked(new EventHandler<MouseEvent>(){
@@ -616,14 +614,6 @@ public class ClientModel {
 		return Spielbrett.getMöglicheFelder();
 	}
 	
-	public static String getIp() {
-		return ip;
-	}
-
-	public static void setIp(String ip) {
-		ClientModel.ip = ip;
-	}
-
 	/** Mögliche Felder der ArrayList hinzufügen (Supportmethode)
 	 * @param turmKoordinaten
 	 * @author Raphaela Rey
@@ -636,7 +626,7 @@ public class ClientModel {
 		if((getTurmFarbe(turmKoordinaten).equals(Color.BLACK))){
 			// Mögliche Felder geradeaus
 			boolean bereitsEinFeldBesetzt = false;
-
+	
 			for(int i = 1; i < Spielbrett.getFelder()[0].length; i++){
 				try {
 					Feld möglichGeradeaus = Spielbrett.getFelder()[xKoords][yKoords-i];
@@ -673,7 +663,7 @@ public class ClientModel {
 				}
 			}
 			bereitsEinFeldBesetzt = false;
-
+	
 			// Mögliche Felder links diagonal 
 			for(int i = 1; i < Spielbrett.getFelder()[0].length; i++){
 				try {
@@ -754,8 +744,15 @@ public class ClientModel {
 			}				
 		}
 	}
-	
-	
+
+	public static String getIp() {
+		return ip;
+	}
+
+	public static void setIp(String ip) {
+		ClientModel.ip = ip;
+	}
+
 	public String getMeldung() {
 		return meldung;
 	}
