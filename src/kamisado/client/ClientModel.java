@@ -94,8 +94,18 @@ public class ClientModel {
 			} else if (teile[0].equals("löschen")){
 				setMeldung(meldung);
 				logger.info("Meldung auf löschen gesetzt: " + meldung);
-			} else {
-				meldung = "Fehler";
+			} else if (teile[0].equals("gewinnerWeiss")){
+//				TODO Meldung starten
+				
+				
+			} else if (teile[0].equals("gewinnerSchwarz")){
+//				TODO Meldung starten
+				
+				
+			} else if (teile[0].equals("stillstand")){
+//				TODO Meldung starten
+				
+
 			}
 			
 			} else if (neuEmpfangen instanceof Boolean){
