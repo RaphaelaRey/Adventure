@@ -2,14 +2,12 @@ package kamisado.Server;
 
 import java.io.ObjectInputStream;
 import java.net.Socket;
-import java.util.ArrayList;
 import java.util.logging.Logger;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import kamisado.commonClasses.SendenEmpfangen;
 import kamisado.commonClasses.Turm;
-import kamisado.commonClasses.Spielbrett;
 
 /**
  * @author Tobias Deprato

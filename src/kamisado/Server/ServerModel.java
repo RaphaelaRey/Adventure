@@ -4,17 +4,12 @@ package kamisado.Server;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.io.ObjectInputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.logging.Logger;
-
-import kamisado.commonClasses.SendenEmpfangen;
-import kamisado.commonClasses.Turm;
 
 /**
  * @author Tobias Deprato
@@ -23,13 +18,8 @@ import kamisado.commonClasses.Turm;
 public class ServerModel extends Thread{
 	
 	private ServerSocket server;
-	private Client client;
-	private String name;
-	private String namePW;
 	private boolean amLaufen = true;
 	private static final Logger logger = Logger.getLogger("");
-	private String meldung;
-	
 	/** startet den Server und wartet bis sich ein Client verbinden möchte,
 	 * bei einer Verbindung erstellt er ein Clientobjekt
 	 * @author Tobias Deprato 
@@ -56,8 +46,7 @@ public class ServerModel extends Thread{
 					Socket clientSocket = server.accept();
 					logger.info(clientSocket.getInetAddress().getHostName() + " verbunden");
 					
-					//Clientobjekt erstellen
-					client = new Client(ServerModel.this, clientSocket);
+					new Client(ServerModel.this, clientSocket);
 					
 					
 				} catch (Exception e){
