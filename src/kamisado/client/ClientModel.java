@@ -22,15 +22,17 @@ public class ClientModel {
 
 	protected Socket clientSocket;
 	private boolean amLaufen = true;
-	private static String ip;
 	private static String meldung;
 	private static String ipAdresse;
 	private int port = 444;
-	private Feld f;
-	private static boolean amZug;
 	
 	private final static Logger logger = Logger.getLogger("");
-
+	
+	/** verbindet den Client mit dem Server, sendet die Anmeldedaten 
+	 * und wartet auf Daten zum empfangen
+	 * @param String ipAdresse, String Name, String Passwort und String Anmeldeart 
+	 * @author Tobias Deprato 
+	 */
 	public void Verbinden(String ipAdresse, String name, String pw, String art) {
 		 
 		 
@@ -64,69 +66,50 @@ public class ClientModel {
 		}
 	}	
 	
+	/** empfängt ein Objekt und verarbeitet es je nach Objekttyp weiter
+	 * @param Turm[] oder String
+	 * @author Tobias Deprato 
+	 */	
 	public static void EmpfangenClient(Socket clientSocket){
 		try{
 			ObjectInputStream empfangen = new ObjectInputStream(clientSocket.getInputStream());
-			logger.info("available is: " + empfangen.available());
 			
 			Object neuEmpfangen = (Object) empfangen.readObject();
 			
 			//Turm Empfangen
-		if( neuEmpfangen instanceof Turm[]){
-			Turm[] tmpTürme = (Turm[]) neuEmpfangen;
-			logger.info("Türme erhalten");
-			TürmeEmpfangen(tmpTürme);
-			
+			if( neuEmpfangen instanceof Turm[]){
+				Turm[] tmpTürme = (Turm[]) neuEmpfangen;
+				TürmeEmpfangen(tmpTürme);
+				
 			// String Empfangen
 			} else if (neuEmpfangen instanceof String){
 			String tmpMeldung = (String) neuEmpfangen;
-			
-			String[] teile = tmpMeldung.split(",");
-			String meldung = teile[1];
-			
-			
-			if(teile[0].equals("anmelden") ){
-				setMeldung(meldung);
-				logger.info("Meldung auf anmelden gesetzt: " + meldung);
-			} else if (teile[0].equals("registrieren")) {
-				setMeldung(meldung);
-				logger.info("Meldung auf registrieren gesetzt: " + meldung);
-			} else if (teile[0].equals("löschen")){
-				setMeldung(meldung);
-				logger.info("Meldung auf löschen gesetzt: " + meldung);
-			} else if (teile[0].equals("gewinnerWeiss")){
-//				TODO Meldung starten
+				
+				String[] teile = tmpMeldung.split(",");
+				String meldung = teile[1];
 				
 				
-			} else if (teile[0].equals("gewinnerSchwarz")){
-//				TODO Meldung starten
-				
-				
-			} else if (teile[0].equals("stillstand")){
-//				TODO Meldung starten
-				
-
+				if(teile[0].equals("anmelden") ){
+					setMeldung(meldung);
+				} else if (teile[0].equals("registrieren")) {
+					setMeldung(meldung);
+				} else if (teile[0].equals("löschen")){
+					setMeldung(meldung);
+				}		
 			}
-			
-			} else if (neuEmpfangen instanceof Boolean){
-			boolean tmpBol = (boolean) neuEmpfangen;
-			if(tmpBol == true){
-				setAmZug(true);
-			}
-			} else{
-			logger.info("hat nicht funktioniert so");
-			}	
-		
-		logger.info("Daten Empfangen von Client ");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
 	
+	/** erhält die Türme, nachdem sie im Client eingetroffen sind 
+	 * und startet das Update
+	 * @param neueTürme
+	 * @author Tobias Deprato 
+	 */
 	public static void TürmeEmpfangen(Turm[] tmpTürme){
 		Turm[] Türme = Spielbrett.getTürme();
 		if(tmpTürme != null && tmpTürme[0] != null) {
-			logger.info("Türme empfangen");
 			UpdateSpielfeld(Türme, tmpTürme);
 			logger.info("Spielfeld aktualisiert");
 			
@@ -138,11 +121,20 @@ public class ClientModel {
 		}
 	}	
 	
+	/** leitet die neuen Türme an die SendenEmpfangen klasse weiter zum senden
+	 * @param neueTürme
+	 * @author Tobias Deprato 
+	 */
 	public void TürmeSenden(){
 		SendenEmpfangen.Senden(clientSocket, Spielbrett.getTürme());
 		logger.info("Daten gesendet");
 	}
 	
+	/** leitet die Anmelde-, Registrierungs- oder Löschen-Daten 
+	 * an die SendenEmpfangen klasse weiter zum senden
+	 * @param String anmeldung, Registrierung oder Löschung
+	 * @author Tobias Deprato 
+	 */
 	public void AnmeldungSenden(String art, String name, String pw){
 		String namePW = art + "," + name + ","+ pw;
 		SendenEmpfangen.Senden(clientSocket, namePW);
@@ -213,27 +205,11 @@ public class ClientModel {
 		}
 	}
 	
-	public void setName(String name){
-	}
-	
 	public String getIP(){
 		return ClientModel.ipAdresse;
 	}
 	public void setIP(String ipAdresse){
 		ClientModel.ipAdresse = ipAdresse;
-	}
-	
-	public Feld getFeld(int[] feldKoordinaten){
-		
-		Feld[][] felder = Spielbrett.getFelder();
-		for(int i = 0; i < felder.length; i++){
-			for(int j = 0; j < felder.length; j++){
-				if(felder[i][j].getKoordinaten() == feldKoordinaten){
-					this.f = felder[i][j];
-				}
-			}
-		}
-		return f;
 	}
 	
 	public void setSpielbrett(Spielbrett Spielbrett){
@@ -745,27 +721,10 @@ public class ClientModel {
 		}
 	}
 
-	public static String getIp() {
-		return ip;
-	}
-
-	public static void setIp(String ip) {
-		ClientModel.ip = ip;
-	}
-
 	public String getMeldung() {
 		return meldung;
 	}
 	public static void setMeldung(String neueMeldung) {
 		meldung = neueMeldung;
 	}
-
-	public static boolean isAmZug() {
-		return amZug;
-	}
-
-	public static void setAmZug(boolean amZug) {
-		ClientModel.amZug = amZug;
-	}
-
 }

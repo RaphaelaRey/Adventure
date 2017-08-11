@@ -30,7 +30,10 @@ public class ServerModel extends Thread{
 	private static final Logger logger = Logger.getLogger("");
 	private String meldung;
 	
-	
+	/** startet den Server und wartet bis sich ein Client verbinden möchte,
+	 * bei einer Verbindung erstellt er ein Clientobjekt
+	 * @author Tobias Deprato 
+	 */	
 	public ServerModel (int port)  {
 		
 		try{
@@ -53,7 +56,7 @@ public class ServerModel extends Thread{
 					Socket clientSocket = server.accept();
 					logger.info(clientSocket.getInetAddress().getHostName() + " verbunden");
 					
-					
+					//Clientobjekt erstellen
 					client = new Client(ServerModel.this, clientSocket);
 					
 					
@@ -62,10 +65,9 @@ public class ServerModel extends Thread{
 				}
 			}
 		}
-		}; 
-		Thread b = new Thread(a);
-		b.start();
-		logger.info("Thread gestartet");
+	}; 
+	Thread b = new Thread(a);
+	b.start();
 }
 	
 	/**

@@ -185,14 +185,4 @@ public class ClientController {
 		});
 	}
 	
-	public void openMessageView(String message){
-		if(message.equals("gewinnerWeiss")){
-			Stage stage = new Stage();
-			InfofensterView iview = new InfofensterView(stage,view.GewinnerMeldungStillstandWeiss);
-			InfofensterController icontroller = new InfofensterController(iview);
-			iview.start();
-		}
-	}
-	
-	
 }

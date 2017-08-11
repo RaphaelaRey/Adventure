@@ -1,6 +1,6 @@
 package kamisado.Server;
 
-/**
+/**startet den Server
  * @author Tobias Deprato
  */
 
