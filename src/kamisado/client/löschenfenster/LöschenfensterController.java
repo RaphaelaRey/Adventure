@@ -40,7 +40,11 @@ public class LöschenfensterController {
 				String art = "löschen";
 				
 				clientModel.AnmeldungSenden(art, name, pw);
-				
+				try {
+					Thread.sleep(50);
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
 				String meldung = clientModel.getMeldung();
 				
 				if(meldung.equals("ErfolgreichMeldung")){
@@ -49,6 +53,7 @@ public class LöschenfensterController {
 					InfofensterController icontroller = new InfofensterController(iview);
 					iview.start();
 					stage.setAlwaysOnTop(true);
+					löschenView.stop();
 				}
 				if(meldung.equals("BenutzerExistiertNichtMeldung")){
 					Stage stage = new Stage();
