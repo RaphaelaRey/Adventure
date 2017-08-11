@@ -47,7 +47,7 @@ public class AnmeldefensterController {
 				
 				clientModel.Verbinden(ip, name, pw, art);
 				try {
-					Thread.sleep(300);
+					Thread.sleep(500);
 				} catch (InterruptedException e1) {
 					e1.printStackTrace();
 				}
@@ -100,6 +100,12 @@ public class AnmeldefensterController {
 				 }else{
 				 
 				 clientModel.Verbinden(ip, name, pw, art);
+				 
+				 try {
+						Thread.sleep(300);
+					} catch (InterruptedException e1) {
+						e1.printStackTrace();
+					}
 				 
 				 String meldung = clientModel.getMeldung();
 				 
