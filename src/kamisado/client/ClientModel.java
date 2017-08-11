@@ -212,36 +212,20 @@ public class ClientModel {
 		ClientModel.ipAdresse = ipAdresse;
 	}
 	
+	public String getMeldung() {
+		return meldung;
+	}
+
+	public static void setMeldung(String neueMeldung) {
+		meldung = neueMeldung;
+	}
+
 	public void setSpielbrett(Spielbrett Spielbrett){
-		this.spielbrett = Spielbrett;
+		ClientModel.spielbrett = Spielbrett;
 	}
 	
 	public Spielbrett getSpielbrett (){
-		return this.spielbrett; 
-	}
-	
-	/** Überprüft, ob bereits ein Turm bewegt wurde (also ob es sich um den ersten Spielzug handelt oder nicht
-	 * @return true falls ein Turm bewegt wurde
-	 * @author Raphaela Rey
-	 */
-	public static boolean bereitsEinTurmBewegt(){
-		for(int i = 0; i < Spielbrett.getTürme().length; i++){
-			if(Spielbrett.getTürme()[i].isTurmBewegt()){
-				return true;
-			}
-		}
-		return false;
-	}
-	
-	/** Setzt die boolean-Variable turmbewegt zurück, damit wieder ein Turm ausgewählt werden kann
-	 * @return zurückgesetztes Turm-Array
-	 * @author Raphaela Rey
-	 */
-	public static Turm[] bereitsEinTurmBewegtZurücksetzen(){
-		for(int i = 0; i < Spielbrett.getTürme().length; i++){
-			Spielbrett.getTürme()[i].setTurmBewegt(false);
-		}
-		return Spielbrett.getTürme();
+		return ClientModel.spielbrett; 
 	}
 	
 	/** Überprüfen, ob zwei int-Arrays gleich sind
@@ -256,6 +240,7 @@ public class ClientModel {
 		}
 		return false;
 	}
+
 	/** Randbreite aller Türme zurücksetzen
 	 * @author Raphaela Rey
 	 */
@@ -264,6 +249,7 @@ public class ClientModel {
 			Spielbrett.getTürme()[i].setStrokeWidth(spielbrett.STROKEWIDTHTÜRMESTANDARD);
 		}	
 	}
+
 	/** Turmfarbe (schwarz/weiss) basierend auf dessen Koordinaten herausfinden
 	 * @param turmKoordinaten
 	 * @return Turmfarbe
@@ -292,6 +278,30 @@ public class ClientModel {
 		}
 		return null;
 	}
+	/** Überprüft, ob bereits ein Turm bewegt wurde (also ob es sich um den ersten Spielzug handelt oder nicht
+	 * @return true falls ein Turm bewegt wurde
+	 * @author Raphaela Rey
+	 */
+	public static boolean bereitsEinTurmBewegt(){
+		for(int i = 0; i < Spielbrett.getTürme().length; i++){
+			if(Spielbrett.getTürme()[i].isTurmBewegt()){
+				return true;
+			}
+		}
+		return false;
+	}
+
+	/** Setzt die boolean-Variable turmbewegt zurück, damit wieder ein Turm ausgewählt werden kann
+	 * @return zurückgesetztes Turm-Array
+	 * @author Raphaela Rey
+	 */
+	public static Turm[] bereitsEinTurmBewegtZurücksetzen(){
+		for(int i = 0; i < Spielbrett.getTürme().length; i++){
+			Spielbrett.getTürme()[i].setTurmBewegt(false);
+		}
+		return Spielbrett.getTürme();
+	}
+
 	/** Gewinner herausfinden (überprüfen, ob ein Turm als Gewinnerturm definiert ist)
 	 * @return Gewinnerfarbe oder null, falls niemand gewonnen hat
 	 * @author Raphaela Rey
@@ -432,7 +442,6 @@ public class ClientModel {
 				}
 			}	
 		}
-		logger.info("Koordinaten nächster aktiver Turm: "+nächsterAktiverTurm[0]+nächsterAktiverTurm[1]);
 		return nächsterAktiverTurm;
 	}
 		
@@ -443,7 +452,6 @@ public class ClientModel {
 	 */
 	public int[] setNächsterGegnerischerTurmBlockade(int[]nächsterAktiverTurm){ 
 		turmStrokeWidthZurücksetzen();
-		System.out.println("setnächstergegnerischerturmblockade ausgeführt");
 		if(getTurmFarbe(nächsterAktiverTurm).equals(Color.BLACK)){
 			for (int m = 0; m < Spielbrett.getTürme().length; m++){
 				Feld aktivesFeld = Spielbrett.getFelder()[nächsterAktiverTurm[0]][nächsterAktiverTurm[1]];
@@ -719,12 +727,5 @@ public class ClientModel {
 				}
 			}				
 		}
-	}
-
-	public String getMeldung() {
-		return meldung;
-	}
-	public static void setMeldung(String neueMeldung) {
-		meldung = neueMeldung;
 	}
 }
