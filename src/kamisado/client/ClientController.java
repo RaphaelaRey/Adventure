@@ -167,16 +167,7 @@ public class ClientController {
 				InfofensterController icontroller = new InfofensterController(iview);
 				iview.start();
 				stage.setAlwaysOnTop(true);
-				view.stop();
-				
-//				Stage stage = new Stage();
-//				AnmeldefensterView anmeldeView = new AnmeldefensterView(stage,anmeldeController, clientModel, view);
-//				AnmeldefensterController anmeldeController = new AnmeldefensterController(anmeldeView, view, clientModel);
-//				clientModel.clientAnhalten();
-//				anmeldeView.start();
-//				stage.setAlwaysOnTop(true);
-//				clientModel.clientAnhalten();
-				
+				view.stop();				
 			}
 			
 		});
@@ -184,10 +175,10 @@ public class ClientController {
 		//Wenn der Benutzer auf löschen klickt, popt ein neues Fenster für die Eingaben zur Löschung eines Accoutns auf
 		view.menuDateiLöschen.setOnAction(new EventHandler<ActionEvent>(){
 			@Override
-			public void handle(ActionEvent event) {
+			public void handle(ActionEvent event) {	
 				Stage stage = new Stage();
 				LöschenfensterView lview = new LöschenfensterView(stage);
-				LöschenfensterController lcontroller = new LöschenfensterController(lview, view);
+				LöschenfensterController lcontroller = new LöschenfensterController(lview, view, clientModel);
 				lview.start();
 				stage.setAlwaysOnTop(true);
 			}

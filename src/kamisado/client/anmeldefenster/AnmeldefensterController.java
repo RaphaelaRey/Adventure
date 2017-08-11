@@ -52,7 +52,7 @@ public class AnmeldefensterController {
 					e1.printStackTrace();
 				}
 				String meldung = clientModel.getMeldung();
-				
+				//Wenn Eingaben stimmen, erscheint Fenster mit Startmeldung
 				if(meldung.equals("startMeldung")){
 					Stage stage = new Stage();
 					InfofensterView iview = new InfofensterView(stage,anmeldeView.startMeldung);
@@ -63,6 +63,7 @@ public class AnmeldefensterController {
 					clientView.menuDateiAbmelden.setDisable(false);
 					clientView.menuDateiLöschen.setDisable(false);
 				}
+				//Wenn das Passwort falsch ist, erscheint die Meldung, dass das Passwort falsch ist
 				if(meldung.equals("PasswortFalsch")){
 					Stage stage = new Stage();
 					InfofensterView iview = new InfofensterView(stage,anmeldeView.PWfalschMeldung);
@@ -70,7 +71,7 @@ public class AnmeldefensterController {
 					iview.start();
 					stage.setAlwaysOnTop(true);
 				}
-				
+				//Wenn der Benutzername im File nicht gespeichert ist, erscheint die Meldung, dass der Benutzer nicht existiert
 				if(meldung.equals("BenutzerExistiertNicht")){
 					Stage stage = new Stage();
 					InfofensterView iview = new InfofensterView(stage,anmeldeView.BenutzerExistiertNicht);
@@ -89,6 +90,7 @@ public class AnmeldefensterController {
 				 ip = anmeldeView.registrierenIPtxt.getText();
 				 String art = "registrieren";
 				 
+				 //Wenn der Benutzername zu kurz ist, erscheint die Meldung, dass der Name zu kurz ist
 				 if(name.length()<5){
 					 Stage stage = new Stage();
 					InfofensterView iview = new InfofensterView(stage,anmeldeView.NameZuKurz);
@@ -101,6 +103,7 @@ public class AnmeldefensterController {
 				 
 				 String meldung = clientModel.getMeldung();
 				 
+				 //Wenn der Benutzername bereits vergeben ist, erscheint die Meldung, dass der Benutzername vergeben ist
 				 if(meldung.equals("BenutzernameVergeben")){
 					 Stage stage = new Stage();
 						InfofensterView iview = new InfofensterView(stage,anmeldeView.BenutzernameVergeben);
@@ -108,7 +111,7 @@ public class AnmeldefensterController {
 						iview.start();
 						stage.setAlwaysOnTop(true);
 				 }
-				 
+				 //Wenn der Benutzername nicht vergeben ist und das Passwort und der Name genug lang sind, erscheint die Registriermeldung
 				 if(meldung.equals("RegistrierMeldung")){
 					 Stage stage = new Stage();
 						InfofensterView iview = new InfofensterView(stage,anmeldeView.RegistrierMeldung);
@@ -120,6 +123,7 @@ public class AnmeldefensterController {
 						clientView.menuDateiLöschen.setDisable(false);
 				 }
 				 
+				 //Wenn das Passwort zu kurz ist, erscheint die Meldung, dass das Passwort zu kurz ist
 				 if(meldung.equals("PasswortZuKurz")){
 					 Stage stage = new Stage();
 						InfofensterView iview = new InfofensterView(stage,anmeldeView.PasswortZuKurz);

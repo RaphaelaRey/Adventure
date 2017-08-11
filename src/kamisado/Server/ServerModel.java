@@ -68,6 +68,11 @@ public class ServerModel extends Thread{
 		logger.info("Thread gestartet");
 }
 	
+	/**
+	 * @param AnmeldeInfos
+	 * @return String mit der Meldung, welche auf dem Client angezeigt wird
+	 * @author carmen walser
+	 */
 	public String AnmeldungPrüfen(String AnmeldeInfos){
 		String meldung = "";
 		String[] prüfen = AnmeldeInfos.split(",");
@@ -101,6 +106,11 @@ public class ServerModel extends Thread{
 		return meldung;
 	}
 	
+	/**
+	 * @param RegistrierInfos
+	 * @return String mit der Meldung, welche auf dem Client angezeigt wird
+	 * @author carmen walser
+	 */
 	public String RegistrierungPrüfen(String RegistrierInfos){
 		String meldung = "";
 		String[] prüfen = RegistrierInfos.split(",");
@@ -136,6 +146,11 @@ public class ServerModel extends Thread{
 	}
 	
 	
+	/**
+	 * @param LöschInfos
+	 * @return String mit der Meldung, welche auf dem Client angezeigt wird
+	 * @author carmen walser
+	 */
 	public String LöschenPrüfen(String LöschInfos){
 		String meldung = "";
 		String[] prüfen = LöschInfos.split(",");
@@ -183,7 +198,7 @@ public class ServerModel extends Thread{
 						schreiben.write(s);
 						schreiben.write("\n");
 						schreiben.close();
-					}meldung="ErfolgreichMeldung";
+					}meldung="löschen,ErfolgreichMeldung";
 					break;
 				}else if(parts[0].equals(prüfen[0])&&!parts[1].equals(prüfen[1])){
 					benutzerExistiert=true;
@@ -200,13 +215,6 @@ public class ServerModel extends Thread{
 		return meldung;
 	}
 	
-	public String getMeldung() {
-		return meldung;
-	}
-
-	public void setMeldung(String meldung) {
-		this.meldung = meldung;
-	}
 	
 	
 }

@@ -86,49 +86,14 @@ public void EmpfangenServer (){
 			logger.info("Löschung");
 			meldung = model.LöschenPrüfen(namePW);
 			SendenEmpfangen.Senden(clientSocket, meldung);
-		} else if (teile[0].equals("gewinnerWeiss")){
-//			TODO Meldung anzeigen
-			
-			for (Client c : clients) {
-				SendenEmpfangen.Senden(c.clientSocket, tmpMeldung);
-				logger.info("neuer String " + tmpMeldung + " gesendet an " + c.clientSocket.getInetAddress().getHostName());
-			}
-		} else if (teile[0].equals("gewinnerSchwarz")){
-//			TODO Meldung anzeigen
-			
-			for (Client c : clients) {
-				SendenEmpfangen.Senden(c.clientSocket, tmpMeldung);
-				logger.info("neuer String " + tmpMeldung + " gesendet an " + c.clientSocket.getInetAddress().getHostName());
-			}
-		} else if (teile[0].equals("stillstand")){
-//			TODO Meldung anzeigen
-			
-			for (Client c : clients) {
-				SendenEmpfangen.Senden(c.clientSocket, tmpMeldung);
-				logger.info("neuer String " + tmpMeldung + " gesendet an " + c.clientSocket.getInetAddress().getHostName());
-			}
 		}
-		
-		
-		
-	} else if (neuEmpfangen instanceof Boolean){
-		boolean tmpBol = (boolean)neuEmpfangen;
-		 
-		for (Client c : clients) {
-			SendenEmpfangen.Senden(c.clientSocket, tmpBol);
-			logger.info("neue boolean gesendet an" + c.clientSocket.getInetAddress().getHostName());						}
-	} else{
-		logger.info("Objecttype: " + empfangen.getClass());
-	}
-	
-	logger.info("Daten Empfangen von Client ");
-	} catch (Exception e) {
+	} 
+	}catch (Exception e) {
 		e.printStackTrace();
 		
+		}
 	}
-		
 	
-	}
 
         
 }

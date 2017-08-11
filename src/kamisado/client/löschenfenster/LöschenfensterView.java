@@ -11,6 +11,10 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
+/**
+ * @author carmen walser
+ *
+ */
 public class LöschenfensterView {
 	
 	Stage löschenStage;
